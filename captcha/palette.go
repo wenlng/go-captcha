@@ -4,7 +4,7 @@
  * @Date 2021/7/18
  * @Email wengaolng@gmail.com
  **/
-package captcha
+package go_captcha
 
 import (
 	"image"

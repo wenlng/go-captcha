@@ -19,13 +19,9 @@ Package captcha implements generation and click location verification of image C
 >>Other：https://gocenter.io
 
 ##### The Golang 1.13+ can be executed directly
-```Linux shell script
+```shell script
 go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.io,direct
-```
-```Window shell script
-set GO111MODULE=on
-set GOPROXY=https://goproxy.io,direct
 ```
 
 - Install

@@ -331,11 +331,31 @@ API = http://....../captcha/check-data
     }
 ```
 
-IT技术网站: [witkeycode.com](witkeycode.com)
+##### Example Design Sketch
+<div align="center">
+    <img src="http://47.104.180.148/go-captcha/go-captcha-01.png" alt="Reward Support">
+    <br/>
+    <br/>
+    <img src="http://47.104.180.148/go-captcha/go-captcha-02.png" alt="Reward Support">
+    <br/>
+    <br/>
+    <img src="http://47.104.180.148/go-captcha/go-captcha-03.png" alt="Reward Support">
+    <br/>
+    <br/>
+    <img src="http://47.104.180.148/go-captcha/go-captcha-04.png" alt="Reward Support">
+    <br/>
+    <br/>
+    <img src="http://47.104.180.148/go-captcha/go-captcha-05.png" alt="Reward Support">
+</div>
+<br>
+<br/>
+
+-IT技术网站: [witkeycode.com](witkeycode.com)
 
 <div align="center">
     <img src="http://47.104.180.148/reward-support.png" alt="Reward Support">
 </div>
+<br/>
 
 ## LICENSE
     MIT

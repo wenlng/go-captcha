@@ -1,10 +1,10 @@
 /**
  * @Author Awen
- * @Description Captcha Draw
+ * @Description Captcha Palette
  * @Date 2021/7/18
  * @Email wengaolng@gmail.com
  **/
-package go_captcha
+package captcha
 
 import (
 	"image"

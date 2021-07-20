@@ -5,7 +5,7 @@
  * @Email wengaolng@gmail.com
  **/
 
-package go_captcha
+package captcha
 
 import (
 	"crypto/rand"

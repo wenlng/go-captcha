@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8"/>
+    <title>点选图片验证码</title>
+</head>
+
+<style type="text/css">
+    html{
+        width: 100%;
+        height: 100%;
+        background-color: #16202f;
+    }
+    body{
+        width: 100%;
+        height: 100%;
+        margin:0;
+        padding:0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .wg-cap-root{
+        width: 100%;
+        height: 100%;
+        display:-webkit-box;
+        display:-webkit-flex;
+        display:-ms-flexbox;
+        display:flex;
+        flex-direction: column;
+        -webkit-box-align:center;
+        -webkit-align-items:center;
+        -ms-flex-align:center;
+        align-items: center;
+    }
+    .wg-cap-container{
+        position: relative;
+        width: 330px;
+        padding: 440px 15px 0 15px;
+        height: 50px;
+        margin: auto;
+    }
+    .wg-cap-container.wg-cap-dialog__active  .wg-cap-dialog {
+        display: block;
+    }
+
+    @keyframes tinUpIn {
+        0% { opacity:0; transform:scale(1) translateY(-500%); }
+        50% { opacity:1; transform:scale(1.1) translateY(0); }
+        70% { opacity:1; transform:scale(1.1) translateY(0); }
+        90% { opacity:1; transform:scale(1.1) translateY(0);  }
+        60% { opacity:1; transform:scale(1) translateY(0);  }
+        80% { opacity:1; transform:scale(1) translateY(0); }
+        100% { opacity:1; transform:scale(1) translateY(0); }
+    }
+    @-webkit-keyframes tinUpIn {
+        0% { opacity:0; transform:scale(1) translateY(-500%); }
+        50% { opacity:1; transform:scale(1.1) translateY(0); }
+        70% { opacity:1; transform:scale(1.1) translateY(0); }
+        90% { opacity:1; transform:scale(1.1) translateY(0);  }
+        60% { opacity:1; transform:scale(1) translateY(0);  }
+        80% { opacity:1; transform:scale(1) translateY(0); }
+        100% { opacity:1; transform:scale(1) translateY(0); }
+    }
+    .wg-cap-container.wg-cap-dialog__active  .wg-cap-wrap{
+        display: block;
+        animation: tinUpIn 1s linear;
+        -moz-animation: tinUpIn 1s linear;
+        -webkit-animation: tinUpIn 1s linear;
+    }
+    .wg-cap-container .wg-cap-block{
+        /*padding-top: 440px;*/
+    }
+
+    .wg-cap-dialog{
+        position: fixed;
+        z-index: 2000;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: none;
+    }
+
+    .wg-cap-wrap{
+        position: absolute;
+        bottom: -10px;
+        z-index: 2001;
+        display: none;
+
+        padding: 15px;
+        border: 1px solid rgba(206, 223, 254, 0.5);
+        background: #ffffff;
+
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+
+        box-shadow: 0 0 20px rgba(100, 100, 100, 0.1);
+        -webkit-box-shadow: 0 0 20px rgba(100, 100, 100, 0.1);
+        -moz-box-shadow: 0 0 20px rgba(100, 100, 100, 0.1);
+
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    .wg-cap-wrap__header{
+        height: 50px;
+        width: 100%;
+        font-size: 15px;
+
+        display:-webkit-box;
+        display:-webkit-flex;
+        display:-ms-flexbox;
+        display:flex;
+        -webkit-box-align:center;
+        -webkit-align-items:center;
+        -ms-flex-align:center;
+        align-items: center;
+    }
+    .wg-cap-wrap__header span{
+        padding-right: 5px;
+    }
+    .wg-cap-wrap__header span em{
+        padding: 0 3px;
+        font-weight: bold;
+        color: #3e7cff;
+        font-style: normal;
+    }
+    .wg-cap-wrap__header .wg-cap-wrap__image{
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        overflow: hidden;
+        text-align: center;
+        line-height: 1;
+    }
+    .wg-cap-wrap__header .wg-cap-wrap__thumb.wg-cap-wrap__hidden{
+        display: none;
+    }
+
+    .wg-cap-wrap__body{
+        position: relative;
+        width: 300px;
+        height: 300px;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        background: #34383e;
+        margin: auto;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .wg-cap-wrap__body .wg-cap-wrap__picture{
+        position: relative;
+        z-index: 10;
+        width: 300px;
+        height: 300px;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+        line-height: 300px;
+        text-align: center;
+    }
+    .wg-cap-wrap__body .wg-cap-wrap__picture.wg-cap-wrap__hidden{
+        display: none;
+    }
+    .wg-cap-wrap__body .wg-cap-wrap__loading{
+        position: absolute;
+        z-index: 9;
+        top: 50%;
+        left: 50%;
+        width: 68px;
+        height: 68px;
+        margin-left: -34px;
+        margin-top: -34px;
+        line-height: 68px;
+        text-align: center;
+    }
+    .wg-cap-wrap__body .wg-cap-wrap__dot{
+        position: absolute;
+        z-index: 10;
+        width: 22px;
+        height: 22px;
+        color: #cedffe;
+        background: #3e7cff;
+        border: 2px solid #f7f9fb;
+        line-height: 20px;
+        text-align: center;
+        -webkit-border-radius: 22px;
+        -moz-border-radius: 22px;
+        border-radius: 22px;
+        cursor: default;
+    }
+
+    .wg-cap-wrap__footer {
+        width: 100%;
+        height: 40px;
+        color: #34383e;
+        display:-webkit-box;
+        display:-webkit-flex;
+        display:-ms-flexbox;
+        display:flex;
+        -webkit-box-align:center;
+        -webkit-align-items:center;
+        -ms-flex-align:center;
+        align-items: center;
+        padding-top: 15px;
+    }
+    .wg-cap-wrap__footer .wg-cap-wrap__ico{
+        flex: 1;
+    }
+    .wg-cap-wrap__footer .wg-cap-wrap__ico img{
+        width: 24px;
+        height: 24px;
+        color: #34383e;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+    .wg-cap-wrap__footer .wg-cap-wrap__btn{
+        width: 120px;
+        height: 40px;
+    }
+    .wg-cap-wrap__footer .wg-cap-wrap__btn button{
+        width: 100%;
+        height: 40px;
+        letter-spacing: 2px;
+        text-align: center;
+        padding: 9px 15px;
+        font-size: 15px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        display: inline-block;
+        line-height: 1;
+        white-space: nowrap;
+        cursor: pointer;
+        color: #fff;
+        background-color: #409eff;
+        border: 1px solid #409eff;
+        -webkit-appearance: none;
+        box-sizing: border-box;
+        outline: none;
+        margin: 0;
+        transition: .1s;
+        font-weight: 500;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+    }
+    .wg-cap-wrap__footer .wg-cap-wrap__btn button:hover {
+        background: #66b1ff;
+        border-color: #66b1ff;
+        color: #fff;
+    }
+
+    .wg-cap-btn {
+        width: 100%;
+        height: 48px;
+    }
+    .wg-cap-btn .wg-cap-btn__inner{
+        width: 100%;
+        height: 48px;
+        position: relative;
+        letter-spacing: 1px;
+    }
+    .wg-cap-btn .wg-cap-state__default, .wg-cap-btn .wg-cap-state__error, .wg-cap-btn .wg-cap-state__success, .wg-cap-btn .wg-cap-state__over{
+        position: absolute;
+        width: 100%;
+        height: 48px;
+        font-size: 13px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        display: inline-block;
+        line-height: 1;
+        white-space: nowrap;
+        cursor: pointer;
+        -webkit-appearance: none;
+        box-sizing: border-box;
+        outline: none;
+        margin: 0;
+        transition: .1s;
+        font-weight: 500;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+
+        display:-webkit-box;
+        display:-webkit-flex;
+        display:-ms-flexbox;
+        display:flex;
+        -webkit-box-align:center;
+        -webkit-align-items:center;
+        -ms-flex-align:center;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+
+        visibility: hidden;
+    }
+    .wg-cap-btn .wg-cap-state__default{
+        color: #3e7cff;
+        border: 1px solid #50a1ff;
+        background: #ecf5ff;
+        box-shadow: 0 0 20px rgba(62, 124, 255, 0.1);
+        -webkit-box-shadow: 0 0 20px rgba(62, 124, 255, 0.1);
+        -moz-box-shadow: 0 0 20px rgba(62, 124, 255, 0.1);
+    }
+    .wg-cap-btn .wg-cap-state__error{
+        color: #ed4630;
+        background: #fef0f0;
+        border: 1px solid #ff5a34;
+    }
+    .wg-cap-btn .wg-cap-state__over{
+        color: #ffa000;
+        background: #fdf6ec;
+        border: 1px solid #ffbe09;
+    }
+    .wg-cap-btn .wg-cap-state__success{
+        color: #5eaa2f;
+        background: #f0f9eb;
+        border: 1px solid #8bc640
+    }
+    .wg-cap-btn .wg-cap-active__default .wg-cap-state__default, .wg-cap-btn .wg-cap-active__error .wg-cap-state__error,.wg-cap-btn .wg-cap-active__over .wg-cap-state__over ,.wg-cap-btn .wg-cap-active__success .wg-cap-state__success {
+        visibility: visible;
+    }
+    .wg-cap-btn .wg-cap-state__inner{
+        display:-webkit-box;
+        display:-webkit-flex;
+        display:-ms-flexbox;
+        display:flex;
+        -webkit-box-align:center;
+        -webkit-align-items:center;
+        -ms-flex-align:center;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+    }
+    .wg-cap-btn .wg-cap-state__inner em{
+        padding-left: 5px;
+        color: #3e7cff;
+        font-style: normal;
+    }
+    .wg-cap-btn .wg-cap-btn__inner .wg-cap-btn__ico{
+        position: relative;
+        width: 24px;
+        height: 24px;
+        margin-right: 12px;
+        font-size: 14px;
+        display: inline-block;
+        float: left;
+        flex: 0;
+    }
+    .wg-cap-btn .wg-cap-btn__inner .wg-cap-btn__ico img{
+        width: 24px;
+        height: 24px;
+        float: left;
+        position: relative;
+        z-index: 10;
+    }
+    @keyframes ripple {
+        0% { opacity: 0; }
+        5% { opacity: 0.05; }
+        20% { opacity: 0.35; }
+        65% { opacity: 0.01;  }
+        100% {
+            transform: scaleX(2) scaleY(2);
+            opacity: 0;
+        }
+    }
+    @-webkit-keyframes ripple {
+        0% { opacity: 0; }
+        5% { opacity: 0.05; }
+        20% { opacity: 0.35; }
+        65% { opacity: 0.01;  }
+        100% {
+            transform: scaleX(2) scaleY(2);
+            opacity: 0;
+        }
+    }
+    .wg-cap-btn .wg-cap-btn__inner .wg-cap-btn__verify::after {
+        background: #409eff;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        content: "";
+        display: block;
+        width: 24px;
+        height: 24px;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 9;
+
+        animation: ripple 1.3s infinite;
+        -moz-animation: ripple 1.3s infinite;
+        -webkit-animation: ripple 1.3s infinite;
+        animation-delay: 2s;
+        -moz-animation-delay: 2s;
+        -webkit-animation-delay: 2s;
+    }
+
+    .wg-cap-tip{
+        padding: 50px 20px 100px;
+        font-size: 13px;
+        color: #76839b;
+        text-align: center;
+        line-height: 180%;
+        width: 100%;
+        max-width: 680px;
+    }
+</style>
+
+<body>
+<div class="wg-cap-root">
+    <div id="wg-cap-container" class="wg-cap-container">
+        <div class="wg-cap-block">
+            <!-- wrap -->
+            <div id="wg-cap-wrap" class="wg-cap-wrap">
+                <div class="wg-cap-wrap__header">
+                    <span>请在下图<em>依次</em>点击：</span>
+                    <img id="wg-cap-thumb" class="wg-cap-wrap__thumb" src="" alt="...">
+                </div>
+                <div class="wg-cap-wrap__body" id="wg-cap-wrap" >
+                    <img id="wg-cap-image" class="wg-cap-wrap__picture" src="" alt="...">
+                    <img class="wg-cap-wrap__loading" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0ibWFyZ2luOiBhdXRvOyBiYWNrZ3JvdW5kOiByZ2JhKDI0MSwgMjQyLCAyNDMsIDApOyBkaXNwbGF5OiBibG9jazsgc2hhcGUtcmVuZGVyaW5nOiBhdXRvOyIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjM2LjgxMDEiIHI9IjEzIiBmaWxsPSIjM2U3Y2ZmIj4KICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9ImN5IiBkdXI9IjFzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgY2FsY01vZGU9InNwbGluZSIga2V5U3BsaW5lcz0iMC40NSAwIDAuOSAwLjU1OzAgMC40NSAwLjU1IDAuOSIga2V5VGltZXM9IjA7MC41OzEiIHZhbHVlcz0iMjM7Nzc7MjMiPjwvYW5pbWF0ZT4KICA8L2NpcmNsZT4KPC9zdmc+" alt="正在加载中...">
+                    <div id="wg-cap-dots">
+                        <!-- <div class="wg-cap-wrap__dot"><span>1</span></div> -->
+                    </div>
+                </div>
+                <div class="wg-cap-wrap__footer">
+                    <div class="wg-cap-wrap__ico">
+                        <img id="wg-cap-close-btn" src="data:image/svg+xml;base64,PHN2ZyB0PSIxNjI2NjE0NDM5NDIzIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9Ijg2NzUiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cGF0aCBkPSJNNTEyIDIzLjI3MjcyN2MyNjkuOTE3MDkxIDAgNDg4LjcyNzI3MyAyMTguODEwMTgyIDQ4OC43MjcyNzMgNDg4LjcyNzI3M2E0ODYuNjMyNzI3IDQ4Ni42MzI3MjcgMCAwIDEtODQuOTQ1NDU1IDI3NS40MDk0NTUgNDYuNTQ1NDU1IDQ2LjU0NTQ1NSAwIDAgMS03Ni44NDY1NDUtNTIuNTI2NTQ2QTM5My41NDE4MTggMzkzLjU0MTgxOCAwIDAgMCA5MDcuNjM2MzY0IDUxMmMwLTIxOC41MDc2MzYtMTc3LjEyODcyNy0zOTUuNjM2MzY0LTM5NS42MzYzNjQtMzk1LjYzNjM2NFMxMTYuMzYzNjM2IDI5My40OTIzNjQgMTE2LjM2MzYzNiA1MTJzMTc3LjEyODcyNyAzOTUuNjM2MzY0IDM5NS42MzYzNjQgMzk1LjYzNjM2NGEzOTUuMTcwOTA5IDM5NS4xNzA5MDkgMCAwIDAgMTI1LjQ0LTIwLjI5MzgxOSA0Ni41NDU0NTUgNDYuNTQ1NDU1IDAgMCAxIDI5LjQ4NjU0NSA4OC4yOTY3MjhBNDg4LjI2MTgxOCA0ODguMjYxODE4IDAgMCAxIDUxMiAxMDAwLjcyNzI3M0MyNDIuMDgyOTA5IDEwMDAuNzI3MjczIDIzLjI3MjcyNyA3ODEuOTE3MDkxIDIzLjI3MjcyNyA1MTJTMjQyLjA4MjkwOSAyMy4yNzI3MjcgNTEyIDIzLjI3MjcyN3ogbS0xMTUuMiAzMDcuNzEyTDUxMiA0NDYuMTM4MTgybDExNS4yLTExNS4yYTQ2LjU0NTQ1NSA0Ni41NDU0NTUgMCAxIDEgNjUuODE1MjczIDY1Ljg2MTgxOEw1NzcuODYxODE4IDUxMmwxMTUuMiAxMTUuMmE0Ni41NDU0NTUgNDYuNTQ1NDU1IDAgMSAxLTY1Ljg2MTgxOCA2NS44MTUyNzNMNTEyIDU3Ny44NjE4MThsLTExNS4yIDExNS4yYTQ2LjU0NTQ1NSA0Ni41NDU0NTUgMCAxIDEtNjUuODE1MjczLTY1Ljg2MTgxOEw0NDYuMTM4MTgyIDUxMmwtMTE1LjItMTE1LjJhNDYuNTQ1NDU1IDQ2LjU0NTQ1NSAwIDEgMSA2NS44NjE4MTgtNjUuODE1MjczeiIgcC1pZD0iODY3NiIgZmlsbD0iIzcwNzA3MCI+PC9wYXRoPjwvc3ZnPg==" alt="关闭">
+                        <img id="wg-cap-refresh-btn" src="data:image/svg+xml;base64,PHN2ZyB0PSIxNjI2NjE0NDk5NjM4IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjEzNjAiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cGF0aCBkPSJNMTg3LjQ1NiA0MjUuMDI0YTMzNiAzMzYgMCAwIDAgMzY4LjM4NCA0MjAuMjI0IDQ4IDQ4IDAgMCAxIDEyLjU0NCA5NS4xNjggNDMyIDQzMiAwIDAgMS00NzMuNjY0LTU0MC4xNmwtNTcuMjgtMTUuMzZhMTIuOCAxMi44IDAgMCAxLTYuMjcyLTIwLjkyOGwxNTkuMTY4LTE3OS40NTZhMTIuOCAxMi44IDAgMCAxIDIyLjE0NCA1Ljg4OGw0OC4wNjQgMjM1LjA3MmExMi44IDEyLjggMCAwIDEtMTUuODA4IDE0LjkxMmwtNTcuMjgtMTUuMzZ6TTgzNi40OCA1OTkuMDRhMzM2IDMzNiAwIDAgMC0zNjguMzg0LTQyMC4yMjQgNDggNDggMCAxIDEtMTIuNTQ0LTk1LjE2OCA0MzIgNDMyIDAgMCAxIDQ3My42NjQgNTQwLjE2bDU3LjI4IDE1LjM2YTEyLjggMTIuOCAwIDAgMSA2LjI3MiAyMC45MjhsLTE1OS4xNjggMTc5LjQ1NmExMi44IDEyLjggMCAwIDEtMjIuMTQ0LTUuODg4bC00OC4wNjQtMjM1LjA3MmExMi44IDEyLjggMCAwIDEgMTUuODA4LTE0LjkxMmw1Ny4yOCAxNS4zNnoiIGZpbGw9IiM3MDcwNzAiIHAtaWQ9IjEzNjEiPjwvcGF0aD48L3N2Zz4=" alt="刷新">
+                    </div>
+                    <div class="wg-cap-wrap__btn">
+                        <button id="wg-cap-check-btn">确认</button>
+                    </div>
+                </div>
+            </div>
+            <!-- dialog -->
+            <div id="wg-cap-dialog" class="wg-cap-dialog"></div>
+            <!-- button -->
+            <div class="wg-cap-btn">
+                <!-- wg-cap-active__default wg-cap-active__error wg-cap-active__over wg-cap-active__success--->
+                <div id="wg-cap-btn-control" class="wg-cap-btn__inner wg-cap-active__default">
+                    <div id="wg-cap-btn-default" class="wg-cap-state__default">
+                        <!-- 初始状态 -->
+                        <div class="wg-cap-state__inner">
+                            <div class="wg-cap-btn__ico wg-cap-btn__verify">
+                                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSLlm77lsYJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiCgkgdmlld0JveD0iMCAwIDIwMCAyMDAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDIwMCAyMDA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojM0U3Q0ZGO30KCS5zdDF7ZmlsbDojRkZGRkZGO30KPC9zdHlsZT4KPGNpcmNsZSBjbGFzcz0ic3QwIiBjeD0iMTAwIiBjeT0iMTAwIiByPSI5Ni4zIi8+CjxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xNDAuOCw2NC40bC0zOS42LTExLjloLTIuNEw1OS4yLDY0LjRjLTEuNiwwLjgtMi44LDIuNC0yLjgsNHYyNC4xYzAsMjUuMywxNS44LDQ1LjksNDIuMyw1NC42CgljMC40LDAsMC44LDAuNCwxLjIsMC40YzAuNCwwLDAuOCwwLDEuMi0wLjRjMjYuNS04LjcsNDIuMy0yOC45LDQyLjMtNTQuNlY2OC4zQzE0My41LDY2LjgsMTQyLjMsNjUuMiwxNDAuOCw2NC40eiIvPgo8L3N2Zz4K">
+                            </div>
+                            <span class="wg-cap-btn__text">点击按键进行验证</span>
+                        </div>
+                    </div>
+                    <div id="wg-cap-btn-error" class="wg-cap-state__error">
+                        <!-- 验证失败状态 -->
+                        <div class="wg-cap-state__inner">
+                            <div class="wg-cap-btn__ico">
+                                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyMDAgMjAwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbGw6I0VENDYzMDt9Cjwvc3R5bGU+CjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xODQsMjYuNkwxMDIuNCwyLjFoLTQuOUwxNiwyNi42Yy0zLjMsMS42LTUuNyw0LjktNS43LDguMnY0OS44YzAsNTIuMiwzMi42LDk0LjcsODcuMywxMTIuNgoJYzAuOCwwLDEuNiwwLjgsMi40LDAuOHMxLjYsMCwyLjQtMC44YzU0LjctMTgsODcuMy01OS42LDg3LjMtMTEyLjZWMzQuN0MxODkuOCwzMS41LDE4Ny4zLDI4LjIsMTg0LDI2LjZ6IE0xMzQuNSwxMjMuMQoJYzMuMSwzLjEsMy4xLDguMiwwLDExLjNjLTEuNiwxLjYtMy42LDIuMy01LjcsMi4zcy00LjEtMC44LTUuNy0yLjNMMTAwLDExMS4zbC0yMy4xLDIzLjFjLTEuNiwxLjYtMy42LDIuMy01LjcsMi4zCgljLTIsMC00LjEtMC44LTUuNy0yLjNjLTMuMS0zLjEtMy4xLTguMiwwLTExLjNMODguNywxMDBMNjUuNSw3Ni45Yy0zLjEtMy4xLTMuMS04LjIsMC0xMS4zYzMuMS0zLjEsOC4yLTMuMSwxMS4zLDBMMTAwLDg4LjcKCWwyMy4xLTIzLjFjMy4xLTMuMSw4LjItMy4xLDExLjMsMGMzLjEsMy4xLDMuMSw4LjIsMCwxMS4zTDExMS4zLDEwMEwxMzQuNSwxMjMuMXoiLz4KPC9zdmc+Cg==" alt="失败">
+                            </div>
+                            <span>验证失败 <em>点击重试</em></span>
+                        </div>
+                    </div>
+                    <div id="wg-cap-btn-over" class="wg-cap-state__over">
+                        <!-- 验证次数过多状态 -->
+                        <div class="wg-cap-state__inner">
+                            <div class="wg-cap-btn__ico">
+                                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyMDAgMjAwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbGw6I0VENDYzMDt9Cjwvc3R5bGU+CjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xODQsMjYuNkwxMDIuNCwyLjFoLTQuOUwxNiwyNi42Yy0zLjMsMS42LTUuNyw0LjktNS43LDguMnY0OS44YzAsNTIuMiwzMi42LDk0LjcsODcuMywxMTIuNgoJYzAuOCwwLDEuNiwwLjgsMi40LDAuOHMxLjYsMCwyLjQtMC44YzU0LjctMTgsODcuMy01OS42LDg3LjMtMTEyLjZWMzQuN0MxODkuOCwzMS41LDE4Ny4zLDI4LjIsMTg0LDI2LjZ6IE0xMzQuNSwxMjMuMQoJYzMuMSwzLjEsMy4xLDguMiwwLDExLjNjLTEuNiwxLjYtMy42LDIuMy01LjcsMi4zcy00LjEtMC44LTUuNy0yLjNMMTAwLDExMS4zbC0yMy4xLDIzLjFjLTEuNiwxLjYtMy42LDIuMy01LjcsMi4zCgljLTIsMC00LjEtMC44LTUuNy0yLjNjLTMuMS0zLjEtMy4xLTguMiwwLTExLjNMODguNywxMDBMNjUuNSw3Ni45Yy0zLjEtMy4xLTMuMS04LjIsMC0xMS4zYzMuMS0zLjEsOC4yLTMuMSwxMS4zLDBMMTAwLDg4LjcKCWwyMy4xLTIzLjFjMy4xLTMuMSw4LjItMy4xLDExLjMsMGMzLjEsMy4xLDMuMSw4LjIsMCwxMS4zTDExMS4zLDEwMEwxMzQuNSwxMjMuMXoiLz4KPC9zdmc+Cg==" alt="失败">
+                            </div>
+                            <span>点击次数过多 <em>点击重试</em></span>
+                        </div>
+                    </div>
+                    <div class="wg-cap-state__success">
+                        <!-- 验证成功状态 -->
+                        <div class="wg-cap-state__inner">
+                            <div class="wg-cap-btn__ico">
+                                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyMDAgMjAwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbGw6IzVFQUEyRjt9Cjwvc3R5bGU+CjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xODMuMywyNy4yTDEwMi40LDIuOWgtNC45TDE2LjcsMjcuMkMxMy40LDI4LjgsMTEsMzIsMTEsMzUuM3Y0OS40YzAsNTEuOCwzMi40LDkzLjksODYuNiwxMTEuNwoJYzAuOCwwLDEuNiwwLjgsMi40LDAuOGMwLjgsMCwxLjYsMCwyLjQtMC44YzU0LjItMTcuOCw4Ni42LTU5LjEsODYuNi0xMTEuN1YzNS4zQzE4OSwzMiwxODYuNiwyOC44LDE4My4zLDI3LjJ6IE0xNDYuMSw4MS40CglsLTQ4LjUsNDguNWMtMS42LDEuNi0zLjIsMi40LTUuNywyLjRjLTIuNCwwLTQtMC44LTUuNy0yLjRMNjIsMTA1LjdjLTMuMi0zLjItMy4yLTguMSwwLTExLjNjMy4yLTMuMiw4LjEtMy4yLDExLjMsMGwxOC42LDE4LjYKCWw0Mi45LTQyLjljMy4yLTMuMiw4LjEtMy4yLDExLjMsMEMxNDkuNCw3My4zLDE0OS40LDc4LjIsMTQ2LjEsODEuNEwxNDYuMSw4MS40eiIvPgo8L3N2Zz4K" alt="成功">
+                            </div>
+                            <span>已验证成功</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- tip -->
+    <div class="wg-cap-tip">Demo: 本页面为效果演示，在接入时处理对应事件、状态的显示和微调整样式融合到实际项目即可；后端使用Go，前端使用Js，也可以接入Vue,React,Angular...等MVVM框架项目中使用</div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+/** =================================================================================
+ * @Description: 此DEMO前端使用原生方式编写，为了让开发者更好理解使用，在本实例中不使用不依懒JQ、Vue等前端库
+ * 如果你在 VUE、React、Angular等项目中使用，直接拷贝代码修改一下做成组件即可
+ * ==================================================================================
+ */
+
+/**
+ * @Description:  封闭Ajax
+ * @return post Function
+            get Function
+ */
+const Ajax = (function () {
+    var xhr
+    var requestArr = []
+
+    /**
+     * @Description: 初始化
+     */
+    function __initialize() {
+        if(window.XMLHttpRequest){
+            xhr = new XMLHttpRequest()
+        } else if(window.ActiveObject){
+            xhr = new ActiveXobject('Microsoft.XMLHTTP')
+        }
+    }
+
+    /**
+     * @Description: 请求处理
+     * @param options
+     */
+    function requestHandler(options){
+        // 调用函数时如果options没有指定，就给它赋值{},一个空的Object
+        options = options || {}
+        // 请求格式GET、POST，默认为GET
+        options.type = (options.type || "GET").toUpperCase()
+        // 响应数据格式，默认json
+        options.dataType = options.dataType || "json"
+        // options.data请求的数据
+        const params = ajaxFormatParams(options.data)
+
+        // 启动并发送一个请求
+        if(options.type === "GET"){
+            xhr.open("GET", options.url+"?" + params,true);
+            xhr.send(null);
+        }else if(options.type === "POST"){
+            xhr.open("post",options.url,true);
+            // 设置表单提交时的内容类型
+            // Content-type数据请求的格式
+            xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xhr.send(params);
+        }
+
+        xhr.timeout = options.timeout
+
+        // 设置有效时间
+        setTimeout(function(){
+            if(xhr.readySate !== 4){
+                xhr.abort();
+            }
+        }, options.timeout)
+
+        // onreadystatechange
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4){
+                var status = xhr.status;
+                if(status >= 200 && status < 300 || status === 304){
+                    var data = xhr.responseText
+                    if (isJSONString(data)) {
+                        data = eval("("+xhr.responseText+")")
+                    }
+                    options.success&&options.success(data, xhr.responseXML);
+                }else{
+                    options.error&&options.error(status);
+                }
+            }
+            options.complete&&options.complete(status);
+        }
+    }
+
+    /**
+     * @Description: 是否是Json格式
+     * @param str
+     */
+    function isJSONString(str) {
+        if (typeof str == 'string') {
+            try {
+                var obj = JSON.parse(str)
+                return typeof obj == 'object' && obj
+            } catch(e) {}
+        }
+
+        return false
+    }
+
+    /**
+     * @Description: Ajax格式化请求参数
+     * @param data
+     */
+    function ajaxFormatParams(data){
+        var arr = [];
+        for(var name in data){
+            arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]))
+        }
+        arr.push(("v=" + Math.random()).replace(".",""))
+        return arr.join("&")
+    }
+
+    /**
+     * @Description: 处理Post请求
+     * @param url
+     * @param data
+     * @param success
+     * @param error
+     * @param complete
+     */
+    function handlePost (url, data, success, error, complete) {
+        requestHandler({
+            url: url,
+            type: 'post',
+            data: data,
+            dataType:'json',
+            timeout: 10000,
+            contentType: "application/json",
+            success: success,
+            error: error,
+            complete: complete
+        })
+    }
+
+    /**
+     * @Description: 处理Get请求
+     * @param url
+     * @param data
+     * @param success
+     * @param error
+     * @param complete
+     */
+    function handleGet (url, data, success, error, complete) {
+        requestHandler({
+            url: url,
+            type: 'post',
+            data: data,
+            dataType:'json',
+            timeout: 10000,
+            contentType: "application/json",
+            success: success,
+            error: error,
+            complete: complete
+        })
+    }
+
+    __initialize()
+    return {
+       post: handlePost,
+       get: handleGet
+    }
+})();
+
+/**
+ * @Description: 封闭Captcha
+ */
+const Captcha = (function () {
+    /**
+     * @Description: 唯一KEY值，用作验证使用
+     */
+    var captchaKey = ""
+    /**
+     * @Description: 用户鼠标点击的位置 x,y
+     */
+    var dots = []
+    /**
+     * @Description: 最大可点数
+     */
+    var maxDot = 8
+
+    const captchaWrapDom        = document.querySelector("#wg-cap-dots")
+    const captchaImageDom       = document.querySelector("#wg-cap-image")
+    const captchaThumbDom       = document.querySelector("#wg-cap-thumb")
+    const captchaBtnControlDom  = document.querySelector("#wg-cap-btn-control")
+    const captchaCheckBtnDom    = document.querySelector("#wg-cap-check-btn")
+    const captchaCloseBtnDom    = document.querySelector("#wg-cap-close-btn")
+    const captchaDialogBtnDom   = document.querySelector("#wg-cap-dialog")
+    const captchaRefreshBtnDom  = document.querySelector("#wg-cap-refresh-btn")
+    const captchaDefaultBtnDom  = document.querySelector("#wg-cap-btn-default")
+    const captchaErrorBtnDom    = document.querySelector("#wg-cap-btn-error")
+    const captchaOverBtnDom     = document.querySelector("#wg-cap-btn-over")
+    const dialogDom             = document.querySelector("#wg-cap-container")
+
+    /**
+     * @Description: 初始化
+     */
+    function __initialize() {
+        requestCaptchaData()
+        handleEvent()
+
+        // 禁用移动端缩放
+        document.addEventListener('touchstart', (event) => {
+            if (event.touches.length > 1) {
+                event.preventDefault()
+            }
+        })
+        document.addEventListener('gesturestart', (event) => {
+            event.preventDefault()
+        })
+        // touchstart  解决:hover伪类在移动端二次点击的问题
+        document.body.addEventListener('touchend', () => { })
+    }
+
+    /**
+     * @Description: 处理所有事件
+     */
+    function handleEvent() {
+        addEventListener(captchaImageDom, "click", handleClickPos)
+        addEventListener(captchaCheckBtnDom, "click", handleClickCheck)
+        addEventListener(captchaCloseBtnDom, "click", handleClickClose)
+        addEventListener(captchaDialogBtnDom, "click", handleClickClose)
+        addEventListener(captchaRefreshBtnDom, "click", handleClickRefresh)
+        addEventListener(captchaDefaultBtnDom, "click", handleClickDefault)
+        addEventListener(captchaErrorBtnDom, "click", handleClickDefault)
+        addEventListener(captchaOverBtnDom, "click", handleClickDefault)
+    }
+
+    /**
+     * @Description: 为任意元素.绑定任意的事件
+     * @param el    任意的元素
+     * @param type  事件的类型
+     * @param fn    事件处理函数
+     */
+    function addEventListener(el,type,fn) {
+        //判断浏览器是否支持这个方法
+        if(el.addEventListener){
+            el.addEventListener(type,fn,false);
+        }else if(el.attachEvent){
+            el.attachEvent("on"+type,fn);
+        }else{
+            el["on"+type]=fn;
+        }
+    }
+
+    /**
+     * @Description: 找到元素的屏幕位置
+     * @param el
+     */
+    function calcLocationLeft(el){
+        var tmp = el.offsetLeft
+        var val = el.offsetParent
+        while(val != null){
+            tmp += val.offsetLeft
+            val = val.offsetParent
+        }
+        return tmp
+    }
+
+    /**
+     * @Description: 找到元素的屏幕位置
+     * @param el
+     */
+    function calcLocationTop(el){
+        var tmp = el.offsetTop
+        var val = el.offsetParent
+        while(val != null){
+            tmp += val.offsetTop
+            val = val.offsetParent
+        }
+        return tmp
+    }
+
+    /**
+     * @Description: 插入点击icon大小为22x22
+     * @param event
+     * @param x
+     * @param y
+     */
+    function appendDotIcon(event, x, y) {
+        // const icon = '<div class="wg-cap-wrap__dot" style="position:absolute; top:' + (y * 0.5) + 'px; left:' + (x * 0.5) + 'px;"><span>'+ (dots.length + 1) +'</span></div>'
+        const dot = document.createElement('div')
+        dot.setAttribute('class', 'wg-cap-wrap__dot')
+        dot.setAttribute('style', 'top:' + (y - 11) + 'px; left:' + (x - 11) + 'px;')
+        dot.innerHTML = '<span>'+ (dots.length + 1) +'</span>'
+        captchaWrapDom.appendChild(dot)
+
+        dots.push([x, y])
+    }
+
+    /**
+     * @Description: 重置
+     */
+    function resetCaptcha() {
+        captchaKey = ""
+        dots = []
+        captchaWrapDom.innerHTML = ""
+    }
+
+    /**
+     * @Description: 清空验证图片
+     */
+    function clearImage() {
+        captchaImageDom.setAttribute("src", "")
+        captchaThumbDom.setAttribute("src", "")
+    }
+
+    /**
+     * @Description: 处理点击验证码图片位置
+     * @param ev
+     */
+    function handleClickPos(ev){
+        if (dots.length >= maxDot || captchaKey === "") {
+            return
+        }
+
+        const e = ev || event;
+        const dom = e.currentTarget
+        const domX = calcLocationLeft(dom)
+        const domY = calcLocationTop(dom)
+
+        const mouseX = (navigator.appName === 'Netscape') ? e.pageX : e.x + document.body.scrollLeft
+        const mouseY = (navigator.appName === 'Netscape') ? e.pageY : e.y+document.body.scrollTop
+
+        // 计算点击的相对位置
+        const xPos = mouseX - domX;
+        const yPos = mouseY - domY;
+
+        appendDotIcon(e, xPos, yPos)
+        e.cancelBubble = true
+        e.preventDefault()
+        return false
+    }
+
+    /**
+     * @Description: 点击刷新
+     */
+    function handleClickRefresh() {
+        requestCaptchaData()
+    }
+
+    /**
+     * @Description: 点击刷新
+     */
+    function handleClickClose() {
+        dialogDom.classList.remove("wg-cap-dialog__active")
+    }
+
+    /**
+     * @Description: 点击验证
+     */
+    function handleClickCheck() {
+        var dotsA = []
+        dots.forEach(function (value, key) {
+            dotsA.push(value.join(","))
+        })
+
+        if (dotsA.length <= 0) {
+            alert("请点选图案进行验证")
+            return
+        }
+
+        requestCheckCaptchaData({'dots': dotsA.join(','), 'key': captchaKey})
+    }
+
+    /**
+     * @Description: 点击验证按钮，弹窗
+     */
+    function handleClickDefault() {
+        requestCaptchaData()
+        dialogDom.classList.add("wg-cap-dialog__active")
+    }
+
+    /**
+     * @Description: 请求验证码数据
+     */
+    function requestCaptchaData() {
+        resetCaptcha()
+        clearImage()
+        captchaImageDom.classList.add("wg-cap-wrap__hidden")
+        captchaThumbDom.classList.add("wg-cap-wrap__hidden")
+
+        Ajax.get("/captcha-data", {}, function(data){
+            if (data['code'] === 0) {
+                captchaImageDom.classList.remove("wg-cap-wrap__hidden")
+                captchaThumbDom.classList.remove("wg-cap-wrap__hidden")
+                captchaImageDom.setAttribute("src", data['image_base64'])
+                captchaThumbDom.setAttribute("src", data['thumb_base64'])
+                captchaKey = data['captcha_key']
+            } else {
+                alert("请求验证码数据失败：" + data['message'])
+            }
+        }, function(e){
+            console.log("请求验证码数据失败：" + e['message']);
+        })
+    }
+
+    /**
+     * @Description: 请求验证数据
+     * @param dots
+     */
+    function requestCheckCaptchaData(dots) {
+        Ajax.post("/check-data", dots, function(data){
+            captchaBtnControlDom.classList.remove("wg-cap-active__default")
+            captchaBtnControlDom.classList.remove("wg-cap-active__over")
+            if (data['code'] === 0) {
+                alert("验证成功")
+                captchaBtnControlDom.classList.remove("wg-cap-active__error")
+                captchaBtnControlDom.classList.add("wg-cap-active__success")
+                handleClickClose()
+            } else {
+                alert("验证失败")
+                captchaBtnControlDom.classList.remove("wg-cap-active__success")
+                captchaBtnControlDom.classList.add("wg-cap-active__error")
+            }
+        }, function(e){
+            captchaBtnControlDom.classList.remove("wg-cap-active__default")
+            captchaBtnControlDom.classList.remove("wg-cap-active__over")
+            captchaBtnControlDom.classList.remove("wg-cap-active__success")
+            captchaBtnControlDom.classList.add("wg-cap-active__error")
+        }, function () {
+            captchaKey = ""
+        })
+    }
+
+    __initialize()
+    return {}
+})();
+</script>
+</html>

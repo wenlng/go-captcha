@@ -1,4 +1,4 @@
-module go-captcha
+module "github.com/wenlng/goCaptcha"
 
 go 1.16
 

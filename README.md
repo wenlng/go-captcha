@@ -19,14 +19,18 @@ Package captcha implements generation and click location verification of image C
 >>Other：https://gocenter.io
 
 ##### The Golang 1.13+ can be executed directly
-```shell script
+```Linux shell script
 go env -w GO111MODULE=on
-go env -w GOPROXY=https://goproxy.cn,direct
+go env -w GOPROXY=https://goproxy.io,direct
+```
+```Window shell script
+set GO111MODULE=on
+set GOPROXY=https://goproxy.io,direct
 ```
 
 - Install
 ```
-go get github.com/wenlng/go-captcha
+go get -u github.com/wenlng/go-captcha
 ```
 
 - Import Module
@@ -176,13 +180,13 @@ func main(){
     // Method: SetImageSize(size *Size);
     // Desc: Set size of captcha
     // ====================================================
-    capt.SetImageSize(&Size{300, 300})
+    capt.SetImageSize(&captcha.Size{300, 300})
 
     // ====================================================
     // Method: SetThumbSize(size *Size);
     // Desc: Set size of captcha thumb
     // ====================================================
-    capt.SetThumbSize(&Size{150, 40})
+    capt.SetThumbSize(&captcha.Size{150, 40})
 
     // ====================================================
     // Method: SetTextRangLen(val *captcha.RangeVal);
@@ -203,16 +207,13 @@ func main(){
     // Method: SetImageFontAlpha(val float64);
     // Desc:Set alpha of captcha font
     // ====================================================
-    capt.SetImageFontAlpha([]string{
-        "/__example/resources/images/r1.jpg",
-        "/__example/resources/images/r2.jpg",
-    })
+    capt.SetImageFontAlpha(0.5)
 
     // ====================================================
     // Method: SetTextRangAnglePos(pos []*RangeVal);
     // Desc:Set angle of captcha text
     // ====================================================
-    capt.SetTextRangAnglePos(&captcha.RangeVal{
+    capt.SetTextRangAnglePos([]*captcha.RangeVal{
         {1, 15},
         {15, 30},
         {30, 45},

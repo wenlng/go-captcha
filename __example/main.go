@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/wenlng/goCaptcha/captcha"
+	"github.com/wenlng/go-captcha/captcha"
 	"html/template"
 	"io"
 	"io/ioutil"

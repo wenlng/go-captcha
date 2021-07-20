@@ -33,7 +33,7 @@ go get github.com/wenlng/go-captcha
 ```go
 package main
 
-import "github.com/wenlng/goCaptcha/captcha"
+import "github.com/wenlng/go-captcha/captcha"
 
 func main(){
    // ....
@@ -45,7 +45,7 @@ func main(){
 package main
 import (
     "fmt"
-	"github.com/wenlng/goCaptcha/captcha"
+    "github.com/wenlng/go-captcha/captcha"
 )
 
 func main(){
@@ -95,7 +95,7 @@ func main(){
 package main
 import (
     "fmt"
-	"github.com/wenlng/goCaptcha/captcha"
+    "github.com/wenlng/go-captcha/captcha"
 )
 
 func main(){
@@ -116,7 +116,7 @@ func main(){
 package main
 import (
     "fmt"
-	"github.com/wenlng/goCaptcha/captcha"
+	"github.com/wenlng/go-captcha/captcha"
 )
 
 func main(){
@@ -148,7 +148,7 @@ func main(){
 package main
 import (
     "fmt"
-	"github.com/wenlng/goCaptcha/captcha"
+	"github.com/wenlng/go-captcha/captcha"
 )
 
 func main(){
@@ -274,7 +274,7 @@ func main(){
 package main
 import (
     "fmt"
-	"github.com/wenlng/goCaptcha/captcha"
+    "github.com/wenlng/go-captcha/captcha"
 )
 
 func main(){

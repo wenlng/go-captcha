@@ -344,7 +344,7 @@ func main(){
 }
 ```
 
-- Example Url：[http://47.104.180.148/go/captcha/demo](http://47.104.180.148/go/captcha/demo)
+- Example Url：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
 ##### Fronted Example Api Params
 ```
 // Example: Get captcha data

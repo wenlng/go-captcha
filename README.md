@@ -8,28 +8,40 @@ Package captcha implements generation and click location verification of image C
 
 - Installation of proxy go module in China
 >
->>goProxy https://github.com/goproxy/goproxy.cn
+>>GoProxy https://github.com/goproxy/goproxy.cn
 >
->>aliProxy： https://mirrors.aliyun.com/goproxy/
+>>AliProxy： https://mirrors.aliyun.com/goproxy/
 >
->>officialProxy： https://goproxy.io/
+>>OfficialProxy： https://goproxy.io/
 >
 >>ChinaProxy：https://goproxy.cn
 >
 >>Other：https://gocenter.io
 
-##### The Golang 1.13+ can be executed directly
+#### Set Proxy of Go module 
+- Window
 ```shell script
+set GO111MODULE=on
+set GOPROXY=https://goproxy.io,direct
+
+### The Golang 1.13+ can be executed directly
 go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.io,direct
 ```
+- Linux or Mac
+```shell script
+vi vim ~/.bash_profile
+export GO111MODULE=on
+export GOPROXY=https://goproxy.io,direct
+source ~/.bash_profile
+```
 
-- Install
+##### Install Module
 ```
 go get -u github.com/wenlng/go-captcha
 ```
 
-- Import Module
+##### Import Module
 ```go
 package main
 
@@ -116,7 +128,7 @@ func main(){
 package main
 import (
     "fmt"
-	"github.com/wenlng/go-captcha/captcha"
+    "github.com/wenlng/go-captcha/captcha"
 )
 
 func main(){
@@ -148,7 +160,7 @@ func main(){
 package main
 import (
     "fmt"
-	"github.com/wenlng/go-captcha/captcha"
+    "github.com/wenlng/go-captcha/captcha"
 )
 
 func main(){
@@ -185,10 +197,34 @@ func main(){
     capt.SetThumbSize(&captcha.Size{150, 40})
 
     // ====================================================
+    // Method: SetFontDPI(val int);
+    // Desc: Set random DPI of captcha font, The best is 72
+    // ====================================================
+    capt.SetFontDPI(72)
+
+    // ====================================================
     // Method: SetTextRangLen(val *captcha.RangeVal);
     // Desc: Set random length of captcha text
     // ====================================================
     capt.SetTextRangLen(&captcha.RangeVal{6, 7})
+
+    // ====================================================
+    // Method: SetRangFontSize(val *captcha.RangeVal);
+    // Desc: Set random size of captcha text
+    // ====================================================
+    capt.SetRangFontSize(&captcha.RangeVal{32, 42})
+
+    // ====================================================
+    // Method: SetRangCheckTextLen(val *captcha.RangeVal);
+    // Desc:Set random length of check text
+    // ====================================================
+    capt.SetRangCheckTextLen(&captcha.RangeVal{2, 4})
+
+    // ====================================================
+    // Method: SetRangCheckFontSize(val *captcha.RangeVal);
+    // Desc:Set random size of check text
+    // ====================================================
+    capt.SetRangCheckFontSize(&captcha.RangeVal{24, 30})
     
     // ====================================================
     // Method: SetTextRangFontColors(colors []string);
@@ -309,7 +345,7 @@ func main(){
 ```
 
 - Example Url：[http://47.104.180.148/go/captcha/demo](http://47.104.180.148/go/captcha/demo)
-##### Fronted Example Other
+##### Fronted Example Api Params
 ```
 // Example: Get captcha data
 API = http://....../captcha/captcha-data
@@ -322,7 +358,7 @@ API = http://....../captcha/captcha-data
 
 // Example: Post check data
 API = http://....../captcha/check-data
-    Reuest Data = {
+    Request Data = {
         dots: "x1,y1,x2,y2,...."
         key: "......"
     }

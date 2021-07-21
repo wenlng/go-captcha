@@ -130,7 +130,6 @@ func (cc *Captcha) SetFont(fonts []string) {
 	cc.Config.RangFont = fonts
 }
 
-
 /**
  * @Description: 设置验证码尺寸
  * @receiver cc
@@ -150,6 +149,15 @@ func (cc *Captcha) SetThumbSize(size *Size) {
 }
 
 /**
+ * @Description: 设置随机字体大小
+ * @receiver cc
+ * @param val
+ */
+func (cc *Captcha) SetRangFontSize(val *RangeVal) {
+	cc.Config.RangFontSize = val
+}
+
+/**
  * @Description: 设置字符随机长度范围
  * @receiver cc
  * @param val
@@ -165,6 +173,15 @@ func (cc *Captcha) SetTextRangLen(val *RangeVal) {
  */
 func (cc *Captcha) SetTextRangFontColors(colors []string) {
 	cc.Config.RangFontColors = colors
+}
+
+/**
+ * @Description: 设置分辨率，72为标准
+ * @receiver cc
+ * @param val
+ */
+func (cc *Captcha) SetFontDPI(val int) {
+	cc.Config.FontDPI = val
 }
 
 /**
@@ -192,6 +209,24 @@ func (cc *Captcha) SetImageFontDistort(val int) {
  */
 func (cc *Captcha) SetTextRangAnglePos(pos []*RangeVal) {
 	cc.Config.RangTexAnglePos = pos
+}
+
+/**
+ * @Description: 设置随机验证文本长度
+ * @receiver cc
+ * @param val
+ */
+func (cc *Captcha) SetRangCheckTextLen(val *RangeVal) {
+	cc.Config.RangCheckTextLen = val
+}
+
+/**
+ * @Description: 设置随机验证文本大小
+ * @receiver cc
+ * @param val
+ */
+func (cc *Captcha) SetRangCheckFontSize(val *RangeVal) {
+	cc.Config.RangCheckFontSize = val
 }
 
 /**

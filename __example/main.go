@@ -60,12 +60,6 @@ func GetCaptchaData(w http.ResponseWriter, r *http.Request) {
 	//chars := []string{"你","好","呀","这","是","点","击","验","证","码","哟"}
 	//_ = capt.SetRangChars(chars)
 
-	/*
-
-
-
-	 */
-
 	capt.SetTextRangFontColors([]string{
 		"#006600",
 		"#005db9",

@@ -22,6 +22,8 @@ import (
  * @Description: 图片点数据
  */
 type CharDot struct {
+	// 顺序索引
+	Index int
 	// x,y位置
 	Dx   int
 	Dy   int
@@ -460,7 +462,7 @@ func (cc *Captcha) genDots(imageSize *Size, fontSize *RangeVal, chars string, pa
 		y = int(math.Min(math.Max(float64(y), 10), float64(height - randFontSize - (padding * 2))))
 		text := fmt.Sprintf("%s", str)
 
-		dot := CharDot{x, y, randFontSize, fontWidth, fontHeight, text, randAngle, randColor}
+		dot := CharDot{i,x, y, randFontSize, fontWidth, fontHeight, text, randAngle, randColor}
 		dots[i] = dot
 	}
 

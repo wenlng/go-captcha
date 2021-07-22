@@ -8,17 +8,17 @@ Package captcha implements generation and click location verification of image C
 
 - Installation of proxy go module in China
 >
->>GoProxy https://github.com/goproxy/goproxy.cn
+>GoProxy https://github.com/goproxy/goproxy.cn
 >
->>AliProxy： https://mirrors.aliyun.com/goproxy/
+>AliProxy： https://mirrors.aliyun.com/goproxy/
 >
->>OfficialProxy： https://goproxy.io/
+>OfficialProxy： https://goproxy.io/
 >
->>ChinaProxy：https://goproxy.cn
+>ChinaProxy：https://goproxy.cn
 >
->>Other：https://gocenter.io
+>Other：https://gocenter.io
 
-#### Set Proxy of Go module 
+### Set Proxy of Go module 
 - Window
 ```shell script
 set GO111MODULE=on
@@ -36,12 +36,12 @@ export GOPROXY=https://goproxy.io,direct
 source ~/.bash_profile
 ```
 
-##### Install Module
+### Install Module
 ```
 go get -u github.com/wenlng/go-captcha
 ```
 
-##### Import Module
+### Import Module
 ```go
 package main
 
@@ -52,7 +52,7 @@ func main(){
 }
 ```
 
-##### Quick use
+### Quick use
 ```go
 package main
 import (
@@ -101,7 +101,7 @@ func main(){
 
 ```
 
-##### Method Instructions
+### Method Instructions
 - New Instances or Get Single Instances
 ```go
 package main
@@ -155,7 +155,7 @@ func main(){
 }
 ```
 
-##### Set configuration
+### Set configuration
 ```go
 package main
 import (
@@ -302,7 +302,7 @@ func main(){
 }
 ```
 
-##### Generate Captcha Data
+### Generate Captcha Data
 ```go
 package main
 import (
@@ -327,7 +327,7 @@ func main(){
     // generate ...
     // ====================================================
     // dots:  Character position information
-    //  - {"0":{"Dx":198,"Dy":77,"Size":41,"Width":54,"Height":41,"Text":"SH","Angle":6,"Color":"#885500"} ...}
+    //  - {"0":{"Index":0,"Dx":198,"Dy":77,"Size":41,"Width":54,"Height":41,"Text":"SH","Angle":6,"Color":"#885500"} ...}
     // imageBase64:  Verify the clicked image
     // thumbImageBase64: Thumb displayed
     // key: Only Key
@@ -345,7 +345,7 @@ func main(){
 ```
 
 - Example Url：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
-##### Fronted Example Api Params
+### Fronted Example Api Params
 ```
 // Example: Get captcha data
 API = http://....../captcha/captcha-data
@@ -364,7 +364,7 @@ API = http://....../captcha/check-data
     }
 ```
 
-##### Example Design Sketch
+### Example Design Sketch
 <div align="center">
     <img src="http://47.104.180.148/go-captcha/go-captcha-01.png" alt="Reward Support">
     <br/>

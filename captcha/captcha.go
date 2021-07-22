@@ -488,7 +488,7 @@ func (cc *Captcha) rangeCheckDots(dots map[int]CharDot) (map[int]CharDot, string
 		}
 		dot := dots[value]
 		dot.Index = i
-		chkDots[i] = dots[value]
+		chkDots[i] = dot
 		chars = append(chars, chkDots[i].Text)
 	}
 	return chkDots, strings.Join(chars, ":")

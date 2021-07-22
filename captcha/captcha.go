@@ -430,7 +430,8 @@ func (cc *Captcha) genDots(imageSize *Size, fontSize *RangeVal, chars string, pa
 
 	//sStr := strings.Replace(chars, ":", "", -1)
 	strs := strings.Split(chars, ":")
-	for i, str := range strs{
+	for i := 0; i < len(strs); i ++{
+		str := strs[i]
 		// 随机角度
 		randAngle := cc.getRandAngle()
 		// 随机颜色
@@ -485,6 +486,8 @@ func (cc *Captcha) rangeCheckDots(dots map[int]CharDot) (map[int]CharDot, string
 		if i >= count {
 			continue
 		}
+		dot := dots[value]
+		dot.Index = i
 		chkDots[i] = dots[value]
 		chars = append(chars, chkDots[i].Text)
 	}

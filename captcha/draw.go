@@ -390,13 +390,15 @@ func (cd *Draw) calcImageSpace (pa *Palette) *AreaPoint {
 			if _, _, _, a := co.RGBA(); a > 0 {
 				if x < minX {
 					minX = x
-				} else if x > maxX{
+				}
+				if x > maxX{
 					maxX = x
 				}
 
 				if y < minY {
 					minY = y
-				} else if y > maxY{
+				}
+				if y > maxY{
 					maxY = y
 				}
 			}

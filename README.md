@@ -1,10 +1,30 @@
 # go-captcha
 Package captcha implements generation and click location verification of image CAPTCHAs. 
 
+
 [![License](https://img.shields.io/github/license/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/blob/master/LICENSE)
 [![Version](https://img.shields.io/github/tag/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/wenlng/go-captcha)](https://goreportcard.com/report/github.com/wenlng/go-captcha)
 [![GoDoc](https://godoc.org/github.com/wenlng/go-captcha?status.svg)](https://godoc.org/github.com/wenlng/go-captcha)
+
+### Example Design Sketch
+<div align="center">
+    <img src="http://47.104.180.148/go-captcha/go-captcha-01.png" alt="Reward Support">
+    <br/>
+    <br/>
+    <img src="http://47.104.180.148/go-captcha/go-captcha-02.png" alt="Reward Support">
+    <br/>
+    <br/>
+    <img src="http://47.104.180.148/go-captcha/go-captcha-03.png" alt="Reward Support">
+    <br/>
+    <br/>
+    <img src="http://47.104.180.148/go-captcha/go-captcha-04.png" alt="Reward Support">
+    <br/>
+    <br/>
+    <img src="http://47.104.180.148/go-captcha/go-captcha-05.png" alt="Reward Support">
+</div>
+<br>
+<br/>
 
 - Installation of proxy go module in China
 >
@@ -363,25 +383,6 @@ API = http://....../captcha/check-data
         key: "......"
     }
 ```
-
-### Example Design Sketch
-<div align="center">
-    <img src="http://47.104.180.148/go-captcha/go-captcha-01.png" alt="Reward Support">
-    <br/>
-    <br/>
-    <img src="http://47.104.180.148/go-captcha/go-captcha-02.png" alt="Reward Support">
-    <br/>
-    <br/>
-    <img src="http://47.104.180.148/go-captcha/go-captcha-03.png" alt="Reward Support">
-    <br/>
-    <br/>
-    <img src="http://47.104.180.148/go-captcha/go-captcha-04.png" alt="Reward Support">
-    <br/>
-    <br/>
-    <img src="http://47.104.180.148/go-captcha/go-captcha-05.png" alt="Reward Support">
-</div>
-<br>
-<br/>
 
 -IT技术网站: [witkeycode.com](witkeycode.com)
 

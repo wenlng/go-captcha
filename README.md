@@ -9,19 +9,15 @@ Package captcha implements generation and click location verification of image C
 
 ### Example Design Sketch
 <div align="center">
-    <img src="http://47.104.180.148/go-captcha/go-captcha-01.png" alt="Reward Support">
+    <img src="http://47.104.180.148/go-captcha/go-captcha-01.png?v=1" alt="Reward Support">
     <br/>
     <br/>
-    <img src="http://47.104.180.148/go-captcha/go-captcha-02.png" alt="Reward Support">
+    <img src="http://47.104.180.148/go-captcha/go-captcha-02.png?v=1" alt="Reward Support">
     <br/>
     <br/>
-    <img src="http://47.104.180.148/go-captcha/go-captcha-03.png" alt="Reward Support">
+    <img src="http://47.104.180.148/go-captcha/go-captcha.jpg?v=1" alt="Reward Support">
     <br/>
-    <br/>
-    <img src="http://47.104.180.148/go-captcha/go-captcha-04.png" alt="Reward Support">
-    <br/>
-    <br/>
-    <img src="http://47.104.180.148/go-captcha/go-captcha-05.png" alt="Reward Support">
+    <br/>   
 </div>
 <br>
 <br/>
@@ -384,10 +380,10 @@ API = http://....../captcha/check-data
     }
 ```
 
--IT技术网站: [witkeycode.com](witkeycode.com)
+-作者IT技术网站: [http://witkeycode.com](http://witkeycode.com)
 
 <div align="center">
-    <img src="http://47.104.180.148/reward-support.png" alt="Reward Support">
+    <img src="http://47.104.180.148/reward-support.png?v=1" alt="Reward Support">
 </div>
 <br/>
 

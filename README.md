@@ -8,6 +8,7 @@ Package captcha implements generation and click location verification of image C
 [![GoDoc](https://godoc.org/github.com/wenlng/go-captcha?status.svg)](https://godoc.org/github.com/wenlng/go-captcha)
 
 ### Example Design Sketch
+Demo：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
 <div align="center">
     <img src="http://47.104.180.148/go-captcha/go-captcha-01.png?v=1" alt="Reward Support">
     <br/>
@@ -360,7 +361,6 @@ func main(){
 }
 ```
 
-- Example Url：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
 ### Fronted Example Api Params
 ```
 // Example: Get captcha data

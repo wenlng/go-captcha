@@ -7,8 +7,11 @@ Package captcha implements generation and click location verification of image C
 [![Go Report Card](https://goreportcard.com/badge/github.com/wenlng/go-captcha)](https://goreportcard.com/report/github.com/wenlng/go-captcha)
 [![GoDoc](https://godoc.org/github.com/wenlng/go-captcha?status.svg)](https://godoc.org/github.com/wenlng/go-captcha)
 
+- Example Code：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
+- Demo：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
+- Author Website: [http://witkeycode.com](http://witkeycode.com)
+
 ### Example Design Sketch
-Demo：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
 <div align="center">
     <img src="http://47.104.180.148/go-captcha/go-captcha-01.png?v=1" alt="Reward Support">
     <br/>
@@ -380,7 +383,6 @@ API = http://....../captcha/check-data
     }
 ```
 
--作者IT技术网站: [http://witkeycode.com](http://witkeycode.com)
 
 <div align="center">
     <img src="http://47.104.180.148/reward-support.png?v=1" alt="Reward Support">

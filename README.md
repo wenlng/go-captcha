@@ -55,12 +55,19 @@ export GOPROXY=https://goproxy.io,direct
 source ~/.bash_profile
 ```
 
-### Install Module
+### Dependency Library
+```
+github.com/golang/freetype
+golang.org/x/crypto
+golang.org/x/image
+```
+
+### Install Captcha Module
 ```
 go get -u github.com/wenlng/go-captcha
 ```
 
-### Import Module
+### Import Captcha Module
 ```go
 package main
 
@@ -72,10 +79,14 @@ func main(){
 ```
 
 ### Quick use
+Configuration items that must be set:  SetFont and SetBackground
+<br/>
+You can copy the resource files under the "__example/resources" to the directory of your project
 ```go
 package main
 import (
     "fmt"
+    "os"
     "github.com/wenlng/go-captcha/captcha"
 )
 
@@ -83,19 +94,20 @@ func main(){
     // Captcha Single Instances
     capt := captcha.GetCaptcha()
     
+    path, _ := os.Getwd()
     // ==========================
     // Config that must be set
     // --------------------------
     // Set font absolute path
     capt.SetFont([]string{
-        "/__example/resources/fonts/fzshengsksjw_cu.ttf",
-        "/__example/resources/fonts/fzssksxl.ttf",
+        path + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
+        path + "/__example/resources/fonts/fzssksxl.ttf",
     })
     
     // Set background image absolute path
     capt.SetBackground([]string{
-        "/__example/resources/images/1.jpg",
-        "/__example/resources/images/2.jpg",
+        path + "/__example/resources/images/1.jpg",
+        path + "/__example/resources/images/2.jpg",
     })
     
     // Generate Captcha
@@ -179,19 +191,21 @@ func main(){
 package main
 import (
     "fmt"
+    "os"
     "github.com/wenlng/go-captcha/captcha"
 )
 
 func main(){
     capt := captcha.GetCaptcha()
     
+    path, _ := os.Getwd()    
     // ====================================================
     // Method: SetBackground(color []string);
     // Desc: Set random image of captcha background
     // ====================================================
     capt.SetBackground([]string{
-        "/__example/resources/images/1.jpg",
-        "/__example/resources/images/2.jpg",
+        path + "/__example/resources/images/1.jpg",
+        path + "/__example/resources/images/2.jpg",
     })
 
     // ====================================================
@@ -199,8 +213,8 @@ func main(){
     // Desc: Set random font of captcha text
     // ====================================================
     capt.SetFont([]string{
-        "/__example/resources/fonts/fzshengsksjw_cu.ttf",
-        "/__example/resources/fonts/fzssksxl.ttf",
+        path + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
+        path + "/__example/resources/fonts/fzssksxl.ttf",
     })
 
     // ====================================================
@@ -293,8 +307,8 @@ func main(){
     // Desc:Set random image of captcha thumb background
     // ====================================================
     capt.SetThumbBackground([]string{
-        "/__example/resources/images/r1.jpg",
-        "/__example/resources/images/r2.jpg",
+        path + "/__example/resources/images/r1.jpg",
+        path + "/__example/resources/images/r2.jpg",
     })
 
     // ====================================================
@@ -326,21 +340,23 @@ func main(){
 package main
 import (
     "fmt"
+    "os"
     "github.com/wenlng/go-captcha/captcha"
 )
 
 func main(){
     capt := captcha.GetCaptcha()
     
+    path, _ := os.Getwd()
     // set configuration ...
     // ==========================
     capt.SetFont([]string{
-        "/__example/resources/fonts/fzshengsksjw_cu.ttf",
-        "/__example/resources/fonts/fzssksxl.ttf",
+        path + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
+        path + "/__example/resources/fonts/fzssksxl.ttf",
     })
     capt.SetBackground([]string{
-        "/__example/resources/images/1.jpg",
-        "/__example/resources/images/2.jpg",
+        path + "/__example/resources/images/1.jpg",
+        path + "/__example/resources/images/2.jpg",
     })
     
     // generate ...

@@ -29,7 +29,6 @@ func GenerateKey(str string) (string, error) {
 	return _hash, nil
 }
 
-
 /**
  * @Description: Md5
  * @param str

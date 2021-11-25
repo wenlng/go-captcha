@@ -19,16 +19,16 @@ func TestDrawTextImg(t *testing.T) {
 	draw := GetDraw()
 
 	drawDots := &captcha.DrawDot{
-		Dx: 0,
-		Dy: 0,
+		Dx:      0,
+		Dy:      0,
 		FontDPI: 72,
-		Text: "你好",
-		Angle: 45,
-		Size: 20,
-		Color: "#841524",
-		Width: 20,
-		Height: 20,
-		Font: getPWD() + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
+		Text:    "你好",
+		Angle:   45,
+		Size:    20,
+		Color:   "#841524",
+		Width:   20,
+		Height:  20,
+		Font:    getPWD() + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
 	}
 
 	canvas, ap, _ := draw.DrawTextImg(drawDots, &captcha.DrawCanvas{
@@ -47,11 +47,11 @@ func TestDrawTextImg(t *testing.T) {
 	height := maxY - minY
 
 	co, _ := captcha.ParseHexColor("#841524")
-	var coArr = []color.RGBA {
+	var coArr = []color.RGBA{
 		co,
 	}
 	canvas2 := draw.CreateCanvasWithPalette(&captcha.DrawCanvas{
-		Width: width,
+		Width:  width,
 		Height: height,
 	}, coArr)
 
@@ -65,7 +65,7 @@ func TestDrawTextImg(t *testing.T) {
 		}
 	}
 
-	file := getPWD() +"/tests/.cache/" + fmt.Sprintf("%v", captcha.RandInt(1, 200)) + "textImg.png"
+	file := getPWD() + "/tests/.cache/" + fmt.Sprintf("%v", captcha.RandInt(1, 200)) + "textImg.png"
 	logFile, _ := os.OpenFile(file, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 	defer logFile.Close()
 	err := png.Encode(logFile, canvas)

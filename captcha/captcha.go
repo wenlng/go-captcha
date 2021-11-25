@@ -25,8 +25,8 @@ type CharDot struct {
 	// 顺序索引
 	Index int
 	// x,y位置
-	Dx   int
-	Dy   int
+	Dx int
+	Dy int
 	// 字体大小
 	Size int
 	// 字体宽
@@ -46,11 +46,11 @@ type CharDot struct {
  */
 type Captcha struct {
 	// 字符集合，用于随机字符串
-	Chars 			[]string
+	Chars []string
 	// 难度码配置
 	Config *Config
 	// 验证画图
-	CaptchaDraw			*Draw
+	CaptchaDraw *Draw
 }
 
 var clickCaptcha *Captcha
@@ -61,8 +61,8 @@ var clickCaptcha *Captcha
  */
 func NewCaptcha() *Captcha {
 	return &Captcha{
-		Chars: GetCaptchaDefaultChars(),
-		Config: GetCaptchaDefaultConfig(),
+		Chars:       GetCaptchaDefaultChars(),
+		Config:      GetCaptchaDefaultConfig(),
 		CaptchaDraw: &Draw{},
 	}
 }
@@ -85,11 +85,11 @@ func GetCaptcha() *Captcha {
  * @param chars
  * @return error
  */
-func (cc *Captcha) SetRangChars (chars []string) error {
+func (cc *Captcha) SetRangChars(chars []string) error {
 	// 检测单词是否超出2个，超出会影响位置验证
 	var err error
-	if len(chars) > 0{
-		for _, char := range chars{
+	if len(chars) > 0 {
+		for _, char := range chars {
 			if IsChineseChar(char) {
 				if LenChineseChar(char) > 1 {
 					err = fmt.Errorf("Captcha SetRangChars Error: The chinese char [%s] must be equal to 1!", char)
@@ -137,7 +137,7 @@ func (cc *Captcha) SetFont(fonts []string) {
  * @receiver cc
  * @param size
  */
-func (cc *Captcha) SetImageSize (size *Size) {
+func (cc *Captcha) SetImageSize(size *Size) {
 	cc.Config.ImageSize = size
 }
 
@@ -286,9 +286,9 @@ func (cc *Captcha) SetThumbBgSlimLineNum(val int) {
  * @return error
  */
 func (cc *Captcha) checkConfig() error {
-	if len(cc.Config.RangFont) <= 0{
+	if len(cc.Config.RangFont) <= 0 {
 		return fmt.Errorf("CaptchaConfig Error: No RangFont configured!")
-	} else if len(cc.Config.RangBackground) <= 0{
+	} else if len(cc.Config.RangBackground) <= 0 {
 		return fmt.Errorf("CaptchaConfig Error: No RangBackground configured!")
 	}
 
@@ -299,12 +299,12 @@ func (cc *Captcha) checkConfig() error {
 
 	// 检测文件是否存在
 	for _, fontPath := range cc.Config.RangFont {
-		if has, err := PathExists(fontPath); !has || err != nil{
+		if has, err := PathExists(fontPath); !has || err != nil {
 			return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission!", fontPath)
 		}
 	}
 	for _, bgPath := range cc.Config.RangBackground {
-		if has, err := PathExists(bgPath); !has || err != nil{
+		if has, err := PathExists(bgPath); !has || err != nil {
 			return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission!", bgPath)
 		}
 	}
@@ -312,7 +312,7 @@ func (cc *Captcha) checkConfig() error {
 	// 传有图片路径时检测背景是否存在
 	if len(cc.Config.RangThumbBackground) > 0 {
 		for _, tBgPath := range cc.Config.RangThumbBackground {
-			if has, err := PathExists(tBgPath); !has || err != nil{
+			if has, err := PathExists(tBgPath); !has || err != nil {
 				return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission!", tBgPath)
 			}
 		}
@@ -324,7 +324,7 @@ func (cc *Captcha) checkConfig() error {
 	}
 
 	// 验证颜色总和是否超出255个
-	if len(cc.Config.RangFontColors) + len(cc.Config.RangThumbBgColors) >= 255 {
+	if len(cc.Config.RangFontColors)+len(cc.Config.RangThumbBgColors) >= 255 {
 		return fmt.Errorf("CaptchaConfig Error: len(RangFontColors + RangThumbBgColors) must be less than or equal to 255!")
 	}
 
@@ -423,14 +423,14 @@ func (cc *Captcha) genDots(imageSize *Size, fontSize *RangeVal, chars string, pa
 	dots := make(map[int]CharDot) // 各个文字点位置
 	width := imageSize.Width
 	height := imageSize.Height
-	if padding > 0{
+	if padding > 0 {
 		width -= padding
 		height -= padding
 	}
 
 	//sStr := strings.Replace(chars, ":", "", -1)
 	strs := strings.Split(chars, ":")
-	for i := 0; i < len(strs); i ++{
+	for i := 0; i < len(strs); i++ {
 		str := strs[i]
 		// 随机角度
 		randAngle := cc.getRandAngle()
@@ -449,7 +449,7 @@ func (cc *Captcha) genDots(imageSize *Size, fontSize *RangeVal, chars string, pa
 				surplus := fontWidth - randFontSize
 				ra := randAngle % 90
 				pr := float64(surplus) / 90
-				h := math.Max(float64(ra) * pr, 1)
+				h := math.Max(float64(ra)*pr, 1)
 				fontHeight = fontHeight + int(h)
 			}
 		}
@@ -458,12 +458,12 @@ func (cc *Captcha) genDots(imageSize *Size, fontSize *RangeVal, chars string, pa
 		_w := width / len(strs)
 		rd := math.Abs(float64(_w) - float64(fontWidth))
 		x := (i * _w) + RandInt(0, int(math.Max(rd, 1)))
-		x = int(math.Min(math.Max(float64(x), 10), float64(width - randFontSize - (padding * 2))))
-		y := RandInt(0, height - fontHeight) + fontHeight
-		y = int(math.Min(math.Max(float64(y), 10), float64(height - randFontSize - (padding * 2))))
+		x = int(math.Min(math.Max(float64(x), 10), float64(width-randFontSize-(padding*2))))
+		y := RandInt(0, height-fontHeight) + fontHeight
+		y = int(math.Min(math.Max(float64(y), 10), float64(height-randFontSize-(padding*2))))
 		text := fmt.Sprintf("%s", str)
 
-		dot := CharDot{i,x, y, randFontSize, fontWidth, fontHeight, text, randAngle, randColor}
+		dot := CharDot{i, x, y, randFontSize, fontWidth, fontHeight, text, randAngle, randColor}
 		dots[i] = dot
 	}
 
@@ -506,27 +506,27 @@ func (cc *Captcha) genCaptchaImage(size *Size, dots map[int]CharDot) (string, er
 	var drawDots []*DrawDot
 	for _, dot := range dots {
 		drawDot := &DrawDot{
-			Dx: dot.Dx,
-			Dy: dot.Dy,
+			Dx:      dot.Dx,
+			Dy:      dot.Dy,
 			FontDPI: cc.Config.FontDPI,
-			Text: dot.Text,
-			Angle: dot.Angle,
-			Color: dot.Color,
-			Size: dot.Size,
-			Width: dot.Width,
-			Height: dot.Height,
-			Font: cc.genRandWithString(cc.Config.RangFont),
+			Text:    dot.Text,
+			Angle:   dot.Angle,
+			Color:   dot.Color,
+			Size:    dot.Size,
+			Width:   dot.Width,
+			Height:  dot.Height,
+			Font:    cc.genRandWithString(cc.Config.RangFont),
 		}
 		drawDots = append(drawDots, drawDot)
 	}
 
 	img, err := cc.CaptchaDraw.Draw(&DrawCanvas{
-		Width: size.Width,
-		Height: size.Height,
-		Background: cc.genRandWithString(cc.Config.RangBackground),
+		Width:             size.Width,
+		Height:            size.Height,
+		Background:        cc.genRandWithString(cc.Config.RangBackground),
 		BackgroundDistort: cc.getRandDistortWithLevel(cc.Config.ImageFontDistort),
-		TextAlpha: cc.Config.ImageFontAlpha,
-		CaptchaDrawDot: drawDots,
+		TextAlpha:         cc.Config.ImageFontAlpha,
+		CaptchaDrawDot:    drawDots,
 	})
 	if err != nil {
 		return "", err
@@ -550,34 +550,34 @@ func (cc *Captcha) genCaptchaThumbImage(size *Size, dots map[int]CharDot) (strin
 
 	fontWidth := size.Width / len(dots)
 	for i, dot := range dots {
-		Dx := int(math.Max(float64(fontWidth * i + fontWidth / dot.Width), 8))
-		Dy := size.Height / 2 + dot.Size / 2 - rand.Intn(size.Height / 16*len(dot.Text))
+		Dx := int(math.Max(float64(fontWidth*i+fontWidth/dot.Width), 8))
+		Dy := size.Height/2 + dot.Size/2 - rand.Intn(size.Height/16*len(dot.Text))
 
 		drawDot := &DrawDot{
-			Dx: Dx,
-			Dy: Dy,
+			Dx:      Dx,
+			Dy:      Dy,
 			FontDPI: cc.Config.FontDPI,
-			Text: dot.Text,
-			Angle: dot.Angle,
-			Color: dot.Color,
-			Size: dot.Size,
-			Width: dot.Width,
-			Height: dot.Height,
-			Font: cc.genRandWithString(cc.Config.RangFont),
+			Text:    dot.Text,
+			Angle:   dot.Angle,
+			Color:   dot.Color,
+			Size:    dot.Size,
+			Width:   dot.Width,
+			Height:  dot.Height,
+			Font:    cc.genRandWithString(cc.Config.RangFont),
 		}
 		drawDots = append(drawDots, drawDot)
 	}
 
 	params := &DrawCanvas{
-		Width: size.Width,
-		Height: size.Height,
-		CaptchaDrawDot: drawDots,
-		BackgroundDistort: cc.getRandDistortWithLevel(cc.Config.ImageFontDistort),
-		BackgroundCirclesNum: cc.Config.ThumbBgCirclesNum,
+		Width:                 size.Width,
+		Height:                size.Height,
+		CaptchaDrawDot:        drawDots,
+		BackgroundDistort:     cc.getRandDistortWithLevel(cc.Config.ImageFontDistort),
+		BackgroundCirclesNum:  cc.Config.ThumbBgCirclesNum,
 		BackgroundSlimLineNum: cc.Config.ThumbBgSlimLineNum,
 	}
 
-	if  len(cc.Config.RangThumbBackground) > 0 {
+	if len(cc.Config.RangThumbBackground) > 0 {
 		params.Background = cc.genRandWithString(cc.Config.RangThumbBackground)
 	}
 
@@ -610,7 +610,7 @@ func (cc *Captcha) genCaptchaThumbImage(size *Size, dots map[int]CharDot) (strin
  * @return int
  */
 func (cc *Captcha) getRandDistortWithLevel(level int) int {
-	if level == 1{
+	if level == 1 {
 		return RandInt(240, 320)
 	} else if level == 2 {
 		return RandInt(180, 240)
@@ -665,7 +665,7 @@ func (cc *Captcha) getRandColor() string {
  */
 func (cc *Captcha) genRandChar(length int) string {
 	var strA []string
-	for ; len(strA) < length; {
+	for len(strA) < length {
 		char := cc.randChar()
 		if !InArrayWithStr(strA, char) {
 			strA = append(strA, char)
@@ -680,7 +680,7 @@ func (cc *Captcha) genRandChar(length int) string {
  * @param strs
  * @return string
  */
-func (cc *Captcha) genRandWithString(strs[]string) string {
+func (cc *Captcha) genRandWithString(strs []string) string {
 	strLen := len(strs)
 	index := RandInt(0, strLen)
 	if index >= strLen {

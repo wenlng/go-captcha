@@ -17,8 +17,8 @@ import (
  * @Example: {min: 0, max: 45} 从0-45中取任意值
  */
 type RangeVal struct {
-	Min		int
-	Max 	int
+	Min int
+	Max int
 }
 
 /**
@@ -26,8 +26,8 @@ type RangeVal struct {
  * @Example: {width: 0, height: 45} 从0-45中取任意值
  */
 type Size struct {
-	Width	int
-	Height 	int
+	Width  int
+	Height int
 }
 
 /**
@@ -49,41 +49,41 @@ const (
  */
 type Config struct {
 	// 随机字符串长度范围
-	RangTextLen 		*RangeVal
+	RangTextLen *RangeVal
 	// 随机验证字符串长度范围, 注意：RangCheckTextLen < RangTextLen
-	RangCheckTextLen 	*RangeVal
+	RangCheckTextLen *RangeVal
 	// 随机文本角度范围集合
-	RangTexAnglePos		[]*RangeVal
+	RangTexAnglePos []*RangeVal
 	// 随机文本尺寸范围集合
-	RangFontSize		*RangeVal
+	RangFontSize *RangeVal
 	// 随机缩略文本尺寸范围集合
-	RangCheckFontSize	*RangeVal
+	RangCheckFontSize *RangeVal
 	// 随机文本颜色	格式："#541245"
-	RangFontColors		[]string
+	RangFontColors []string
 	// 随机字体	格式：字体绝对路径字符串, /home/..../xxx.ttf
-	RangFont			[]string
+	RangFont []string
 	// 屏幕每英寸的分辨率
-	FontDPI				int
+	FontDPI int
 	// 随机验证码背景图		格式：图片绝对路径字符串, /home/..../xxx.png
-	RangBackground		[]string
+	RangBackground []string
 	// 验证码尺寸, 注意：高度 > RangFontSize.max , 长度 > RangFontSize.max * RangFontSize.max
-	ImageSize			*Size
+	ImageSize *Size
 	// 验证码文本扭曲程度
-	ImageFontDistort	int
+	ImageFontDistort int
 	// 验证码文本透明度 0-1
-	ImageFontAlpha		float64
+	ImageFontAlpha float64
 	// 缩略图尺寸, 注意：高度 > RangCheckFontSize.max , 长度 > RangCheckFontSize.max * RangFontSize.max
-	ThumbnailSize		*Size
+	ThumbnailSize *Size
 	// 随机缩略背景图		格式：图片绝对路径字符串, /home/..../xxx.png
-	RangThumbBackground	[]string
+	RangThumbBackground []string
 	// 缩略图背景随机色	格式："#541245"
-	RangThumbBgColors	[]string
+	RangThumbBgColors []string
 	// 缩略图扭曲程度，值为 ThumbBackgroundDistort...,
-	ThumbBgDistort		int
+	ThumbBgDistort int
 	// 缩略图小圆点数量
-	ThumbBgCirclesNum	int
+	ThumbBgCirclesNum int
 	// 缩略图线条数量
-	ThumbBgSlimLineNum	int
+	ThumbBgSlimLineNum int
 }
 
 /**
@@ -101,27 +101,27 @@ func GetCaptchaDefaultChars() []string {
  */
 func GetCaptchaDefaultConfig() *Config {
 	return &Config{
-		RangTextLen: 		&RangeVal{6, 7},
-		RangCheckTextLen: 	&RangeVal{2, 4},
-		RangTexAnglePos:	[]*RangeVal{
-								{1, 15},
-								{15, 30},
-								{30, 45},
-								{315, 330},
-								{330, 345},
-								{345, 359},
-							},
-		RangFontSize: 		&RangeVal{32, 42},
-		FontDPI: 			72,
-		RangCheckFontSize: 	&RangeVal{24, 30},
-		ImageFontDistort: 	ThumbBackgroundDistortLevel3,
-		ImageFontAlpha: 	1,
-		RangFontColors: 	getRangeDarkColors(),
-		ImageSize:			&Size{300, 300},
-		ThumbnailSize:		&Size{150, 40},
-		RangThumbBgColors: 	getRangeLightColors(),
-		ThumbBgDistort: 	ThumbBackgroundDistortLevel3,
-		ThumbBgCirclesNum: 	15,
+		RangTextLen:      &RangeVal{6, 7},
+		RangCheckTextLen: &RangeVal{2, 4},
+		RangTexAnglePos: []*RangeVal{
+			{1, 15},
+			{15, 30},
+			{30, 45},
+			{315, 330},
+			{330, 345},
+			{345, 359},
+		},
+		RangFontSize:       &RangeVal{32, 42},
+		FontDPI:            72,
+		RangCheckFontSize:  &RangeVal{24, 30},
+		ImageFontDistort:   ThumbBackgroundDistortLevel3,
+		ImageFontAlpha:     1,
+		RangFontColors:     getRangeDarkColors(),
+		ImageSize:          &Size{300, 300},
+		ThumbnailSize:      &Size{150, 40},
+		RangThumbBgColors:  getRangeLightColors(),
+		ThumbBgDistort:     ThumbBackgroundDistortLevel3,
+		ThumbBgCirclesNum:  15,
 		ThumbBgSlimLineNum: 2,
 	}
 }
@@ -140,7 +140,6 @@ func getRangeLightColors() []string {
 	}
 	return rColor
 }
-
 
 /**
  * @Description: 获取默认随机深色颜色
@@ -163,7 +162,7 @@ func getRangeDarkColors() []string {
  */
 func randDarkColor() string {
 	randColor := randRGBAColor()
-	increase := float64(30 + RandInt(0,255))
+	increase := float64(30 + RandInt(0, 255))
 	red := math.Abs(math.Min(float64(randColor.R)-increase, 255))
 	green := math.Abs(math.Min(float64(randColor.G)-increase, 255))
 	blue := math.Abs(math.Min(float64(randColor.B)-increase, 255))
@@ -176,9 +175,9 @@ func randDarkColor() string {
  * @return string
  */
 func randLightColor() string {
-	red := RandInt(0,55) + 200
-	green := RandInt(0,55) + 200
-	blue := RandInt(0,55) + 200
+	red := RandInt(0, 55) + 200
+	green := RandInt(0, 55) + 200
+	blue := RandInt(0, 55) + 200
 	return fmt.Sprintf("#%v%v%v", red, green, blue)
 }
 
@@ -188,8 +187,8 @@ func randLightColor() string {
  * @return color.RGBA
  */
 func randRGBAColor() color.RGBA {
-	red := RandInt(0,255)
-	green := RandInt(0,255)
+	red := RandInt(0, 255)
+	green := RandInt(0, 255)
 	var blue int
 	if (red + green) > 400 {
 		blue = 0
@@ -201,4 +200,3 @@ func randRGBAColor() color.RGBA {
 	}
 	return color.RGBA{R: uint8(red), G: uint8(green), B: uint8(blue), A: uint8(255)}
 }
-

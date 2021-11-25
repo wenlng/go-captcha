@@ -48,7 +48,7 @@ func TestChars(t *testing.T) {
 	capt := getCaptcha()
 	//chars := "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	//capt.SetRangChars(strings.Split(chars, ""))
-	chars := []string{"HE","CA","WO","NE","HT","IE","PG","GI","CH","CO","DA"}
+	chars := []string{"HE", "CA", "WO", "NE", "HT", "IE", "PG", "GI", "CH", "CO", "DA"}
 	_ = capt.SetRangChars(chars)
 	//chars := []string{"你","好","呀","这","是","点","击","验","证","码","哟"}
 	//capt.SetRangChars(chars)

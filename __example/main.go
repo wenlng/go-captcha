@@ -98,7 +98,7 @@ func GetCaptchaData(w http.ResponseWriter, r *http.Request) {
 	dots, b64, tb64, key, err := capt.Generate()
 	if err != nil {
 		bt, _ := json.Marshal(map[string]interface{}{
-			"code": 1,
+			"code":    1,
 			"message": "GenCaptcha err",
 		})
 		_, _ = fmt.Fprintf(w, string(bt))
@@ -106,10 +106,10 @@ func GetCaptchaData(w http.ResponseWriter, r *http.Request) {
 	}
 	WriteCache(dots, key)
 	bt, _ := json.Marshal(map[string]interface{}{
-		"code": 0,
+		"code":         0,
 		"image_base64": b64,
 		"thumb_base64": tb64,
-		"captcha_key": key,
+		"captcha_key":  key,
 	})
 	_, _ = fmt.Fprintf(w, string(bt))
 }
@@ -126,7 +126,7 @@ func CheckCaptcha(w http.ResponseWriter, r *http.Request) {
 	key := r.Form.Get("key")
 	if dots == "" || key == "" {
 		bt, _ := json.Marshal(map[string]interface{}{
-			"code": code,
+			"code":    code,
 			"message": "dots or key param is empty",
 		})
 		_, _ = fmt.Fprintf(w, string(bt))
@@ -136,7 +136,7 @@ func CheckCaptcha(w http.ResponseWriter, r *http.Request) {
 	cacheData := ReadCache(key)
 	if cacheData == "" {
 		bt, _ := json.Marshal(map[string]interface{}{
-			"code": code,
+			"code":    code,
 			"message": "illegal key",
 		})
 		_, _ = fmt.Fprintf(w, string(bt))
@@ -147,7 +147,7 @@ func CheckCaptcha(w http.ResponseWriter, r *http.Request) {
 	var dct map[int]captcha.CharDot
 	if err := json.Unmarshal([]byte(cacheData), &dct); err != nil {
 		bt, _ := json.Marshal(map[string]interface{}{
-			"code": code,
+			"code":    code,
 			"message": "illegal key",
 		})
 		_, _ = fmt.Fprintf(w, string(bt))
@@ -155,11 +155,11 @@ func CheckCaptcha(w http.ResponseWriter, r *http.Request) {
 	}
 
 	chkRet := false
-	if len(src) >= len(dct) * 2 {
+	if len(src) >= len(dct)*2 {
 		chkRet = true
 		for i, dot := range dct {
 			j := i * 2
-			k := i * 2 + 1
+			k := i*2 + 1
 			a, _ := strconv.Atoi(src[j])
 			b, _ := strconv.Atoi(src[k])
 			chkRet = CheckDist(a, b, dot.Dx, dot.Dy, dot.Width, dot.Height)
@@ -169,7 +169,7 @@ func CheckCaptcha(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if chkRet && (len(dct) * 2) == len(src) {
+	if chkRet && (len(dct)*2) == len(src) {
 		code = 0
 	}
 
@@ -230,16 +230,16 @@ func ReadCache(file string) string {
  */
 func CheckDist(sx, sy, dx, dy, width int, height int) bool {
 	return sx >= dx &&
-		sx <= dx + width &&
+		sx <= dx+width &&
 		sy <= dy &&
-		sy >= dy - height
+		sy >= dy-height
 }
 
 /**
  * @Description: Get cache dir path
  * @return string
  */
-func getCacheDir() string  {
+func getCacheDir() string {
 	return getPWD() + "/__example/.cache/"
 }
 

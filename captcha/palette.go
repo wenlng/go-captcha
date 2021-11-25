@@ -23,7 +23,7 @@ type Point struct {
 /**
  * @Description: 调色板
  */
-type Palette struct{
+type Palette struct {
 	*image.Paletted
 }
 
@@ -47,7 +47,7 @@ func NewPalette(r image.Rectangle, p color.Palette) *Palette {
  * @param radius
  * @param colorIdx
  */
-func (p *Palette)drawCircle(x, y, radius int, colorIdx uint8) {
+func (p *Palette) drawCircle(x, y, radius int, colorIdx uint8) {
 	f := 1 - radius
 	dfx := 1
 	dfy := -2 * radius
@@ -82,7 +82,7 @@ func (p *Palette)drawCircle(x, y, radius int, colorIdx uint8) {
  * @param y
  * @param colorIdx
  */
-func (p *Palette)drawHorizLine(fromX, toX, y int, colorIdx uint8) {
+func (p *Palette) drawHorizLine(fromX, toX, y int, colorIdx uint8) {
 	for x := fromX; x <= toX; x++ {
 		p.SetColorIndex(x, y, colorIdx)
 	}
@@ -94,7 +94,7 @@ func (p *Palette)drawHorizLine(fromX, toX, y int, colorIdx uint8) {
  * @param amplude
  * @param period
  */
-func (p *Palette)distort(amplude float64, period float64) {
+func (p *Palette) distort(amplude float64, period float64) {
 	w := p.Bounds().Max.X
 	h := p.Bounds().Max.Y
 	newP := NewPalette(image.Rect(0, 0, w, h), p.Palette)
@@ -103,7 +103,7 @@ func (p *Palette)distort(amplude float64, period float64) {
 		for y := 0; y < h; y++ {
 			xo := amplude * math.Sin(float64(y)*dx)
 			yo := amplude * math.Cos(float64(x)*dx)
-			newP.SetColorIndex(x, y, p.ColorIndexAt(x + int(xo), y + int(yo)))
+			newP.SetColorIndex(x, y, p.ColorIndexAt(x+int(xo), y+int(yo)))
 		}
 	}
 
@@ -123,7 +123,7 @@ func (p *Palette)distort(amplude float64, period float64) {
  * @param point2
  * @param lineColor
  */
-func (p *Palette)drawBeeline(point1 Point, point2 Point, lineColor color.RGBA) {
+func (p *Palette) drawBeeline(point1 Point, point2 Point, lineColor color.RGBA) {
 	dx := math.Abs(float64(point1.X - point2.X))
 	dy := math.Abs(float64(point2.Y - point1.Y))
 	sx, sy := 1, 1
@@ -165,11 +165,11 @@ func (p *Palette)drawBeeline(point1 Point, point2 Point, lineColor color.RGBA) {
  * @return tarX
  * @return tarY
  */
-func (p *Palette)angleSwapPoint(x, y, r, angle float64) (tarX, tarY float64) {
+func (p *Palette) angleSwapPoint(x, y, r, angle float64) (tarX, tarY float64) {
 	x -= r
-	y  = r - y
-	sinVal := math.Sin(angle*(math.Pi/180))
-	cosVal := math.Cos(angle*(math.Pi/180))
+	y = r - y
+	sinVal := math.Sin(angle * (math.Pi / 180))
+	cosVal := math.Cos(angle * (math.Pi / 180))
 	tarX = x*cosVal + y*sinVal
 	tarY = -x*sinVal + y*cosVal
 	tarX += r
@@ -182,7 +182,7 @@ func (p *Palette)angleSwapPoint(x, y, r, angle float64) (tarX, tarY float64) {
  * @receiver p
  * @param angle
  */
-func (p *Palette)Rotate(angle int) {
+func (p *Palette) Rotate(angle int) {
 	tarImg := p
 	width := tarImg.Bounds().Max.X
 	height := tarImg.Bounds().Max.Y
@@ -211,5 +211,3 @@ func (p *Palette)Rotate(angle int) {
 		}
 	}
 }
-
-

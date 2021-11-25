@@ -19,36 +19,36 @@ import (
 	"os"
 )
 
-type DrawDot struct{
-	Dx 			int
-	Dy 			int
-	FontDPI 	int
-	Text		string
-	Size 		int
-	Width 		int
-	Height 		int
-	Angle 		int
-	Color 		string
-	Font 		string
+type DrawDot struct {
+	Dx      int
+	Dy      int
+	FontDPI int
+	Text    string
+	Size    int
+	Width   int
+	Height  int
+	Angle   int
+	Color   string
+	Font    string
 }
 
 /**
  * @Description: 验证码画图
  */
-type DrawCanvas struct{
+type DrawCanvas struct {
 	// 长、高
-	Width		int
-	Height 		int
+	Width  int
+	Height int
 	// 背景图片
-	Background 	string
+	Background string
 	// 缩略图扭曲程度，值为 ThumbBackgroundDistort...,
-	BackgroundDistort		int
+	BackgroundDistort int
 	// 缩略图小圆点数量
-	BackgroundCirclesNum	int
+	BackgroundCirclesNum int
 	// 缩略图线条数量
-	BackgroundSlimLineNum	int
+	BackgroundSlimLineNum int
 	// 文本透明度
-	TextAlpha	float64
+	TextAlpha float64
 
 	CaptchaDrawDot []*DrawDot
 }
@@ -136,7 +136,7 @@ func (cd *Draw) Draw(params *DrawCanvas) (image.Image, error) {
 				co := textImg.At(x, y)
 				if _, _, _, a := co.RGBA(); a > 0 {
 					if x >= minX && x <= maxX && y >= minY && y <= maxY {
-						canvas.Set(dot.Dx + (x - minX), dot.Dy - height + (y - minY), textImg.At(x, y))
+						canvas.Set(dot.Dx+(x-minX), dot.Dy-height+(y-minY), textImg.At(x, y))
 					}
 				}
 			}
@@ -159,8 +159,8 @@ func (cd *Draw) Draw(params *DrawCanvas) (image.Image, error) {
 
 	b := canvas.Bounds()
 	m := image.NewNRGBA(b)
-	curX , curY:= cd.rangCutImage(params.Width, params.Height, img)
-	draw.Draw(m, b, img, image.Point{X: curX , Y: curY}, draw.Src)
+	curX, curY := cd.rangCutImage(params.Width, params.Height, img)
+	draw.Draw(m, b, img, image.Point{X: curX, Y: curY}, draw.Src)
 	draw.Draw(m, canvas.Bounds(), canvas, image.Point{}, draw.Over)
 	subImg := m.SubImage(image.Rect(0, 0, params.Width, params.Height)).(*image.NRGBA)
 	return subImg, nil
@@ -242,7 +242,7 @@ func (cd *Draw) DrawWithPalette(params *DrawCanvas, colorA []color.Color, colorB
 
 		b := img.Bounds()
 		m := image.NewNRGBA(b)
-		curX , curY:= cd.rangCutImage(params.Width, params.Height, img)
+		curX, curY := cd.rangCutImage(params.Width, params.Height, img)
 		draw.Draw(m, b, img, image.Point{X: curX, Y: curY}, draw.Src)
 		canvas.distort(float64(RandInt(5, 10)), float64(RandInt(120, 200)))
 		draw.Draw(m, canvas.Bounds(), canvas, image.Point{}, draw.Over)
@@ -273,11 +273,11 @@ func (cd *Draw) rangCutImage(width int, height int, img image.Image) (int, int) 
 	curX := 0
 	curY := 0
 
-	if iW - width  > 0 {
-		curX = RandInt(0, iW - width)
+	if iW-width > 0 {
+		curX = RandInt(0, iW-width)
 	}
-	if iH - height  > 0 {
-		curY = RandInt(0, iH - height)
+	if iH-height > 0 {
+		curY = RandInt(0, iH-height)
 	}
 
 	return curX, curY
@@ -310,13 +310,13 @@ func (cd *Draw) genRandColor(co []color.Color) color.RGBA {
  */
 func (cd *Draw) DrawTextImg(dot *DrawDot, params *DrawCanvas) (*Palette, *AreaPoint, error) {
 	co, _ := ParseHexColor(dot.Color)
-	var coArr = []color.RGBA {
+	var coArr = []color.RGBA{
 		co,
 	}
 
 	co.A = cd.formatAlpha(params.TextAlpha)
 	canvas := cd.CreateCanvasWithPalette(&DrawCanvas{
-		Width: dot.Width + 10,
+		Width:  dot.Width + 10,
 		Height: dot.Height + 10,
 	}, coArr)
 
@@ -347,7 +347,7 @@ func (cd *Draw) DrawTextImg(dot *DrawDot, params *DrawCanvas) (*Palette, *AreaPo
 	// 画文本
 	text := fmt.Sprintf("%s", dot.Text)
 
-	pt := freetype.Pt(12, dot.Height - 5) // 字出现的位置
+	pt := freetype.Pt(12, dot.Height-5) // 字出现的位置
 	if IsChineseChar(text) {
 		pt = freetype.Pt(10, dot.Height) // 字出现的位置
 	}
@@ -376,7 +376,7 @@ func (cd *Draw) DrawTextImg(dot *DrawDot, params *DrawCanvas) (*Palette, *AreaPo
  * @param pa
  * @return *AreaPoint
  */
-func (cd *Draw) calcImageSpace (pa *Palette) *AreaPoint {
+func (cd *Draw) calcImageSpace(pa *Palette) *AreaPoint {
 	nW := pa.Bounds().Max.X
 	nH := pa.Bounds().Max.Y
 	// 计算裁剪的最小及最大的坐标
@@ -391,14 +391,14 @@ func (cd *Draw) calcImageSpace (pa *Palette) *AreaPoint {
 				if x < minX {
 					minX = x
 				}
-				if x > maxX{
+				if x > maxX {
 					maxX = x
 				}
 
 				if y < minY {
 					minY = y
 				}
-				if y > maxY{
+				if y > maxY {
 					maxY = y
 				}
 			}
@@ -417,7 +417,6 @@ func (cd *Draw) calcImageSpace (pa *Palette) *AreaPoint {
 		maxY,
 	}
 }
-
 
 /**
  * @Description: 格式透明度
@@ -454,7 +453,7 @@ func (cd *Draw) centerWithImage(m image.Image) image.Image {
  * @param m
  * @param dotSize
  */
-func (cd *Draw)strikeThrough(m *Palette, dotSize int) {
+func (cd *Draw) strikeThrough(m *Palette, dotSize int) {
 	maxx := m.Bounds().Max.X
 	maxy := m.Bounds().Max.Y
 	y := RandInt(maxy/3, maxy-maxy/3)
@@ -462,11 +461,11 @@ func (cd *Draw)strikeThrough(m *Palette, dotSize int) {
 	period := RandFloat(80, 180)
 	dx := 2.0 * math.Pi / period
 	for x := 0; x < maxx; x++ {
-		xo := amplitude * math.Cos(float64(y) * dx)
-		yo := amplitude * math.Sin(float64(x) * dx)
+		xo := amplitude * math.Cos(float64(y)*dx)
+		yo := amplitude * math.Sin(float64(x)*dx)
 		for yn := 0; yn < dotSize; yn++ {
 			r := RandInt(0, dotSize)
-			m.drawCircle(x + int(xo), y + int(yo) + (yn * dotSize), r / 2, 1)
+			m.drawCircle(x+int(xo), y+int(yo)+(yn*dotSize), r/2, 1)
 		}
 	}
 }
@@ -478,7 +477,7 @@ func (cd *Draw)strikeThrough(m *Palette, dotSize int) {
  * @param num
  * @param colorB
  */
-func (cd *Draw)drawSlimLine(m *Palette, num int, colorB []color.Color) {
+func (cd *Draw) drawSlimLine(m *Palette, num int, colorB []color.Color) {
 	first := m.Bounds().Max.X / 10
 	end := first * 9
 	y := m.Bounds().Max.Y / 3
@@ -486,12 +485,12 @@ func (cd *Draw)drawSlimLine(m *Palette, num int, colorB []color.Color) {
 		point1 := Point{X: mRand.Intn(first), Y: mRand.Intn(y)}
 		point2 := Point{X: mRand.Intn(first) + end, Y: mRand.Intn(y)}
 
-		if i % 2 == 0 {
-			point1.Y = mRand.Intn(y) + y * 2
+		if i%2 == 0 {
+			point1.Y = mRand.Intn(y) + y*2
 			point2.Y = mRand.Intn(y)
 		} else {
-			point1.Y = mRand.Intn(y) + y*(i % 2)
-			point2.Y = mRand.Intn(y) + y * 2
+			point1.Y = mRand.Intn(y) + y*(i%2)
+			point2.Y = mRand.Intn(y) + y*2
 		}
 
 		m.drawBeeline(point1, point2, cd.genRandColor(colorB))
@@ -506,7 +505,7 @@ func (cd *Draw)drawSlimLine(m *Palette, num int, colorB []color.Color) {
  * @param maxRadius
  * @param circleCount
  */
-func (cd *Draw)fillWithCircles(m *Palette, n, maxRadius int, circleCount int) {
+func (cd *Draw) fillWithCircles(m *Palette, n, maxRadius int, circleCount int) {
 	maxx := m.Bounds().Max.X
 	maxy := m.Bounds().Max.Y
 	for i := 0; i < n; i++ {
@@ -515,4 +514,3 @@ func (cd *Draw)fillWithCircles(m *Palette, n, maxRadius int, circleCount int) {
 		m.drawCircle(RandInt(r, maxx-r), RandInt(r, maxy-r), r, colorIdx)
 	}
 }
-

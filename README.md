@@ -7,6 +7,7 @@ Package captcha implements generation and click location verification of image C
 [![Go Report Card](https://goreportcard.com/badge/github.com/wenlng/go-captcha)](https://goreportcard.com/report/github.com/wenlng/go-captcha)
 [![GoDoc](https://godoc.org/github.com/wenlng/go-captcha?status.svg)](https://godoc.org/github.com/wenlng/go-captcha)
 
+- Github：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
 - Example Code：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
 - Demo：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
 - Author Website: [http://witkeycode.com](http://witkeycode.com)

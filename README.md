@@ -79,7 +79,7 @@ func main(){
 ```
 
 ### Quick use
-Configuration items that must be set:  SetFont and SetBackground
+The SetFont and SetBackground configuration must be set
 <br/>
 You can copy the resource files under the "__example/resources" to the directory of your project
 ```go

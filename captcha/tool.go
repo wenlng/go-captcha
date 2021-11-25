@@ -35,6 +35,7 @@ func t2x(t int64) string {
 	return result
 }
 
+// RgbToHex is a function
 /**
  * @Description: RBG颜色转十六进制颜色
  * @param red
@@ -49,6 +50,7 @@ func RgbToHex(red int64, green int64, blue int64) string {
 	return r + g + b
 }
 
+// HexToRgb is a function
 /**
  * @Description: 十六进制转RBG颜色
  * @param hex
@@ -63,6 +65,7 @@ func HexToRgb(hex string) (int64, int64, int64) {
 	return r, g, b
 }
 
+// ParseHexColor is a function
 /**
  * @Description: 把十六进制颜色转 color.RGBA
  * @param v
@@ -104,6 +107,7 @@ func ParseHexColor(s string) (c color.RGBA, err error) {
 	return
 }
 
+// PathExists is a function
 /**
  * @Description: 检测文件是否存在
  * @param path
@@ -121,6 +125,7 @@ func PathExists(path string) (bool, error) {
 	return false, err
 }
 
+// Child is a function
 /**
  * @Description: 获取路径
  * @param path
@@ -144,6 +149,7 @@ func Child(path string) []string {
 	return listStr
 }
 
+// InArrayWithStr is a function
 /**
  * @Description: InArrayS 如果 s 在 items 中,返回 true；否则，返回 false。
  * @param items
@@ -159,13 +165,14 @@ func InArrayWithStr(items []string, s string) bool {
 	return false
 }
 
+// RandInt is a function
 /**
  * @Description: 生成区间[-m, n]的安全随机数
  * @param min
  * @param max
  * @return int
  */
-func RandInt(min, max int) (result int) {
+func RandInt(min, max int) int {
 	if min > max {
 		return max
 	}
@@ -176,12 +183,12 @@ func RandInt(min, max int) (result int) {
 		result, _ := rand.Int(rand.Reader, big.NewInt(int64(max+1+i64Min)))
 
 		return int(result.Int64() - int64(i64Min))
-	} else {
-		result, _ := rand.Int(rand.Reader, big.NewInt(int64(max-min+1)))
-		return int(int64(min) + result.Int64())
 	}
+	result, _ := rand.Int(rand.Reader, big.NewInt(int64(max-min+1)))
+	return int(int64(min) + result.Int64())
 }
 
+// RandFloat is a function
 /**
  * @Description: 随机浮点数
  * @param min
@@ -192,6 +199,7 @@ func RandFloat(min, max int) float64 {
 	return float64(RandInt(min, max))
 }
 
+// IsChineseChar is a function
 /**
  * @Description: 判断是否是中文
  * @param str
@@ -206,6 +214,7 @@ func IsChineseChar(str string) bool {
 	return false
 }
 
+// LenChineseChar is a function
 /**
  * @Description: 计算中文及字母长度，例如：“你好hello” = 7
  * @param str

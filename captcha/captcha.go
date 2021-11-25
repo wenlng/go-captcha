@@ -18,6 +18,7 @@ import (
 	"time"
 )
 
+// CharDot is a type
 /**
  * @Description: 图片点数据
  */
@@ -41,6 +42,7 @@ type CharDot struct {
 	Color string
 }
 
+// Captcha is a type
 /**
  * @Description: 点选验证码
  */
@@ -55,6 +57,7 @@ type Captcha struct {
 
 var clickCaptcha *Captcha
 
+// NewCaptcha is a function
 /**
  * @Description: 创建点选验证码
  * @return *Captcha
@@ -67,6 +70,7 @@ func NewCaptcha() *Captcha {
 	}
 }
 
+// GetCaptcha is a function
 /**
  * @Description: 获取点选验证码
  * @return *Captcha
@@ -79,6 +83,7 @@ func GetCaptcha() *Captcha {
 	return clickCaptcha
 }
 
+// SetRangChars is a function
 /**
  * @Description: 设置随机字符串，每个单词不能超出2个字符，超出会影响位置的验证
  * @receiver cc
@@ -92,11 +97,11 @@ func (cc *Captcha) SetRangChars(chars []string) error {
 		for _, char := range chars {
 			if IsChineseChar(char) {
 				if LenChineseChar(char) > 1 {
-					err = fmt.Errorf("Captcha SetRangChars Error: The chinese char [%s] must be equal to 1!", char)
+					err = fmt.Errorf("Captcha SetRangChars Error: The chinese char [%s] must be equal to 1", char)
 					break
 				}
 			} else if LenChineseChar(char) > 2 {
-				err = fmt.Errorf("Captcha SetRangChars Error: The char [%s] must be less than or equal to 2!", char)
+				err = fmt.Errorf("Captcha SetRangChars Error: The char [%s] must be less than or equal to 2", char)
 				break
 			}
 		}
@@ -114,6 +119,7 @@ func (cc *Captcha) SetRangChars(chars []string) error {
 // Captcha Set Config
 // =============================================
 
+// SetBackground is a function
 /**
  * @Description: 设置随机背景图片
  * @receiver cc
@@ -123,6 +129,7 @@ func (cc *Captcha) SetBackground(images []string) {
 	cc.Config.RangBackground = images
 }
 
+// SetFont is a function
 /**
  * @Description: 设置随机字体
  * @receiver cc
@@ -132,6 +139,7 @@ func (cc *Captcha) SetFont(fonts []string) {
 	cc.Config.RangFont = fonts
 }
 
+// SetImageSize is a function
 /**
  * @Description: 设置验证码尺寸
  * @receiver cc
@@ -141,6 +149,7 @@ func (cc *Captcha) SetImageSize(size *Size) {
 	cc.Config.ImageSize = size
 }
 
+// SetThumbSize is a function
 /**
  * @Description: 设置缩略图尺寸
  * @receiver cc
@@ -150,6 +159,7 @@ func (cc *Captcha) SetThumbSize(size *Size) {
 	cc.Config.ThumbnailSize = size
 }
 
+// SetRangFontSize is a function
 /**
  * @Description: 设置随机字体大小
  * @receiver cc
@@ -159,6 +169,7 @@ func (cc *Captcha) SetRangFontSize(val *RangeVal) {
 	cc.Config.RangFontSize = val
 }
 
+// SetTextRangLen is a function
 /**
  * @Description: 设置字符随机长度范围
  * @receiver cc
@@ -168,6 +179,7 @@ func (cc *Captcha) SetTextRangLen(val *RangeVal) {
 	cc.Config.RangTextLen = val
 }
 
+// SetTextRangFontColors is a function
 /**
  * @Description: 设置文本随机颜色
  * @receiver cc
@@ -177,6 +189,7 @@ func (cc *Captcha) SetTextRangFontColors(colors []string) {
 	cc.Config.RangFontColors = colors
 }
 
+// SetFontDPI is a function
 /**
  * @Description: 设置分辨率，72为标准
  * @receiver cc
@@ -186,6 +199,7 @@ func (cc *Captcha) SetFontDPI(val int) {
 	cc.Config.FontDPI = val
 }
 
+// SetImageFontAlpha is a function
 /**
  * @Description: 设置验证码文本透明度
  * @receiver cc
@@ -195,6 +209,7 @@ func (cc *Captcha) SetImageFontAlpha(val float64) {
 	cc.Config.ImageFontAlpha = val
 }
 
+// SetImageFontDistort is a function
 /**
  * @Description: 设置验证码文本扭曲程度
  * @receiver cc
@@ -204,6 +219,7 @@ func (cc *Captcha) SetImageFontDistort(val int) {
 	cc.Config.ImageFontDistort = val
 }
 
+// SetTextRangAnglePos is a function
 /**
  * @Description: 设置文本角度位置
  * @receiver cc
@@ -213,6 +229,7 @@ func (cc *Captcha) SetTextRangAnglePos(pos []*RangeVal) {
 	cc.Config.RangTexAnglePos = pos
 }
 
+// SetRangCheckTextLen is a function
 /**
  * @Description: 设置随机验证文本长度
  * @receiver cc
@@ -222,6 +239,7 @@ func (cc *Captcha) SetRangCheckTextLen(val *RangeVal) {
 	cc.Config.RangCheckTextLen = val
 }
 
+// SetRangCheckFontSize is a function
 /**
  * @Description: 设置随机验证文本大小
  * @receiver cc
@@ -231,6 +249,7 @@ func (cc *Captcha) SetRangCheckFontSize(val *RangeVal) {
 	cc.Config.RangCheckFontSize = val
 }
 
+// SetThumbBgColors is a function
 /**
  * @Description: 设置缩略图随机背景颜色
  * @receiver cc
@@ -240,6 +259,7 @@ func (cc *Captcha) SetThumbBgColors(colors []string) {
 	cc.Config.RangThumbBgColors = colors
 }
 
+// SetThumbBackground is a function
 /**
  * @Description: 设置随机背景图片
  * @receiver cc
@@ -249,6 +269,7 @@ func (cc *Captcha) SetThumbBackground(images []string) {
 	cc.Config.RangThumbBackground = images
 }
 
+// SetThumbBgDistort is a function
 /**
  * @Description: 设置缩略图扭曲程度
  * @receiver cc
@@ -258,6 +279,7 @@ func (cc *Captcha) SetThumbBgDistort(val int) {
 	cc.Config.ThumbBgDistort = val
 }
 
+// SetThumbBgCirclesNum is a function
 /**
  * @Description: 设置缩略图小圆点数量
  * @receiver cc
@@ -267,6 +289,7 @@ func (cc *Captcha) SetThumbBgCirclesNum(val int) {
 	cc.Config.ThumbBgCirclesNum = val
 }
 
+// SetThumbBgSlimLineNum is a function
 /**
  * @Description: 缩略图线条数量
  * @receiver cc
@@ -287,25 +310,25 @@ func (cc *Captcha) SetThumbBgSlimLineNum(val int) {
  */
 func (cc *Captcha) checkConfig() error {
 	if len(cc.Config.RangFont) <= 0 {
-		return fmt.Errorf("CaptchaConfig Error: No RangFont configured!")
+		return fmt.Errorf("CaptchaConfig Error: No RangFont configured")
 	} else if len(cc.Config.RangBackground) <= 0 {
-		return fmt.Errorf("CaptchaConfig Error: No RangBackground configured!")
+		return fmt.Errorf("CaptchaConfig Error: No RangBackground configured")
 	}
 
 	//可选
 	//else if len(cc.Config.RangThumbBackground) <= 0{
-	//	return fmt.Errorf("CaptchaConfig Error: No RangThumbBackground configured!")
+	//	return fmt.Errorf("CaptchaConfig Error: No RangThumbBackground configured")
 	//}
 
 	// 检测文件是否存在
 	for _, fontPath := range cc.Config.RangFont {
 		if has, err := PathExists(fontPath); !has || err != nil {
-			return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission!", fontPath)
+			return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission", fontPath)
 		}
 	}
 	for _, bgPath := range cc.Config.RangBackground {
 		if has, err := PathExists(bgPath); !has || err != nil {
-			return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission!", bgPath)
+			return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission", bgPath)
 		}
 	}
 
@@ -313,24 +336,25 @@ func (cc *Captcha) checkConfig() error {
 	if len(cc.Config.RangThumbBackground) > 0 {
 		for _, tBgPath := range cc.Config.RangThumbBackground {
 			if has, err := PathExists(tBgPath); !has || err != nil {
-				return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission!", tBgPath)
+				return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission", tBgPath)
 			}
 		}
 	}
 
 	// 检测验证文本范围最大值是否小于随机字符串的最小范围
 	if cc.Config.RangCheckTextLen.Max > cc.Config.RangTextLen.Min {
-		return fmt.Errorf("CaptchaConfig Error: RangCheckTextLen.max must be less than or equal to RangTextLen.min!")
+		return fmt.Errorf("CaptchaConfig Error: RangCheckTextLen.max must be less than or equal to RangTextLen.min")
 	}
 
 	// 验证颜色总和是否超出255个
 	if len(cc.Config.RangFontColors)+len(cc.Config.RangThumbBgColors) >= 255 {
-		return fmt.Errorf("CaptchaConfig Error: len(RangFontColors + RangThumbBgColors) must be less than or equal to 255!")
+		return fmt.Errorf("CaptchaConfig Error: len(RangFontColors + RangThumbBgColors) must be less than or equal to 255")
 	}
 
 	return nil
 }
 
+// Generate is a function
 /**
  * @Description: 			根据设置的尺寸生成验证码图片
  * @return CaptchaCharDot	位置信息
@@ -343,6 +367,7 @@ func (cc *Captcha) Generate() (map[int]CharDot, string, string, string, error) {
 	return dots, ib64, tb64, key, err
 }
 
+// GenerateWithSize is a function
 /**
  * @Description: 生成验证码图片
  * @param imageSize			主图尺寸
@@ -357,7 +382,7 @@ func (cc *Captcha) GenerateWithSize(imageSize *Size, thumbnailSize *Size) (map[i
 	length := RandInt(cc.Config.RangTextLen.Min, cc.Config.RangTextLen.Max)
 	chars := cc.genRandChar(length)
 	if chars == "" {
-		return nil, "", "", "", fmt.Errorf("genCaptchaImage Error: No character generation!")
+		return nil, "", "", "", fmt.Errorf("genCaptchaImage Error: No character generation")
 	}
 
 	var allDots, thumbDots, checkDots map[int]CharDot
@@ -385,6 +410,7 @@ func (cc *Captcha) GenerateWithSize(imageSize *Size, thumbnailSize *Size) (map[i
 	return checkDots, imageBase64, tImageBase64, key, err
 }
 
+// EncodeB64string is a function
 /**
  * @Description: base64编码
  * @receiver cc

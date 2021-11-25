@@ -47,6 +47,7 @@ func getCaptcha() *captcha.Captcha {
 	return capt
 }
 
+// GetDraw is a function
 /**
  * @Description: 获取Draw
  * @return *captcha.Draw

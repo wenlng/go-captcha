@@ -9,26 +9,27 @@ package captcha
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"golang.org/x/crypto/bcrypt"
 )
 
+// GenerateKey is a function
 /**
  * @Description: 生成KEY
  * @param str str
  * @return Hash
  * @return err
  */
-func GenerateKey(str string) (string, error) {
-	secret := "HW85SDdRhu1Y45av"
-	pwd := []byte(str + secret)
-	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)
-	if err != nil {
-		return "", err
-	}
-	_hash := string(hash)
-	return _hash, nil
-}
+//func GenerateKey(str string) (string, error) {
+//	secret := "HW85SDdRhu1Y45av"
+//	pwd := []byte(str + secret)
+//	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)
+//	if err != nil {
+//		return "", err
+//	}
+//	_hash := string(hash)
+//	return _hash, nil
+//}
 
+// Md5ToString is a function
 /**
  * @Description: Md5
  * @param str

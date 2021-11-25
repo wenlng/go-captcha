@@ -4,6 +4,7 @@
  * @Date 2021/7/18
  * @Email wengaolng@gmail.com
  **/
+
 package captcha
 
 import (
@@ -19,6 +20,7 @@ import (
 	"os"
 )
 
+// DrawDot is a type
 type DrawDot struct {
 	Dx      int
 	Dy      int
@@ -32,6 +34,7 @@ type DrawDot struct {
 	Font    string
 }
 
+// DrawCanvas is a type
 /**
  * @Description: 验证码画图
  */
@@ -53,6 +56,7 @@ type DrawCanvas struct {
 	CaptchaDrawDot []*DrawDot
 }
 
+// AreaPoint is a type
 /**
  * @Description: 区域点信息
  */
@@ -60,11 +64,13 @@ type AreaPoint struct {
 	MinX, MaxX, MinY, MaxY int
 }
 
+// Draw is a type
 /**
  * @Description: 验证码画图
  */
 type Draw struct{}
 
+// CreateCanvasWithPalette is a function
 /**
  * @Description: 创建 Palette 带调包板画布
  * @receiver cd
@@ -86,6 +92,7 @@ func (cd *Draw) CreateCanvasWithPalette(params *DrawCanvas, colorArr []color.RGB
 	return NewPalette(image.Rect(0, 0, width, height), p)
 }
 
+// CreateCanvas is a function
 /**
  * @Description: 创建 NRGBA 画布
  * @receiver cd
@@ -110,6 +117,7 @@ func (cd *Draw) CreateCanvas(params *DrawCanvas, isAlpha bool) *image.NRGBA {
 	return img
 }
 
+// Draw is a function
 /**
  * @Description: 画图
  * @receiver cd
@@ -166,6 +174,7 @@ func (cd *Draw) Draw(params *DrawCanvas) (image.Image, error) {
 	return subImg, nil
 }
 
+// DrawWithPalette is a function
 /**
  * @Description: 使用调色板的画布画图
  * @receiver cd
@@ -299,6 +308,7 @@ func (cd *Draw) genRandColor(co []color.Color) color.RGBA {
 	return color.RGBA{R: uint8(r), G: uint8(g), B: uint8(b), A: uint8(a)}
 }
 
+// DrawTextImg is a function
 /**
  * @Description: 根据
  * @receiver cd

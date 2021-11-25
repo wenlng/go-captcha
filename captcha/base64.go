@@ -27,6 +27,7 @@ func binaryEncoding(img image.Image) []byte {
 	return buf.Bytes()
 }
 
+// EncodeB64string is a function
 /**
  * @Description: base64编码
  * @param img

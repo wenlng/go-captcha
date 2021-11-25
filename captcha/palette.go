@@ -4,6 +4,7 @@
  * @Date 2021/7/18
  * @Email wengaolng@gmail.com
  **/
+
 package captcha
 
 import (
@@ -12,6 +13,7 @@ import (
 	"math"
 )
 
+// Point is a type
 /**
  * @Description: 点
  */
@@ -20,6 +22,7 @@ type Point struct {
 	Y int
 }
 
+// Palette is a type
 /**
  * @Description: 调色板
  */
@@ -27,6 +30,7 @@ type Palette struct {
 	*image.Paletted
 }
 
+// NewPalette is a function
 /**
  * @Description: 创建调色板
  * @param r
@@ -36,6 +40,42 @@ type Palette struct {
 func NewPalette(r image.Rectangle, p color.Palette) *Palette {
 	return &Palette{
 		image.NewPaletted(r, p),
+	}
+}
+
+// Rotate is a function
+/**
+ * @Description: 旋转任意角度
+ * @receiver p
+ * @param angle
+ */
+func (p *Palette) Rotate(angle int) {
+	tarImg := p
+	width := tarImg.Bounds().Max.X
+	height := tarImg.Bounds().Max.Y
+	r := width / 2
+	//trX, trY := tarImg.Bounds().Max.X / 2, tarImg.Bounds().Max.Y / 2
+	retImg := image.NewPaletted(image.Rect(0, 0, width, height), tarImg.Palette)
+	for x := 0; x <= retImg.Bounds().Max.X; x++ {
+		for y := 0; y <= retImg.Bounds().Max.Y; y++ {
+			//if (x - trX)*(x - trX) + (y - trY)*(y - trY) <= r*r {
+			//	tx, ty := p.angleSwapPoint(float64(x), float64(y), float64(r), float64(angle))
+			//	retImg.SetColorIndex(x, y, tarImg.ColorIndexAt(int(tx), int(ty)))
+			//}
+			tx, ty := p.angleSwapPoint(float64(x), float64(y), float64(r), float64(angle))
+			at := tarImg.ColorIndexAt(int(tx), int(ty))
+			if at > 0 {
+				retImg.SetColorIndex(x, y, tarImg.ColorIndexAt(int(tx), int(ty)))
+			}
+		}
+	}
+
+	nW := retImg.Bounds().Max.X
+	nH := retImg.Bounds().Max.Y
+	for x := 0; x < nW; x++ {
+		for y := 0; y < nH; y++ {
+			p.SetColorIndex(x, y, retImg.ColorIndexAt(x, y))
+		}
 	}
 }
 
@@ -175,39 +215,4 @@ func (p *Palette) angleSwapPoint(x, y, r, angle float64) (tarX, tarY float64) {
 	tarX += r
 	tarY = r - tarY
 	return
-}
-
-/**
- * @Description: 旋转任意角度
- * @receiver p
- * @param angle
- */
-func (p *Palette) Rotate(angle int) {
-	tarImg := p
-	width := tarImg.Bounds().Max.X
-	height := tarImg.Bounds().Max.Y
-	r := width / 2
-	//trX, trY := tarImg.Bounds().Max.X / 2, tarImg.Bounds().Max.Y / 2
-	retImg := image.NewPaletted(image.Rect(0, 0, width, height), tarImg.Palette)
-	for x := 0; x <= retImg.Bounds().Max.X; x++ {
-		for y := 0; y <= retImg.Bounds().Max.Y; y++ {
-			//if (x - trX)*(x - trX) + (y - trY)*(y - trY) <= r*r {
-			//	tx, ty := p.angleSwapPoint(float64(x), float64(y), float64(r), float64(angle))
-			//	retImg.SetColorIndex(x, y, tarImg.ColorIndexAt(int(tx), int(ty)))
-			//}
-			tx, ty := p.angleSwapPoint(float64(x), float64(y), float64(r), float64(angle))
-			at := tarImg.ColorIndexAt(int(tx), int(ty))
-			if at > 0 {
-				retImg.SetColorIndex(x, y, tarImg.ColorIndexAt(int(tx), int(ty)))
-			}
-		}
-	}
-
-	nW := retImg.Bounds().Max.X
-	nH := retImg.Bounds().Max.Y
-	for x := 0; x < nW; x++ {
-		for y := 0; y < nH; y++ {
-			p.SetColorIndex(x, y, retImg.ColorIndexAt(x, y))
-		}
-	}
 }

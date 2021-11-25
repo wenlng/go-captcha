@@ -1,9 +1,10 @@
 /**
  * @Author Awen
- * @Description Captcha Config
+ * @Description Captcha
  * @Date 2021/7/18
  * @Email wengaolng@gmail.com
  **/
+
 package captcha
 
 import (
@@ -12,6 +13,7 @@ import (
 	"math"
 )
 
+// RangeVal is a type
 /**
  * @Description: 范围值
  * @Example: {min: 0, max: 45} 从0-45中取任意值
@@ -21,6 +23,7 @@ type RangeVal struct {
 	Max int
 }
 
+// Size is a type
 /**
  * @Description: 尺寸
  * @Example: {width: 0, height: 45} 从0-45中取任意值
@@ -44,6 +47,7 @@ const (
 	ThumbBackgroundDistortLevel5
 )
 
+// Config is a type
 /**
 * @Description: 验证码配置
  */
@@ -86,6 +90,7 @@ type Config struct {
 	ThumbBgSlimLineNum int
 }
 
+// GetCaptchaDefaultChars is a type
 /**
  * @Description: 获取字符
  * @return map[int]string
@@ -95,6 +100,7 @@ func GetCaptchaDefaultChars() []string {
 	return chars
 }
 
+// GetCaptchaDefaultConfig is a type
 /**
  * @Description: 获取默认配置
  * @return CaptchaConfig

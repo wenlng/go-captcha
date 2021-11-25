@@ -1,11 +1,11 @@
-# go-captcha
-Package captcha implements generation and click location verification of image CAPTCHAs. 
+# go-captcha - Behavioral Verification Code
 
-
-[![License](https://img.shields.io/github/license/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/blob/master/LICENSE)
 [![Version](https://img.shields.io/github/tag/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/wenlng/go-captcha)](https://goreportcard.com/report/github.com/wenlng/go-captcha)
 [![GoDoc](https://godoc.org/github.com/wenlng/go-captcha?status.svg)](https://godoc.org/github.com/wenlng/go-captcha)
+[![License](https://img.shields.io/github/license/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/blob/master/LICENSE)
+
+Package captcha implements generation and click location verification of image CAPTCHAs. 
 
 - Github：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
 - Example Code：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
@@ -23,21 +23,15 @@ Package captcha implements generation and click location verification of image C
     <br/>
     <br/>   
 </div>
-<br>
 
-- Installation of proxy go module in China
->
->GoProxy https://github.com/goproxy/goproxy.cn
->
->AliProxy： https://mirrors.aliyun.com/goproxy/
->
->OfficialProxy： https://goproxy.io/
->
->ChinaProxy：https://goproxy.cn
->
->Other：https://gocenter.io
+## Installation of proxy go module in China
+- GoProxy https://github.com/goproxy/goproxy.cn
+- AliProxy： https://mirrors.aliyun.com/goproxy/
+- OfficialProxy： https://goproxy.io/
+- ChinaProxy：https://goproxy.cn
+- Other：https://gocenter.io
 
-### Set Proxy of Go module 
+#### Set Proxy of go module 
 - Window
 ```shell script
 set GO111MODULE=on
@@ -78,7 +72,7 @@ func main(){
 }
 ```
 
-### Quick use
+### Quick Use
 The SetFont and SetBackground configuration must be set
 <br/>
 You can copy the resource files under the "__example/resources" to the directory of your project
@@ -132,7 +126,7 @@ func main(){
 
 ```
 
-### Method Instructions
+### Captcha Instances
 - New Instances or Get Single Instances
 ```go
 package main
@@ -154,7 +148,8 @@ func main(){
 }
 ```
 
-- Set Chars
+### Set Configuration
+#### Set Chars
 ```go
 package main
 import (
@@ -186,7 +181,7 @@ func main(){
 }
 ```
 
-### Set configuration
+#### Set image configuration
 ```go
 package main
 import (
@@ -379,7 +374,7 @@ func main(){
 }
 ```
 
-### Fronted Example Api Params
+### Api Params Of Fronted Example
 ```
 // Example: Get captcha data
 API = http://....../captcha/captcha-data

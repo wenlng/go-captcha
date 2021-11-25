@@ -12,7 +12,6 @@ Package captcha implements generation and click location verification of image C
 - Demo：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
 - Author Website: [http://witkeycode.com](http://witkeycode.com)
 
-### Example Design Sketch
 <div align="center">
     <img src="http://47.104.180.148/go-captcha/go-captcha-01.png?v=1" alt="Reward Support">
     <br/>
@@ -25,7 +24,6 @@ Package captcha implements generation and click location verification of image C
     <br/>   
 </div>
 <br>
-<br/>
 
 - Installation of proxy go module in China
 >

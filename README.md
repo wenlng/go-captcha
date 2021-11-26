@@ -51,9 +51,9 @@ source ~/.bash_profile
 
 ### Dependency Library
 ```
-github.com/golang/freetype
-golang.org/x/crypto
-golang.org/x/image
+go get -u github.com/golang/freetype
+go get -u golang.org/x/crypto
+go get -u golang.org/x/image
 ```
 
 ### Install Captcha Module

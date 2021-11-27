@@ -392,7 +392,7 @@ API = http://....../captcha/check-data
         key: "......"
     }
 ```
-
+<br/>
 
 <div align="center">
     <img src="http://47.104.180.148/reward-support.png?v=1" alt="Reward Support">

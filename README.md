@@ -1,7 +1,7 @@
 # go-captcha - Behavioral Verification Code
 
-[![Version](https://img.shields.io/github/tag/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/wenlng/go-captcha)](https://goreportcard.com/report/github.com/wenlng/go-captcha)
+[![Version](https://img.shields.io/github/tag/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/releases)
 [![GoDoc](https://godoc.org/github.com/wenlng/go-captcha?status.svg)](https://godoc.org/github.com/wenlng/go-captcha)
 [![License](https://img.shields.io/github/license/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/blob/master/LICENSE)
 
@@ -11,6 +11,8 @@ Package captcha implements generation and click location verification of image C
 - Example Code：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
 - Demo：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
 - Author Website: [http://witkeycode.com](http://witkeycode.com)
+
+<br/>
 
 <div align="center">
     <img src="http://47.104.180.148/go-captcha/go-captcha-01.png?v=2" alt="Reward Support">

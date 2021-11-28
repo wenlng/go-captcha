@@ -38,31 +38,34 @@ go-captcha, 一个简洁易用、交互友好、高安全性的点选行为验�
 #### 设置Go模块的代理
 - Window
 ```shell script
-set GO111MODULE=on
-set GOPROXY=https://goproxy.io,direct
+$ set GO111MODULE=on
+$ set GOPROXY=https://goproxy.io,direct
 
-### Golang 1.13+ 可以直接执行
-go env -w GO111MODULE=on
-go env -w GOPROXY=https://goproxy.io,direct
+### The Golang 1.13+ can be executed directly
+$ go env -w GO111MODULE=on
+$ go env -w GOPROXY=https://goproxy.io,direct
 ```
 - Linux or Mac
 ```shell script
-vi vim ~/.bash_profile
-export GO111MODULE=on
-export GOPROXY=https://goproxy.io,direct
-source ~/.bash_profile
+$ export GO111MODULE=on
+$ export GOPROXY=https://goproxy.io,direct
+
+### or
+$ echo "export GO111MODULE=on" >> ~/.profile
+$ echo "export GOPROXY=https://goproxy.cn,direct" >> ~/.profile
+$ source ~/.profile
 ```
 
 ### 依赖golang官方标准库
 ```
-go get -u github.com/golang/freetype
-go get -u golang.org/x/crypto
-go get -u golang.org/x/image
+$ go get -u github.com/golang/freetype
+$ go get -u golang.org/x/crypto
+$ go get -u golang.org/x/image
 ```
 
 ### 安装模块
 ```
-go get -u github.com/wenlng/go-captcha
+$ go get -u github.com/wenlng/go-captcha
 ```
 
 ### 引入模块

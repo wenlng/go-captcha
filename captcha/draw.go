@@ -235,6 +235,9 @@ func (cd *Draw) DrawWithPalette(params *DrawCanvas, colorA []color.Color, colorB
 		text := fmt.Sprintf("%s", dot.Text)
 		pt := freetype.Pt(dot.Dx, dot.Dy) // 字出现的位置
 		_, err = dc.DrawString(text, pt)
+		if err != nil {
+			return canvas, err
+		}
 	}
 
 	if params.Background != "" {

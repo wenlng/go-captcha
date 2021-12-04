@@ -1,13 +1,13 @@
 # go-captcha - Behavioral Verification Code
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/wenlng/go-captcha?t=1)](https://goreportcard.com/report/github.com/wenlng/go-captcha)
 [![Version](https://img.shields.io/github/tag/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/wenlng/go-captcha?t=1)](https://goreportcard.com/report/github.com/wenlng/go-captcha)
 [![GoDoc](https://godoc.org/github.com/wenlng/go-captcha?status.svg)](https://godoc.org/github.com/wenlng/go-captcha)
 [![License](https://img.shields.io/github/license/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/blob/master/LICENSE)
 
 > [English](README.md) | 中文
 
-go-captcha, 一个简洁易用、交互友好、高安全性的点选行为验证码 Go 库 ，采用 “验证码展示-采集用户行为-验证行为数据” 为流程，用户无需键盘手动输入，极大优化传统验证码用户体验不佳的问题，支持PC端及移动端，带有与前端交互的DEMO。. 
+go-captcha, 一个简洁易用、交互友好、高安全性的点选行为验证码 Go 库 ，采用 “验证码展示-采集用户行为-验证行为数据” 为流程，用户无需键盘手动输入，极大优化传统验证码用户体验不佳的问题，支持PC端及移动端，带有与前端交互的DEMO。
 
 - Github：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
 - 实例代码：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
@@ -80,7 +80,7 @@ func main(){
 ```
 
 ### 快速使用
-在生成验证码数据时 SetFont 和 SetBackground 配置是必须要先配置
+在生成验证码数据前必须要先设置 SetFont 和 SetBackground 配置项
 <br/>
 你可以直接拷贝实例中 "__example/resources" 的图片和字体文件到你的项目中使用
 ```go
@@ -401,9 +401,8 @@ API = http://....../captcha/check-data
 ```
 <br/>
 
-<div align="center">
-    <img src="http://47.104.180.148/reward-support.png?v=1" alt="Reward Support">
-</div>
+> 请作者喝咖啡：[http://witkeycode.com/sponsor](http://witkeycode.com/sponsor)
+
 <br/>
 
 ## LICENSE

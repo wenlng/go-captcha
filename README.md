@@ -1,7 +1,7 @@
 # go-captcha - Behavioral Verification Code
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/wenlng/go-captcha?t=1)](https://goreportcard.com/report/github.com/wenlng/go-captcha)
 [![Version](https://img.shields.io/github/tag/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/wenlng/go-captcha?t=1)](https://goreportcard.com/report/github.com/wenlng/go-captcha)
 [![GoDoc](https://godoc.org/github.com/wenlng/go-captcha?status.svg)](https://godoc.org/github.com/wenlng/go-captcha)
 [![License](https://img.shields.io/github/license/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/blob/master/LICENSE)
 
@@ -401,9 +401,8 @@ API = http://....../captcha/check-data
 ```
 <br/>
 
-<div align="center">
-    <img src="http://47.104.180.148/reward-support.png?v=1" alt="Reward Support">
-</div>
+> Buy the author coffee: [http://witkeycode.com/sponsor](http://witkeycode.com/sponsor)
+
 <br/>
 
 ## LICENSE

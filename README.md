@@ -65,7 +65,7 @@ $ go get -u golang.org/x/image
 
 ### Install Captcha Module
 ```
-$ go get -u github.com/wenlng/go-captcha
+$ go get -u github.com/wenlng/go-captcha/captcha
 ```
 
 ### Import Captcha Module

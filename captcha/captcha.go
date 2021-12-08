@@ -359,6 +359,7 @@ func (cc *Captcha) checkConfig() error {
  * @Description: 			根据设置的尺寸生成验证码图片
  * @return CaptchaCharDot	位置信息
  * @return string			主图Base64
+ * @return string			验证码KEY
  * @return string			缩略图Base64
  * @return error
  */
@@ -374,6 +375,7 @@ func (cc *Captcha) Generate() (map[int]CharDot, string, string, string, error) {
  * @param thumbnailSize		缩略图尺寸
  * @return CaptchaCharDot	位置信息
  * @return string			主图Base64
+ * @return string			验证码KEY
  * @return string			缩略图Base64
  * @return error
  */
@@ -442,8 +444,6 @@ func (cc *Captcha) genCaptchaKey(str string) (string, error) {
  * @param chars
  * @param padding
  * @return []*CaptchaCharDot
- * @return []*CaptchaCharDot
- * @return error
  */
 func (cc *Captcha) genDots(imageSize *Size, fontSize *RangeVal, chars string, padding int) map[int]CharDot {
 	dots := make(map[int]CharDot) // 各个文字点位置
@@ -501,6 +501,7 @@ func (cc *Captcha) genDots(imageSize *Size, fontSize *RangeVal, chars string, pa
  * @receiver cc
  * @param dots
  * @return map[int]CaptchaCharDot
+ * @return string
  */
 func (cc *Captcha) rangeCheckDots(dots map[int]CharDot) (map[int]CharDot, string) {
 	rand.Seed(time.Now().UnixNano())

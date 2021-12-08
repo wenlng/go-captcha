@@ -12,7 +12,7 @@ go-captcha, 一个简洁易用、交互友好、高安全性的点选行为验�
 - Github：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
 - 实例代码：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
 - Vue实例代码：[https://github.com/wenlng/go-captcha-example/tree/main/fronted-vue-app](https://github.com/wenlng/go-captcha-example/tree/main/fronted-vue-app)
-- Demo：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
+- 在线演示：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
 - 作者网站: [http://witkeycode.com](http://witkeycode.com)
 
 <br/>

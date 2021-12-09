@@ -10,8 +10,9 @@
 go-captcha, 一个简洁易用、交互友好、高安全性的点选行为验证码 Go 库 ，采用 “验证码展示-采集用户行为-验证行为数据” 为流程，用户无需键盘手动输入，极大优化传统验证码用户体验不佳的问题，支持PC端及移动端，带有与前端交互的DEMO。
 
 - Github：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
-- 实例代码：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
-- Vue实例代码：[https://github.com/wenlng/go-captcha-example/tree/main/fronted-vue-app](https://github.com/wenlng/go-captcha-example/tree/main/fronted-vue-app)
+- Go实例代码：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
+- Vue实例代码：[https://github.com/wenlng/go-captcha-example-vue](https://github.com/wenlng/go-captcha-example-vue)
+- React实例代码：[https://github.com/wenlng/go-captcha-example-react](https://github.com/wenlng/go-captcha-example-react)
 - 在线演示：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
 - 作者网站: [http://witkeycode.com](http://witkeycode.com)
 

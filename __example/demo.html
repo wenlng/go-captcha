@@ -19,6 +19,7 @@
         padding:0;
         position: relative;
         overflow: hidden;
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
     }
 
     .wg-cap-root{
@@ -47,18 +48,18 @@
 
     @keyframes tinUpIn {
         0% { opacity:0; transform:scale(1) translateY(-500%); }
-        50% { opacity:1; transform:scale(1.1) translateY(0); }
-        70% { opacity:1; transform:scale(1.1) translateY(0); }
-        90% { opacity:1; transform:scale(1.1) translateY(0);  }
+        /*50% { opacity:1; transform:scale(1.1) translateY(0); }*/
+        /*70% { opacity:1; transform:scale(1.1) translateY(0); }*/
+        /*90% { opacity:1; transform:scale(1.1) translateY(0);  }*/
         60% { opacity:1; transform:scale(1) translateY(0);  }
         80% { opacity:1; transform:scale(1) translateY(0); }
         100% { opacity:1; transform:scale(1) translateY(0); }
     }
     @-webkit-keyframes tinUpIn {
         0% { opacity:0; transform:scale(1) translateY(-500%); }
-        50% { opacity:1; transform:scale(1.1) translateY(0); }
-        70% { opacity:1; transform:scale(1.1) translateY(0); }
-        90% { opacity:1; transform:scale(1.1) translateY(0);  }
+        /*50% { opacity:1; transform:scale(1.1) translateY(0); }*/
+        /*70% { opacity:1; transform:scale(1.1) translateY(0); }*/
+        /*90% { opacity:1; transform:scale(1.1) translateY(0);  }*/
         60% { opacity:1; transform:scale(1) translateY(0);  }
         80% { opacity:1; transform:scale(1) translateY(0); }
         100% { opacity:1; transform:scale(1) translateY(0); }
@@ -325,7 +326,8 @@
     .wg-cap-btn .wg-cap-state__success{
         color: #5eaa2f;
         background: #f0f9eb;
-        border: 1px solid #8bc640
+        border: 1px solid #8bc640;
+        pointer-events: none;
     }
     .wg-cap-btn .wg-cap-active__default .wg-cap-state__default, .wg-cap-btn .wg-cap-active__error .wg-cap-state__error,.wg-cap-btn .wg-cap-active__over .wg-cap-state__over ,.wg-cap-btn .wg-cap-active__success .wg-cap-state__success {
         visibility: visible;
@@ -498,427 +500,463 @@
 
 <script type="text/javascript">
 
-/** =================================================================================
- * @Description: 此DEMO前端使用原生方式编写，为了让开发者更好理解使用，在本实例中不使用不依懒JQ、Vue等前端库
- * 如果你在 VUE、React、Angular等项目中使用，直接拷贝代码修改一下做成组件即可
- * ==================================================================================
- */
-
-/**
- * @Description:  封闭Ajax
- * @return post Function
-            get Function
- */
-const Ajax = (function () {
-    var xhr
-    var requestArr = []
+    /** =================================================================================
+     * @Description: 此DEMO前端使用原生方式编写，为了让开发者更好理解使用，在本实例中不使用不依懒JQ、Vue等前端库
+     * 如果你在 VUE、React、Angular等项目中使用，直接拷贝代码修改一下做成组件即可
+     * ==================================================================================
+     */
 
     /**
-     * @Description: 初始化
+     * @Description:  封装Ajax
+     * @return post Function
+     get Function
      */
-    function __initialize() {
-        if(window.XMLHttpRequest){
-            xhr = new XMLHttpRequest()
-        } else if(window.ActiveObject){
-            xhr = new ActiveXobject('Microsoft.XMLHTTP')
-        }
-    }
+    const Ajax = (function () {
+        var xhr
+        var requestArr = []
 
-    /**
-     * @Description: 请求处理
-     * @param options
-     */
-    function requestHandler(options){
-        // 调用函数时如果options没有指定，就给它赋值{},一个空的Object
-        options = options || {}
-        // 请求格式GET、POST，默认为GET
-        options.type = (options.type || "GET").toUpperCase()
-        // 响应数据格式，默认json
-        options.dataType = options.dataType || "json"
-        // options.data请求的数据
-        const params = ajaxFormatParams(options.data)
-
-        // 启动并发送一个请求
-        if(options.type === "GET"){
-            xhr.open("GET", options.url+"?" + params,true);
-            xhr.send(null);
-        }else if(options.type === "POST"){
-            xhr.open("post",options.url,true);
-            // 设置表单提交时的内容类型
-            // Content-type数据请求的格式
-            xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-            xhr.send(params);
-        }
-
-        xhr.timeout = options.timeout
-
-        // 设置有效时间
-        setTimeout(function(){
-            if(xhr.readySate !== 4){
-                xhr.abort();
+        /**
+         * @Description: 初始化
+         */
+        function __initialize() {
+            if(window.XMLHttpRequest){
+                xhr = new XMLHttpRequest()
+            } else if(window.ActiveObject){
+                xhr = new ActiveXobject('Microsoft.XMLHTTP')
             }
-        }, options.timeout)
+        }
 
-        // onreadystatechange
-        xhr.onreadystatechange = function(){
-            if(xhr.readyState === 4){
-                var status = xhr.status;
-                if(status >= 200 && status < 300 || status === 304){
-                    var data = xhr.responseText
-                    if (isJSONString(data)) {
-                        data = eval("("+xhr.responseText+")")
+        /**
+         * @Description: 请求处理
+         * @param options
+         */
+        function requestHandler(options){
+            // 调用函数时如果options没有指定，就给它赋值{},一个空的Object
+            options = options || {}
+            // 请求格式GET、POST，默认为GET
+            options.type = (options.type || "GET").toUpperCase()
+            // 响应数据格式，默认json
+            options.dataType = options.dataType || "json"
+            // options.data请求的数据
+            const params = ajaxFormatParams(options.data)
+
+            // 启动并发送一个请求
+            if(options.type === "GET"){
+                xhr.open("GET", options.url+"?" + params,true);
+                xhr.send(null);
+            }else if(options.type === "POST"){
+                xhr.open("post",options.url,true);
+                // 设置表单提交时的内容类型
+                // Content-type数据请求的格式
+                xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                xhr.send(params);
+            }
+
+            xhr.timeout = options.timeout
+
+            // 设置有效时间
+            setTimeout(function(){
+                if(xhr.readySate !== 4){
+                    xhr.abort();
+                }
+            }, options.timeout)
+
+            // onreadystatechange
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === 4){
+                    var status = xhr.status;
+                    if(status >= 200 && status < 300 || status === 304){
+                        var data = xhr.responseText
+                        if (isJSONString(data)) {
+                            data = eval("("+xhr.responseText+")")
+                        }
+                        options.success&&options.success(data, xhr.responseXML);
+                    }else{
+                        options.error&&options.error(status);
                     }
-                    options.success&&options.success(data, xhr.responseXML);
-                }else{
-                    options.error&&options.error(status);
+                }
+                options.complete&&options.complete(status);
+            }
+        }
+
+        /**
+         * @Description: 是否是Json格式
+         * @param str
+         */
+        function isJSONString(str) {
+            if (typeof str == 'string') {
+                try {
+                    var obj = JSON.parse(str)
+                    return typeof obj == 'object' && obj
+                } catch(e) {}
+            }
+
+            return false
+        }
+
+        /**
+         * @Description: Ajax格式化请求参数
+         * @param data
+         */
+        function ajaxFormatParams(data){
+            var arr = [];
+            for(var name in data){
+                arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]))
+            }
+            arr.push(("v=" + Math.random()).replace(".",""))
+            return arr.join("&")
+        }
+
+        /**
+         * @Description: 处理Post请求
+         * @param url
+         * @param data
+         * @param success
+         * @param error
+         * @param complete
+         */
+        function handlePost (url, data, success, error, complete) {
+            requestHandler({
+                url: url,
+                type: 'post',
+                data: data,
+                dataType:'json',
+                timeout: 10000,
+                contentType: "application/json",
+                success: success,
+                error: error,
+                complete: complete
+            })
+        }
+
+        /**
+         * @Description: 处理Get请求
+         * @param url
+         * @param data
+         * @param success
+         * @param error
+         * @param complete
+         */
+        function handleGet (url, data, success, error, complete) {
+            requestHandler({
+                url: url,
+                type: 'post',
+                data: data,
+                dataType:'json',
+                timeout: 10000,
+                contentType: "application/json",
+                success: success,
+                error: error,
+                complete: complete
+            })
+        }
+
+        __initialize()
+        return {
+            post: handlePost,
+            get: handleGet
+        }
+    })();
+
+    /**
+     * @Description: 封装Captcha
+     */
+    const Captcha = (function () {
+        /**
+         * @Description: 唯一KEY值，用作验证使用
+         */
+        var captchaKey = ""
+        /**
+         * @Description: 用户鼠标点击的位置 x,y
+         */
+        var dots = []
+        /**
+         * @Description: 最大可点数
+         */
+        var maxDot = 8
+
+        const captchaWrapDom        = document.querySelector("#wg-cap-dots")
+        const captchaImageDom       = document.querySelector("#wg-cap-image")
+        const captchaThumbDom       = document.querySelector("#wg-cap-thumb")
+        const captchaBtnControlDom  = document.querySelector("#wg-cap-btn-control")
+        const captchaCheckBtnDom    = document.querySelector("#wg-cap-check-btn")
+        const captchaCloseBtnDom    = document.querySelector("#wg-cap-close-btn")
+        const captchaDialogBtnDom   = document.querySelector("#wg-cap-dialog")
+        const captchaRefreshBtnDom  = document.querySelector("#wg-cap-refresh-btn")
+        const captchaDefaultBtnDom  = document.querySelector("#wg-cap-btn-default")
+        const captchaErrorBtnDom    = document.querySelector("#wg-cap-btn-error")
+        const captchaOverBtnDom     = document.querySelector("#wg-cap-btn-over")
+        const dialogDom             = document.querySelector("#wg-cap-container")
+
+        /**
+         * @Description: 初始化
+         */
+        function __initialize() {
+            requestCaptchaData()
+            handleEvent()
+
+            // 禁用移动端缩放
+            document.addEventListener('touchstart', (event) => {
+                if (event.touches.length > 1) {
+                    event.preventDefault()
+                }
+            })
+            document.addEventListener('gesturestart', (event) => {
+                event.preventDefault()
+            })
+            // touchstart  解决:hover伪类在移动端二次点击的问题
+            document.body.addEventListener('touchend', () => { })
+        }
+
+        /**
+         * @Description: 处理所有事件
+         */
+        function handleEvent() {
+            addEventListener(captchaImageDom, "click", handleClickPos)
+            addEventListener(captchaCheckBtnDom, "click", handleClickCheck)
+            addEventListener(captchaCloseBtnDom, "click", handleClickClose)
+            addEventListener(captchaDialogBtnDom, "click", handleClickClose)
+            addEventListener(captchaRefreshBtnDom, "click", handleClickRefresh)
+            addEventListener(captchaDefaultBtnDom, "click", handleClickDefault)
+            addEventListener(captchaErrorBtnDom, "click", handleClickDefault)
+            addEventListener(captchaOverBtnDom, "click", handleClickDefault)
+        }
+
+        /**
+         * @Description: 为任意元素.绑定任意的事件
+         * @param el    任意的元素
+         * @param type  事件的类型
+         * @param fn    事件处理函数
+         */
+        function addEventListener(el,type,fn) {
+            //判断浏览器是否支持这个方法
+            if(el.addEventListener){
+                el.addEventListener(type,fn,false);
+            }else if(el.attachEvent){
+                el.attachEvent("on"+type,fn);
+            }else{
+                el["on"+type]=fn;
+            }
+        }
+
+        /**
+         * @Description: 找到元素的屏幕位置
+         * @param el
+         */
+        function calcLocationLeft(el){
+            var tmp = el.offsetLeft
+            var val = el.offsetParent
+            while(val != null){
+                tmp += val.offsetLeft
+                val = val.offsetParent
+            }
+            return tmp
+        }
+
+        /**
+         * @Description: 找到元素的屏幕位置
+         * @param el
+         */
+        function calcLocationTop(el){
+            var tmp = el.offsetTop
+            var val = el.offsetParent
+            while(val != null){
+                tmp += val.offsetTop
+                val = val.offsetParent
+            }
+            return tmp
+        }
+
+        /**
+         * @Description: 找到元素的屏幕位置
+         * @param dom
+         */
+        function getDomXY(dom){
+            var x = 0
+            var y = 0
+            if (dom.getBoundingClientRect) {
+                var box = dom.getBoundingClientRect();
+                var D = document.documentElement;
+                x = box.left + Math.max(D.scrollLeft, document.body.scrollLeft) - D.clientLeft;
+                y = box.top + Math.max(D.scrollTop, document.body.scrollTop) - D.clientTop
+            }
+            else{
+                while (dom !== document.body) {
+                    x += dom.offsetLeft
+                    y += dom.offsetTop
+                    dom = dom.offsetParent
                 }
             }
-            options.complete&&options.complete(status);
-        }
-    }
-
-    /**
-     * @Description: 是否是Json格式
-     * @param str
-     */
-    function isJSONString(str) {
-        if (typeof str == 'string') {
-            try {
-                var obj = JSON.parse(str)
-                return typeof obj == 'object' && obj
-            } catch(e) {}
-        }
-
-        return false
-    }
-
-    /**
-     * @Description: Ajax格式化请求参数
-     * @param data
-     */
-    function ajaxFormatParams(data){
-        var arr = [];
-        for(var name in data){
-            arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]))
-        }
-        arr.push(("v=" + Math.random()).replace(".",""))
-        return arr.join("&")
-    }
-
-    /**
-     * @Description: 处理Post请求
-     * @param url
-     * @param data
-     * @param success
-     * @param error
-     * @param complete
-     */
-    function handlePost (url, data, success, error, complete) {
-        requestHandler({
-            url: url,
-            type: 'post',
-            data: data,
-            dataType:'json',
-            timeout: 10000,
-            contentType: "application/json",
-            success: success,
-            error: error,
-            complete: complete
-        })
-    }
-
-    /**
-     * @Description: 处理Get请求
-     * @param url
-     * @param data
-     * @param success
-     * @param error
-     * @param complete
-     */
-    function handleGet (url, data, success, error, complete) {
-        requestHandler({
-            url: url,
-            type: 'post',
-            data: data,
-            dataType:'json',
-            timeout: 10000,
-            contentType: "application/json",
-            success: success,
-            error: error,
-            complete: complete
-        })
-    }
-
-    __initialize()
-    return {
-       post: handlePost,
-       get: handleGet
-    }
-})();
-
-/**
- * @Description: 封闭Captcha
- */
-const Captcha = (function () {
-    /**
-     * @Description: 唯一KEY值，用作验证使用
-     */
-    var captchaKey = ""
-    /**
-     * @Description: 用户鼠标点击的位置 x,y
-     */
-    var dots = []
-    /**
-     * @Description: 最大可点数
-     */
-    var maxDot = 8
-
-    const captchaWrapDom        = document.querySelector("#wg-cap-dots")
-    const captchaImageDom       = document.querySelector("#wg-cap-image")
-    const captchaThumbDom       = document.querySelector("#wg-cap-thumb")
-    const captchaBtnControlDom  = document.querySelector("#wg-cap-btn-control")
-    const captchaCheckBtnDom    = document.querySelector("#wg-cap-check-btn")
-    const captchaCloseBtnDom    = document.querySelector("#wg-cap-close-btn")
-    const captchaDialogBtnDom   = document.querySelector("#wg-cap-dialog")
-    const captchaRefreshBtnDom  = document.querySelector("#wg-cap-refresh-btn")
-    const captchaDefaultBtnDom  = document.querySelector("#wg-cap-btn-default")
-    const captchaErrorBtnDom    = document.querySelector("#wg-cap-btn-error")
-    const captchaOverBtnDom     = document.querySelector("#wg-cap-btn-over")
-    const dialogDom             = document.querySelector("#wg-cap-container")
-
-    /**
-     * @Description: 初始化
-     */
-    function __initialize() {
-        requestCaptchaData()
-        handleEvent()
-
-        // 禁用移动端缩放
-        document.addEventListener('touchstart', (event) => {
-            if (event.touches.length > 1) {
-                event.preventDefault()
+            return {
+                domX: x,
+                domY: y
             }
-        })
-        document.addEventListener('gesturestart', (event) => {
-            event.preventDefault()
-        })
-        // touchstart  解决:hover伪类在移动端二次点击的问题
-        document.body.addEventListener('touchend', () => { })
-    }
-
-    /**
-     * @Description: 处理所有事件
-     */
-    function handleEvent() {
-        addEventListener(captchaImageDom, "click", handleClickPos)
-        addEventListener(captchaCheckBtnDom, "click", handleClickCheck)
-        addEventListener(captchaCloseBtnDom, "click", handleClickClose)
-        addEventListener(captchaDialogBtnDom, "click", handleClickClose)
-        addEventListener(captchaRefreshBtnDom, "click", handleClickRefresh)
-        addEventListener(captchaDefaultBtnDom, "click", handleClickDefault)
-        addEventListener(captchaErrorBtnDom, "click", handleClickDefault)
-        addEventListener(captchaOverBtnDom, "click", handleClickDefault)
-    }
-
-    /**
-     * @Description: 为任意元素.绑定任意的事件
-     * @param el    任意的元素
-     * @param type  事件的类型
-     * @param fn    事件处理函数
-     */
-    function addEventListener(el,type,fn) {
-        //判断浏览器是否支持这个方法
-        if(el.addEventListener){
-            el.addEventListener(type,fn,false);
-        }else if(el.attachEvent){
-            el.attachEvent("on"+type,fn);
-        }else{
-            el["on"+type]=fn;
-        }
-    }
-
-    /**
-     * @Description: 找到元素的屏幕位置
-     * @param el
-     */
-    function calcLocationLeft(el){
-        var tmp = el.offsetLeft
-        var val = el.offsetParent
-        while(val != null){
-            tmp += val.offsetLeft
-            val = val.offsetParent
-        }
-        return tmp
-    }
-
-    /**
-     * @Description: 找到元素的屏幕位置
-     * @param el
-     */
-    function calcLocationTop(el){
-        var tmp = el.offsetTop
-        var val = el.offsetParent
-        while(val != null){
-            tmp += val.offsetTop
-            val = val.offsetParent
-        }
-        return tmp
-    }
-
-    /**
-     * @Description: 插入点击icon大小为22x22
-     * @param event
-     * @param x
-     * @param y
-     */
-    function appendDotIcon(event, x, y) {
-        // const icon = '<div class="wg-cap-wrap__dot" style="position:absolute; top:' + (y * 0.5) + 'px; left:' + (x * 0.5) + 'px;"><span>'+ (dots.length + 1) +'</span></div>'
-        const dot = document.createElement('div')
-        dot.setAttribute('class', 'wg-cap-wrap__dot')
-        dot.setAttribute('style', 'top:' + (y - 11) + 'px; left:' + (x - 11) + 'px;')
-        dot.innerHTML = '<span>'+ (dots.length + 1) +'</span>'
-        captchaWrapDom.appendChild(dot)
-
-        dots.push([x, y])
-    }
-
-    /**
-     * @Description: 重置
-     */
-    function resetCaptcha() {
-        captchaKey = ""
-        dots = []
-        captchaWrapDom.innerHTML = ""
-    }
-
-    /**
-     * @Description: 清空验证图片
-     */
-    function clearImage() {
-        captchaImageDom.setAttribute("src", "")
-        captchaThumbDom.setAttribute("src", "")
-    }
-
-    /**
-     * @Description: 处理点击验证码图片位置
-     * @param ev
-     */
-    function handleClickPos(ev){
-        if (dots.length >= maxDot || captchaKey === "") {
-            return
         }
 
-        const e = ev || event;
-        const dom = e.currentTarget
-        const domX = calcLocationLeft(dom)
-        const domY = calcLocationTop(dom)
+        /**
+         * @Description: 插入点击icon大小为22x22
+         * @param event
+         * @param x
+         * @param y
+         */
+        function appendDotIcon(event, x, y) {
+            // const icon = '<div class="wg-cap-wrap__dot" style="position:absolute; top:' + (y * 0.5) + 'px; left:' + (x * 0.5) + 'px;"><span>'+ (dots.length + 1) +'</span></div>'
+            const dot = document.createElement('div')
+            dot.setAttribute('class', 'wg-cap-wrap__dot')
+            dot.setAttribute('style', 'top:' + (y - 11) + 'px; left:' + (x - 11) + 'px;')
+            dot.innerHTML = '<span>'+ (dots.length + 1) +'</span>'
+            captchaWrapDom.appendChild(dot)
 
-        const mouseX = (navigator.appName === 'Netscape') ? e.pageX : e.x + document.body.scrollLeft
-        const mouseY = (navigator.appName === 'Netscape') ? e.pageY : e.y+document.body.scrollTop
-
-        // 计算点击的相对位置
-        const xPos = mouseX - domX;
-        const yPos = mouseY - domY;
-
-        appendDotIcon(e, xPos, yPos)
-        e.cancelBubble = true
-        e.preventDefault()
-        return false
-    }
-
-    /**
-     * @Description: 点击刷新
-     */
-    function handleClickRefresh() {
-        requestCaptchaData()
-    }
-
-    /**
-     * @Description: 点击刷新
-     */
-    function handleClickClose() {
-        dialogDom.classList.remove("wg-cap-dialog__active")
-    }
-
-    /**
-     * @Description: 点击验证
-     */
-    function handleClickCheck() {
-        var dotsA = []
-        dots.forEach(function (value, key) {
-            dotsA.push(value.join(","))
-        })
-
-        if (dotsA.length <= 0) {
-            alert("请点选图案进行验证")
-            return
+            dots.push([x, y])
         }
 
-        requestCheckCaptchaData({'dots': dotsA.join(','), 'key': captchaKey})
-    }
+        /**
+         * @Description: 重置
+         */
+        function resetCaptcha() {
+            captchaKey = ""
+            dots = []
+            captchaWrapDom.innerHTML = ""
+        }
 
-    /**
-     * @Description: 点击验证按钮，弹窗
-     */
-    function handleClickDefault() {
-        requestCaptchaData()
-        dialogDom.classList.add("wg-cap-dialog__active")
-    }
+        /**
+         * @Description: 清空验证图片
+         */
+        function clearImage() {
+            captchaImageDom.setAttribute("src", "")
+            captchaThumbDom.setAttribute("src", "")
+        }
 
-    /**
-     * @Description: 请求验证码数据
-     */
-    function requestCaptchaData() {
-        resetCaptcha()
-        clearImage()
-        captchaImageDom.classList.add("wg-cap-wrap__hidden")
-        captchaThumbDom.classList.add("wg-cap-wrap__hidden")
-
-        Ajax.get("/captcha-data", {}, function(data){
-            if (data['code'] === 0) {
-                captchaImageDom.classList.remove("wg-cap-wrap__hidden")
-                captchaThumbDom.classList.remove("wg-cap-wrap__hidden")
-                captchaImageDom.setAttribute("src", data['image_base64'])
-                captchaThumbDom.setAttribute("src", data['thumb_base64'])
-                captchaKey = data['captcha_key']
-            } else {
-                alert("请求验证码数据失败：" + data['message'])
+        /**
+         * @Description: 处理点击验证码图片位置
+         * @param ev
+         */
+        function handleClickPos(ev){
+            if (dots.length >= maxDot || captchaKey === "") {
+                return
             }
-        }, function(e){
-            console.log("请求验证码数据失败：" + e['message']);
-        })
-    }
 
-    /**
-     * @Description: 请求验证数据
-     * @param dots
-     */
-    function requestCheckCaptchaData(dots) {
-        Ajax.post("/check-data", dots, function(data){
-            captchaBtnControlDom.classList.remove("wg-cap-active__default")
-            captchaBtnControlDom.classList.remove("wg-cap-active__over")
-            if (data['code'] === 0) {
-                alert("验证成功")
-                captchaBtnControlDom.classList.remove("wg-cap-active__error")
-                captchaBtnControlDom.classList.add("wg-cap-active__success")
-                handleClickClose()
-            } else {
-                alert("验证失败")
+            const e = ev || window.event;
+            e.preventDefault()
+            const dom = e.currentTarget
+
+            const xy = getDomXY(dom)
+            const domX = xy.domX
+            const domY = xy.domY
+            // ===============================================
+            // @notice 如 getDomXY 不准确可尝试使用 calcLocationLeft 或 calcLocationTop
+            // const domX = this.calcLocationLeft(dom)
+            // const domY = this.calcLocationTop(dom)
+            // ===============================================
+
+            const mouseX = (navigator.appName === 'Netscape') ? e.pageX : e.x + document.body.scrollLeft
+            const mouseY = (navigator.appName === 'Netscape') ? e.pageY : e.y+document.body.scrollTop
+
+            // 计算点击的相对位置
+            const xPos = mouseX - domX;
+            const yPos = mouseY - domY;
+
+            appendDotIcon(e, xPos, yPos)
+            e.cancelBubble = true
+            e.preventDefault()
+            return false
+        }
+
+        /**
+         * @Description: 点击刷新
+         */
+        function handleClickRefresh() {
+            requestCaptchaData()
+        }
+
+        /**
+         * @Description: 点击刷新
+         */
+        function handleClickClose() {
+            dialogDom.classList.remove("wg-cap-dialog__active")
+        }
+
+        /**
+         * @Description: 点击验证
+         */
+        function handleClickCheck() {
+            var dotsA = []
+            dots.forEach(function (value, key) {
+                dotsA.push(value.join(","))
+            })
+
+            if (dotsA.length <= 0) {
+                alert("请点选图案进行验证")
+                return
+            }
+
+            requestCheckCaptchaData({'dots': dotsA.join(','), 'key': captchaKey})
+        }
+
+        /**
+         * @Description: 点击验证按钮，弹窗
+         */
+        function handleClickDefault() {
+            requestCaptchaData()
+            dialogDom.classList.add("wg-cap-dialog__active")
+        }
+
+        /**
+         * @Description: 请求验证码数据
+         */
+        function requestCaptchaData() {
+            resetCaptcha()
+            clearImage()
+            captchaImageDom.classList.add("wg-cap-wrap__hidden")
+            captchaThumbDom.classList.add("wg-cap-wrap__hidden")
+
+            Ajax.get("/go_captcha_data", {}, function(data){
+                if (data['code'] === 0) {
+                    captchaImageDom.classList.remove("wg-cap-wrap__hidden")
+                    captchaThumbDom.classList.remove("wg-cap-wrap__hidden")
+                    captchaImageDom.setAttribute("src", data['image_base64'])
+                    captchaThumbDom.setAttribute("src", data['thumb_base64'])
+                    captchaKey = data['captcha_key']
+                } else {
+                    alert("请求验证码数据失败：" + data['message'])
+                }
+            }, function(e){
+                console.log("请求验证码数据失败：" + e['message']);
+            })
+        }
+
+        /**
+         * @Description: 请求验证数据
+         * @param dots
+         */
+        function requestCheckCaptchaData(dots) {
+            Ajax.post("/go_captcha_check_data", dots, function(data){
+                captchaBtnControlDom.classList.remove("wg-cap-active__default")
+                captchaBtnControlDom.classList.remove("wg-cap-active__over")
+                if (data['code'] === 0) {
+                    alert("验证成功")
+                    captchaBtnControlDom.classList.remove("wg-cap-active__error")
+                    captchaBtnControlDom.classList.add("wg-cap-active__success")
+                    setTimeout(function () {
+                        handleClickClose()
+                    }, 200)
+                } else {
+                    alert("验证失败")
+                    captchaBtnControlDom.classList.remove("wg-cap-active__success")
+                    captchaBtnControlDom.classList.add("wg-cap-active__error")
+                }
+            }, function(e){
+                captchaBtnControlDom.classList.remove("wg-cap-active__default")
+                captchaBtnControlDom.classList.remove("wg-cap-active__over")
                 captchaBtnControlDom.classList.remove("wg-cap-active__success")
                 captchaBtnControlDom.classList.add("wg-cap-active__error")
-            }
-        }, function(e){
-            captchaBtnControlDom.classList.remove("wg-cap-active__default")
-            captchaBtnControlDom.classList.remove("wg-cap-active__over")
-            captchaBtnControlDom.classList.remove("wg-cap-active__success")
-            captchaBtnControlDom.classList.add("wg-cap-active__error")
-        }, function () {
-            captchaKey = ""
-        })
-    }
+            }, function () {
+                captchaKey = ""
+            })
+        }
 
-    __initialize()
-    return {}
-})();
+        __initialize()
+        return {}
+    })();
 </script>
 </html>

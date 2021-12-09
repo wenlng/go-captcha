@@ -67,7 +67,7 @@ $ go get -u golang.org/x/image
 
 ### 安装模块
 ```
-$ go get -u github.com/wenlng/go-captcha
+$ go get -u github.com/wenlng/go-captcha/captcha
 ```
 
 ### 引入模块

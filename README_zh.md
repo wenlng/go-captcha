@@ -82,9 +82,9 @@ func main(){
 ```
 
 ### 快速使用
-在生成验证码数据前必须要先设置 SetFont 和 SetBackground 配置项
+在生成验证码数据前必须先设置 SetFont 和 SetBackground 的配置项
 <br/>
-你可以直接拷贝实例中 "__example/resources" 的图片和字体文件到你的项目中使用
+你可以直接拷贝实例中 "__example/resources" 的图片资源和字体文件到你的项目中使用
 ```go
 package main
 import (
@@ -171,17 +171,17 @@ func main(){
     
     // ====================================================
     // Method: SetRangChars (chars []string) error;
-    // Desc: Set random char of captcha
+    // Desc: 设置验证码文本随机种子
     // ====================================================
-    // Letter
+    // 字符
     //chars := "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     //_ = capt.SetRangChars(strings.Split(chars, ""))
     
-    // Two Letter
+    // 双字母
     //chars := []string{"HE","CA","WO","NE","HT","IE","PG","GI","CH","CO","DA"}
     //_ = capt.SetRangChars(chars)
 
-    // Chinese Char
+    // 汉字
     chars := []string{"你","好","呀","这","是","点","击","验","证","码","哟"}
     _ = capt.SetRangChars(chars)
 
@@ -235,13 +235,13 @@ func main(){
 
     // ====================================================
     // Method: SetFontDPI(val int);
-    // Desc: 设置验证码字体的随机DPI，最好是72
+    // Desc: 设置验证码字体DPI，最好是72
     // ====================================================
     capt.SetFontDPI(72)
 
     // ====================================================
     // Method: SetTextRangLen(val *captcha.RangeVal);
-    // Desc: 设置验证码文本总和的随机长度范围
+    // Desc: 设置验证码文本显示的总数随机范围
     // ====================================================
     capt.SetTextRangLen(&captcha.RangeVal{6, 7})
 
@@ -253,19 +253,19 @@ func main(){
 
     // ====================================================
     // Method: SetRangCheckTextLen(val *captcha.RangeVal);
-    // Desc:设置验证码校验文本的随机长度的范围
+    // Desc:设置验证码校验文本的随机长度范围
     // ====================================================
     capt.SetRangCheckTextLen(&captcha.RangeVal{2, 4})
 
     // ====================================================
     // Method: SetRangCheckFontSize(val *captcha.RangeVal);
-    // Desc:设置验证码文本的随机大小
+    // Desc:设置验证码校验文本的随机大小
     // ====================================================
     capt.SetRangCheckFontSize(&captcha.RangeVal{24, 30})
     
     // ====================================================
     // Method: SetTextRangFontColors(colors []string);
-    // Desc: 设置验证码文本的随机十六进制颜色
+    // Desc: 设置验证码校验文本的随机十六进制颜色
     // ====================================================
     capt.SetTextRangFontColors([]string{
         "#1d3f84",
@@ -280,7 +280,7 @@ func main(){
 
     // ====================================================
     // Method: SetTextRangAnglePos(pos []*RangeVal);
-    // Desc:设置验证码文本的角度
+    // Desc:设置验证码文本的旋转角度
     // ====================================================
     capt.SetTextRangAnglePos([]*captcha.RangeVal{
         {1, 15},
@@ -293,7 +293,7 @@ func main(){
 
     // ====================================================
     // Method: SetImageFontDistort(val int);
-    // Desc:设置验证码字体扭曲程度
+    // Desc:设置验证码字体的扭曲程度
     // ====================================================
     capt.SetImageFontDistort(captcha.ThumbBackgroundDistortLevel2)
   
@@ -323,13 +323,13 @@ func main(){
 
     // ====================================================
     // Method: SetThumbBgCirclesNum(val int);
-    // Desc:设置验证码背景的圈点数
+    // Desc:设置缩略验证码背景的圈点数
     // ====================================================
     capt.SetThumbBgCirclesNum(20)
 
     // ====================================================
     // Method: SetThumbBgSlimLineNum(val int);
-    // Desc:设置验证码背景的线条数
+    // Desc:设置缩略验证码背景的线条数
     // ====================================================
     capt.SetThumbBgSlimLineNum(3)
     
@@ -391,14 +391,14 @@ API = http://....../captcha/captcha-data
         "code": 0,
         "image_base64": "...",
         "thumb_base64": "...",
-        "captcha_key": "...",
+        "captcha_key": "xxxxxx",
     }     
 
 // Example: 提交校验数据 
 API = http://....../captcha/check-data
     Request Data = {
         dots: "x1,y1,x2,y2,...."
-        key: "......"
+        key: "xxxxxx"
     }
 ```
 <br/>

@@ -313,7 +313,7 @@ func (cd *Draw) genRandColor(co []color.Color) color.RGBA {
 
 // DrawTextImg is a function
 /**
- * @Description: 根据
+ * @Description: 绘制文本的图片
  * @receiver cd
  * @param dot
  * @param params

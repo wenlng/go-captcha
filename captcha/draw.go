@@ -72,7 +72,7 @@ type Draw struct{}
 
 // CreateCanvasWithPalette is a function
 /**
- * @Description: 创建 Palette 带调包板画布
+ * @Description: 创建 Palette 带调色板的画布
  * @receiver cd
  * @param params
  * @param colorArr
@@ -176,7 +176,7 @@ func (cd *Draw) Draw(params *DrawCanvas) (image.Image, error) {
 
 // DrawWithPalette is a function
 /**
- * @Description: 使用调色板的画布画图
+ * @Description: 使用调色板的画布绘图
  * @receiver cd
  * @param params
  * @param colorA

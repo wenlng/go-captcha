@@ -1,4 +1,4 @@
-# go-captcha - Behavioral Verification Code
+# go-captcha - 行为式验证码
 
 [![Version](https://img.shields.io/github/tag/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/wenlng/go-captcha?t=1)](https://goreportcard.com/report/github.com/wenlng/go-captcha)
@@ -7,7 +7,7 @@
 
 > [English](README.md) | 中文
 
-go-captcha, 一个简洁易用、交互友好、高安全性的点选行为验证码 Go 库 ，采用 “验证码展示-采集用户行为-验证行为数据” 为流程，用户无需键盘手动输入，极大优化传统验证码用户体验不佳的问题，支持PC端及移动端，带有与前端交互的DEMO。
+go-captcha, 一个简洁易用、交互友好、高安全性的行为式验证码 Go 库 ，采用 “验证码展示-采集用户行为-验证行为数据” 为流程，用户无需键盘手动输入，极大优化传统验证码用户体验不佳的问题，支持PC端及移动端，支持前端Vue、React等项目。
 
 - Github：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
 - Go实例代码：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)

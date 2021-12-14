@@ -34,9 +34,7 @@ func Md5ToString(str string) string {
  * @return string
  */
 var num int64
-const (
-	CONTINUITY = "20060102150405"
-)
+const CONTINUITY = "20060102150405"
 func GenUniqueId() string {
 	t := time.Now()
 	s := t.Format(CONTINUITY)

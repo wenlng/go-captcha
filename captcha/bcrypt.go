@@ -40,7 +40,7 @@ const (
 func GenUniqueId() string {
 	t := time.Now()
 	s := t.Format(CONTINUITY)
-	m := t.UnixNano()/1e6 - t.UnixNano()/1e9 * 1e3
+	m := t.UnixNano() / 1e6 - t.UnixNano() / 1e9 * 1e3
 	ms := Sup(m, 3)
 	p := os.Getpid() % 1000
 	ps := Sup(int64(p), 3)

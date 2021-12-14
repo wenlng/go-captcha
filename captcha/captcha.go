@@ -325,11 +325,6 @@ func (cc *Captcha) checkConfig() error {
 		return fmt.Errorf("CaptchaConfig Error: No RangBackground configured")
 	}
 
-	//可选
-	//else if len(cc.config.RangThumbBackground) <= 0{
-	//	return fmt.Errorf("CaptchaConfig Error: No RangThumbBackground configured")
-	//}
-
 	// 检测文件是否存在
 	for _, fontPath := range cc.config.rangFont {
 		if has, err := PathExists(fontPath); !has || err != nil {

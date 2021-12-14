@@ -34,10 +34,9 @@ func Md5ToString(str string) string {
  * @return string
  */
 var num int64
-const CONTINUITY = "20060102150405"
 func GenUniqueId() string {
 	t := time.Now()
-	s := t.Format(CONTINUITY)
+	s := t.Format("20060102150405")
 	m := t.UnixNano() / 1e6 - t.UnixNano() / 1e9 * 1e3
 	ms := Sup(m, 3)
 	p := os.Getpid() % 1000

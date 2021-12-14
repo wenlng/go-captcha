@@ -92,7 +92,6 @@ func GetCaptcha() *Captcha {
  * @return error
  */
 func (cc *Captcha) SetRangChars(chars []string) error {
-	// 检测单词是否超出2个，超出会影响位置验证
 	var err error
 	if len(chars) > 0 {
 		for _, char := range chars {

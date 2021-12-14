@@ -15,11 +15,13 @@ import (
 	"time"
 )
 
+// Please use command line mode to start
+// go run main.go
 func main() {
 	// Example: Get captcha data
-	http.HandleFunc("/captcha-data", getCaptchaData)
+	http.HandleFunc("/go_captcha_data", getCaptchaData)
 	// Example: Post check data
-	http.HandleFunc("/check-data", checkCaptcha)
+	http.HandleFunc("/go_captcha_check_data", checkCaptcha)
 	// Example: demo
 	http.HandleFunc("/demo", demo)
 
@@ -40,7 +42,7 @@ func main() {
  */
 func demo(w http.ResponseWriter, r *http.Request) {
 	sessid := time.Now().UnixNano() / 1e6
-	t, _ := template.ParseFiles(getPWD() + "/__example/demo.html")
+	t, _ := template.ParseFiles(getPWD() + "/demo.html")
 	_ = t.Execute(w, map[string]interface{}{"sessid": sessid})
 }
 
@@ -72,25 +74,25 @@ func getCaptchaData(w http.ResponseWriter, r *http.Request) {
 	})
 
 	capt.SetFont([]string{
-		getPWD() + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
-		getPWD() + "/__example/resources/fonts/fzssksxl.ttf",
-		getPWD() + "/__example/resources/fonts/hyrunyuan.ttf",
+		getPWD() + "/resources/fonts/fzshengsksjw_cu.ttf",
+		getPWD() + "/resources/fonts/fzssksxl.ttf",
+		getPWD() + "/resources/fonts/hyrunyuan.ttf",
 	})
 
 	capt.SetBackground([]string{
-		getPWD() + "/__example/resources/images/1.jpg",
-		getPWD() + "/__example/resources/images/2.jpg",
-		getPWD() + "/__example/resources/images/3.jpg",
-		getPWD() + "/__example/resources/images/4.jpg",
-		getPWD() + "/__example/resources/images/5.jpg",
+		getPWD() + "/resources/images/1.jpg",
+		getPWD() + "/resources/images/2.jpg",
+		getPWD() + "/resources/images/3.jpg",
+		getPWD() + "/resources/images/4.jpg",
+		getPWD() + "/resources/images/5.jpg",
 	})
 
 	//capt.SetThumbBackground([]string{
-	//	getPWD() + "/__example/resources/images/thumb/r1.jpg",
-	//	getPWD() + "/__example/resources/images/thumb/r2.jpg",
-	//	getPWD() + "/__example/resources/images/thumb/r3.jpg",
-	//	getPWD() + "/__example/resources/images/thumb/r4.jpg",
-	//	getPWD() + "/__example/resources/images/thumb/r5.jpg",
+	//	getPWD() + "/resources/images/thumb/r1.jpg",
+	//	getPWD() + "/resources/images/thumb/r2.jpg",
+	//	getPWD() + "/resources/images/thumb/r3.jpg",
+	//	getPWD() + "/resources/images/thumb/r4.jpg",
+	//	getPWD() + "/resources/images/thumb/r5.jpg",
 	//})
 
 	//capt.SetThumbBgCirclesNum(200)
@@ -241,7 +243,7 @@ func checkDist(sx, sy, dx, dy, width int, height int) bool {
  * @return string
  */
 func getCacheDir() string {
-	return getPWD() + "/__example/.cache/"
+	return getPWD() + "/.cache/"
 }
 
 /**

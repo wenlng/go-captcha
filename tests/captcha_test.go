@@ -1,5 +1,5 @@
 /**
- * @Author Awen
+ * @Au.charshor Awen
  * @Description
  * @Date 2021/7/20
  **/
@@ -7,14 +7,19 @@
 package main
 
 import (
+	"encoding/base64"
 	"fmt"
 	"github.com/wenlng/go-captcha/captcha"
+	"io"
+	"log"
+	"os"
+	"strings"
 	"testing"
 )
 
 func TestImageSize(t *testing.T) {
 	capt := getCaptcha()
-
+	fmt.Println(capt)
 	capt.SetImageSize(&captcha.Size{Width: 300, Height: 300})
 
 	dots, b64, tb64, key, err := capt.Generate()
@@ -33,11 +38,28 @@ func TestSetThumbSize(t *testing.T) {
 
 	capt.SetThumbSize(&captcha.Size{Width: 300, Height: 300})
 
+	//capt.SetImageFontDistort(0)
+	//capt.SetImageFontDistort(0)
 	dots, b64, tb64, key, err := capt.Generate()
 	if err != nil {
 		panic(err)
 		return
 	}
+
+	file := getPWD() + "/tests/.cache/" + fmt.Sprintf("%v", captcha.RandInt(1, 200)) + "Img.png"
+	logFile, _ := os.OpenFile(file, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
+	defer logFile.Close()
+	i := strings.Index(b64, ",")
+	if i < 0 {
+		log.Fatal("no comma")
+	}
+	dec := base64.NewDecoder(base64.StdEncoding, strings.NewReader(b64[i+1:]))
+	io.Copy(logFile, dec)
+
+	if err != nil {
+		panic(err)
+	}
+
 	fmt.Println(len(b64))
 	fmt.Println(len(tb64))
 	fmt.Println(key)

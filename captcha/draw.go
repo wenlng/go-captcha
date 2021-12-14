@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"github.com/golang/freetype"
 	"golang.org/x/image/draw"
+	"golang.org/x/image/font"
 	"image"
 	"image/color"
 	"image/jpeg"
@@ -52,6 +53,8 @@ type DrawCanvas struct {
 	BackgroundSlimLineNum int
 	// 文本透明度
 	TextAlpha float64
+	// FontHinting
+	FontHinting font.Hinting
 
 	CaptchaDrawDot []*DrawDot
 }
@@ -351,6 +354,8 @@ func (cd *Draw) DrawTextImg(dot *DrawDot, params *DrawCanvas) (*Palette, *AreaPo
 
 	// 文字大小
 	dc.SetFontSize(float64(dot.Size))
+
+	dc.SetHinting(params.FontHinting)
 
 	// 文字颜色
 	hexColor, _ := ParseHexColor(dot.Color)

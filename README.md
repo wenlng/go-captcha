@@ -195,7 +195,8 @@ func main(){
 package main
 import (
     "fmt"
-    "os"
+    "golang.org/x/image/font"
+"os"
     "github.com/wenlng/go-captcha/captcha"
 )
 
@@ -238,6 +239,12 @@ func main(){
     // Desc: Set random DPI of captcha font, The best is 72
     // ====================================================
     capt.SetFontDPI(72)
+
+    // ====================================================
+    // Method: SetFontHinting(val font.Hinting);
+    // Desc: Set Hinting of captcha font (HintingNone,HintingVertical,HintingFull)
+    // ====================================================
+    capt.SetFontHinting(font.HintingFull)
 
     // ====================================================
     // Method: SetTextRangLen(val *captcha.RangeVal);

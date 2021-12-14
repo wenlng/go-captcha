@@ -240,6 +240,13 @@ func main(){
     capt.SetFontDPI(72)
 
     // ====================================================
+    // Method: SetFontHinting(val font.Hinting);
+    // Desc: 设置字体Hinting值 (HintingNone,HintingVertical,HintingFull)
+    // ====================================================
+    capt.SetFontHinting(font.HintingFull)
+
+
+    // ====================================================
     // Method: SetTextRangLen(val *captcha.RangeVal);
     // Desc: 设置验证码文本显示的总数随机范围
     // ====================================================

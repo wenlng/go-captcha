@@ -375,7 +375,7 @@ func (cc *Captcha) Generate() (map[int]CharDot, string, string, string, error) {
 
 // GenerateWithSize is a function
 /**
- * @Description: 生成验证码图片
+ * @Description: 			生成验证码图片
  * @param imageSize			主图尺寸
  * @param thumbnailSize		缩略图尺寸
  * @return CaptchaCharDot	位置信息
@@ -459,7 +459,6 @@ func (cc *Captcha) genDots(imageSize *Size, fontSize *RangeVal, chars string, pa
 		height -= padding
 	}
 
-	//sStr := strings.Replace(chars, ":", "", -1)
 	strs := strings.Split(chars, ":")
 	for i := 0; i < len(strs); i++ {
 		str := strs[i]

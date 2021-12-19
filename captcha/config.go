@@ -9,6 +9,7 @@ package captcha
 
 import (
 	"fmt"
+	"github.com/wenlng/go-captcha/captcha/assets"
 	"golang.org/x/image/font"
 	"image/color"
 	"math"
@@ -39,13 +40,13 @@ type Size struct {
  */
 const (
 	// 无扭曲
-	ThumbBackgroundDistortNone = iota
+	DistortNone = iota
 	// 扭曲程度 1-5级别
-	ThumbBackgroundDistortLevel1
-	ThumbBackgroundDistortLevel2
-	ThumbBackgroundDistortLevel3
-	ThumbBackgroundDistortLevel4
-	ThumbBackgroundDistortLevel5
+	DistortLevel1
+	DistortLevel2
+	DistortLevel3
+	DistortLevel4
+	DistortLevel5
 )
 
 // Config is a type
@@ -85,8 +86,10 @@ type Config struct {
 	rangThumbBackground []string
 	// 缩略图背景随机色	格式："#541245"
 	rangThumbBgColors []string
-	// 缩略图扭曲程度，值为 ThumbBackgroundDistort...,
+	// 缩略图扭曲程度，值为 Distort...,
 	thumbBgDistort int
+	// 缩略图文字扭曲程度，值为 Distort...,
+	thumbFontDistort int
 	// 缩略图小圆点数量
 	thumbBgCirclesNum int
 	// 缩略图线条数量
@@ -123,16 +126,20 @@ func GetCaptchaDefaultConfig() *Config {
 		rangFontSize:       &RangeVal{32, 42},
 		fontDPI:            72,
 		rangCheckFontSize:  &RangeVal{24, 30},
-		imageFontDistort:   ThumbBackgroundDistortLevel3,
+		imageFontDistort:   DistortNone,
 		imageFontAlpha:     1,
 		rangFontColors:     getRangeDarkColors(),
 		fontHinting: 		font.HintingFull,
 		imageSize:          &Size{300, 300},
 		thumbnailSize:      &Size{150, 40},
 		rangThumbBgColors:  getRangeLightColors(),
-		thumbBgDistort:     ThumbBackgroundDistortLevel3,
+		thumbFontDistort:   DistortLevel3,
+		thumbBgDistort:     DistortLevel3,
 		thumbBgCirclesNum:  15,
 		thumbBgSlimLineNum: 2,
+
+		rangFont: assets.DefaultBinFontList(),
+		rangBackground: assets.DefaultBinImageList(),
 	}
 }
 

@@ -126,7 +126,7 @@ func TestAlpha(t *testing.T) {
 func TestImageFontDistort(t *testing.T) {
 	capt := getCaptcha()
 
-	capt.SetImageFontDistort(captcha.ThumbBackgroundDistortLevel2)
+	capt.SetImageFontDistort(captcha.DistortLevel2)
 
 	dots, b64, tb64, key, err := capt.Generate()
 	if err != nil {

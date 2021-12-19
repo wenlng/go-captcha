@@ -18,7 +18,7 @@ import (
 func TestDrawTextImg(t *testing.T) {
 	draw := GetDraw()
 
-	drawDots := &captcha.DrawDot{
+	drawDots := captcha.DrawDot{
 		Dx:      0,
 		Dy:      0,
 		FontDPI: 72,
@@ -31,7 +31,7 @@ func TestDrawTextImg(t *testing.T) {
 		Font:    getPWD() + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
 	}
 
-	canvas, ap, _ := draw.DrawTextImg(drawDots, &captcha.DrawCanvas{
+	canvas, ap, _ := draw.DrawTextImg(drawDots, captcha.DrawCanvas{
 		Width:      20,
 		Height:     20,
 		Background: getPWD() + "/__example/resources/images/1.jpg",
@@ -50,7 +50,7 @@ func TestDrawTextImg(t *testing.T) {
 	var coArr = []color.RGBA{
 		co,
 	}
-	canvas2 := draw.CreateCanvasWithPalette(&captcha.DrawCanvas{
+	canvas2 := draw.CreateCanvasWithPalette(captcha.DrawCanvas{
 		Width:  width,
 		Height: height,
 	}, coArr)

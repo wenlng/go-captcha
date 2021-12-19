@@ -82,9 +82,6 @@ func main(){
 ```
 
 ### 快速使用
-在生成验证码数据前必须先设置 SetFont 和 SetBackground 的配置项
-<br/>
-你可以直接拷贝实例中 "__example/resources" 的图片资源和字体文件到你的项目中使用
 ```go
 package main
 import (
@@ -98,20 +95,6 @@ func main(){
     capt := captcha.GetCaptcha()
     
     path, _ := os.Getwd()
-    // ==========================
-    // 必须设置
-    // --------------------------
-    // 设置验证码字体
-    capt.SetFont([]string{
-        path + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
-        path + "/__example/resources/fonts/fzssksxl.ttf",
-    })
-    
-    // 设置验证码背景图
-    capt.SetBackground([]string{
-        path + "/__example/resources/images/1.jpg",
-        path + "/__example/resources/images/2.jpg",
-    })
     
     // 生成验证码
     dots, b64, tb64, key, err := capt.Generate()
@@ -158,6 +141,8 @@ func main(){
 ```
 
 ### 验证码配置
+你可以直接拷贝实例中 "__example/resources" 的图片资源和字体文件到你的项目中使用
+
 #### 文本相关的配置
 ```go
 package main
@@ -302,7 +287,7 @@ func main(){
     // Method: SetImageFontDistort(val int);
     // Desc:设置验证码字体的扭曲程度
     // ====================================================
-    capt.SetImageFontDistort(captcha.ThumbBackgroundDistortLevel2)
+    capt.SetImageFontDistort(captcha.DistortLevel2)
   
     // ====================================================
     // Method: SetThumbBgColors(colors []string);
@@ -324,9 +309,15 @@ func main(){
 
     // ====================================================
     // Method: SetThumbBgDistort(val int);
-    // Desc:设置缩略验证码的扭曲程度
+    // Desc:设置缩略验证码背景的扭曲程度
     // ====================================================
-    capt.SetThumbBgDistort(captcha.ThumbBackgroundDistortLevel2)
+    capt.SetThumbBgDistort(captcha.DistortLevel2)
+
+    // ====================================================
+    // Method: SetThumbFontDistort(val int);
+    // Desc:设置缩略验证码字体的扭曲程度
+    // ====================================================
+    capt.SetThumbFontDistort(captcha.DistortLevel2)
 
     // ====================================================
     // Method: SetThumbBgCirclesNum(val int);

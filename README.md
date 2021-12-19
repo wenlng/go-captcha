@@ -82,9 +82,6 @@ func main(){
 ```
 
 ### Quick Use
-The SetFont and SetBackground configuration must be set
-<br/>
-You can copy the resource files under the "__example/resources" to the directory of your project
 ```go
 package main
 import (
@@ -96,22 +93,6 @@ import (
 func main(){
     // Captcha Single Instances
     capt := captcha.GetCaptcha()
-    
-    path, _ := os.Getwd()
-    // ==========================
-    // Config that must be set
-    // --------------------------
-    // Set font absolute path
-    capt.SetFont([]string{
-        path + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
-        path + "/__example/resources/fonts/fzssksxl.ttf",
-    })
-    
-    // Set background image absolute path
-    capt.SetBackground([]string{
-        path + "/__example/resources/images/1.jpg",
-        path + "/__example/resources/images/2.jpg",
-    })
     
     // Generate Captcha
     dots, b64, tb64, key, err := capt.Generate()
@@ -158,6 +139,7 @@ func main(){
 ```
 
 ### Set Configuration
+You can copy the resource files under the "__example/resources" to the directory of your project
 #### Set Chars
 ```go
 package main
@@ -302,7 +284,7 @@ func main(){
     // Method: SetImageFontDistort(val int);
     // Desc:Set distort of captcha font
     // ====================================================
-    capt.SetImageFontDistort(captcha.ThumbBackgroundDistortLevel2)
+    capt.SetImageFontDistort(captcha.DistortLevel2)
   
     // ====================================================
     // Method: SetThumbBgColors(colors []string);
@@ -324,9 +306,16 @@ func main(){
 
     // ====================================================
     // Method: SetThumbBgDistort(val int);
-    // Desc:Set distort of captcha thumb
+    // Desc:Set background distort of captcha thumb
     // ====================================================
-    capt.SetThumbBgDistort(captcha.ThumbBackgroundDistortLevel2)
+    capt.SetThumbBgDistort(captcha.DistortLevel2)
+
+    // ====================================================
+    // Method: SetThumbFontDistort(val int);
+    // Desc:Set font distort of captcha thumb
+    // ====================================================
+    capt.SetThumbFontDistort(captcha.DistortLevel2)
+
 
     // ====================================================
     // Method: SetThumbBgCirclesNum(val int);

@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"strconv"
 	"strings"
@@ -25,11 +26,11 @@ func main() {
 	// Example: demo
 	http.HandleFunc("/demo", demo)
 
+	log.Println("ListenAndServe 0.0.0.0:8082")
 	err := http.ListenAndServe(":8082", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
-	log.Println("ListenAndServe 0.0.0.0:8082")
 }
 
 // =========================================================
@@ -41,9 +42,9 @@ func main() {
  * @param r
  */
 func demo(w http.ResponseWriter, r *http.Request) {
-	sessid := time.Now().UnixNano() / 1e6
+	//sessid := time.Now().UnixNano() / 1e6
 	t, _ := template.ParseFiles(getPWD() + "/demo.html")
-	_ = t.Execute(w, map[string]interface{}{"sessid": sessid})
+	_ = t.Execute(w, map[string]interface{}{})
 }
 
 /**
@@ -73,19 +74,19 @@ func getCaptchaData(w http.ResponseWriter, r *http.Request) {
 		"#660033",
 	})
 
-	capt.SetFont([]string{
-		getPWD() + "/resources/fonts/fzshengsksjw_cu.ttf",
-		getPWD() + "/resources/fonts/fzssksxl.ttf",
-		getPWD() + "/resources/fonts/hyrunyuan.ttf",
-	})
-
-	capt.SetBackground([]string{
-		getPWD() + "/resources/images/1.jpg",
-		getPWD() + "/resources/images/2.jpg",
-		getPWD() + "/resources/images/3.jpg",
-		getPWD() + "/resources/images/4.jpg",
-		getPWD() + "/resources/images/5.jpg",
-	})
+	// capt.SetFont([]string{
+	// 	getPWD() + "/resources/fonts/fzshengsksjw_cu.ttf",
+	// 	getPWD() + "/resources/fonts/fzssksxl.ttf",
+	// 	getPWD() + "/resources/fonts/hyrunyuan.ttf",
+	// })
+//
+	// capt.SetBackground([]string{
+	// 	getPWD() + "/resources/images/1.jpg",
+	// 	getPWD() + "/resources/images/2.jpg",
+	// 	getPWD() + "/resources/images/3.jpg",
+	// 	getPWD() + "/resources/images/4.jpg",
+	// 	getPWD() + "/resources/images/5.jpg",
+	// })
 
 	//capt.SetThumbBackground([]string{
 	//	getPWD() + "/resources/images/thumb/r1.jpg",

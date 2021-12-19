@@ -154,6 +154,8 @@ func (p *Palette) distort(amplude float64, period float64) {
 			p.SetColorIndex(x, y, newP.ColorIndexAt(x, y))
 		}
 	}
+
+	newP.Palette = nil
 }
 
 /**

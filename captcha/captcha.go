@@ -13,6 +13,7 @@ import (
 	"golang.org/x/image/font"
 	"image"
 	"image/color"
+	"io/ioutil"
 	"math"
 	"math/rand"
 	"strings"
@@ -123,9 +124,22 @@ func (cc *Captcha) SetRangChars(chars []string) error {
 /**
  * @Description: 设置随机背景图片
  * @receiver cc
- * @param colors
+ * @param images
+ * @param args	true|false 是否强制刷新缓存
  */
-func (cc *Captcha) SetBackground(images []string) {
+func (cc *Captcha) SetBackground(images []string, args ...bool) {
+	for _, path := range images {
+		if has, err := PathExists(path); !has || err != nil {
+			panic(fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist", path))
+		}
+		bytes, err := ioutil.ReadFile(path)
+		if err != nil {
+			panic(err)
+		}
+
+		setAssetCache(path, bytes, len(args) > 0 && args[0])
+	}
+
 	cc.config.rangBackground = images
 }
 
@@ -133,9 +147,22 @@ func (cc *Captcha) SetBackground(images []string) {
 /**
  * @Description: 设置随机字体
  * @receiver cc
- * @param colors
+ * @param fonts
+ * @param args	true|false 是否强制刷新缓存
  */
-func (cc *Captcha) SetFont(fonts []string) {
+func (cc *Captcha) SetFont(fonts []string, args ...bool) {
+	for _, path := range fonts {
+		if has, err := PathExists(path); !has || err != nil {
+			panic(fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist", path))
+		}
+		bytes, err := ioutil.ReadFile(path)
+		if err != nil {
+			panic(err)
+		}
+
+		setAssetCache(path, bytes, len(args) > 0 && args[0])
+	}
+
 	cc.config.rangFont = fonts
 }
 
@@ -273,9 +300,22 @@ func (cc *Captcha) SetThumbBgColors(colors []string) {
 /**
  * @Description: 设置随机背景图片
  * @receiver cc
- * @param colors
+ * @param images
+ * @param args	true|false 是否强制刷新缓存
  */
-func (cc *Captcha) SetThumbBackground(images []string) {
+func (cc *Captcha) SetThumbBackground(images []string, args ...bool) {
+	for _, path := range images {
+		if has, err := PathExists(path); !has || err != nil {
+			panic(fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist", path))
+		}
+		bytes, err := ioutil.ReadFile(path)
+		if err != nil {
+			panic(err)
+		}
+
+		setAssetCache(path, bytes, len(args) > 0 && args[0])
+	}
+
 	cc.config.rangThumbBackground = images
 }
 
@@ -287,6 +327,17 @@ func (cc *Captcha) SetThumbBackground(images []string) {
  */
 func (cc *Captcha) SetThumbBgDistort(val int) {
 	cc.config.thumbBgDistort = val
+}
+
+
+// SetThumbFontDistort is a function
+/**
+ * @Description: 设置缩略图字体扭曲程度
+ * @receiver cc
+ * @param val
+ */
+func (cc *Captcha) SetThumbFontDistort(val int) {
+	cc.config.thumbFontDistort = val
 }
 
 // SetThumbBgCirclesNum is a function
@@ -323,27 +374,6 @@ func (cc *Captcha) checkConfig() error {
 		return fmt.Errorf("CaptchaConfig Error: No RangFont configured")
 	} else if len(cc.config.rangBackground) <= 0 {
 		return fmt.Errorf("CaptchaConfig Error: No RangBackground configured")
-	}
-
-	// 检测文件是否存在
-	for _, fontPath := range cc.config.rangFont {
-		if has, err := PathExists(fontPath); !has || err != nil {
-			return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission", fontPath)
-		}
-	}
-	for _, bgPath := range cc.config.rangBackground {
-		if has, err := PathExists(bgPath); !has || err != nil {
-			return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission", bgPath)
-		}
-	}
-
-	// 传有图片路径时检测背景是否存在
-	if len(cc.config.rangThumbBackground) > 0 {
-		for _, tBgPath := range cc.config.rangThumbBackground {
-			if has, err := PathExists(tBgPath); !has || err != nil {
-				return fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist or has no read permission", tBgPath)
-			}
-		}
 	}
 
 	// 检测验证文本范围最大值是否小于随机字符串的最小范围
@@ -533,10 +563,10 @@ func (cc *Captcha) rangeCheckDots(dots map[int]CharDot) (map[int]CharDot, string
  * @return string
  * @return error
  */
-func (cc *Captcha) genCaptchaImage(size *Size, dots map[int]CharDot) (string, error) {
-	var drawDots []*DrawDot
+func (cc *Captcha) genCaptchaImage(size *Size, dots map[int]CharDot) (base64 string, erro error) {
+	var drawDots []DrawDot
 	for _, dot := range dots {
-		drawDot := &DrawDot{
+		drawDot := DrawDot{
 			Dx:      dot.Dx,
 			Dy:      dot.Dy,
 			FontDPI: cc.config.fontDPI,
@@ -546,12 +576,13 @@ func (cc *Captcha) genCaptchaImage(size *Size, dots map[int]CharDot) (string, er
 			Size:    dot.Size,
 			Width:   dot.Width,
 			Height:  dot.Height,
-			Font:    cc.genRandWithString(cc.config.rangFont),
+			Font:   cc.genRandWithString(cc.config.rangFont),
 		}
+
 		drawDots = append(drawDots, drawDot)
 	}
 
-	img, err := cc.captchaDraw.Draw(&DrawCanvas{
+	img, err := cc.captchaDraw.Draw(DrawCanvas{
 		Width:             	size.Width,
 		Height:            	size.Height,
 		Background:        	cc.genRandWithString(cc.config.rangBackground),
@@ -561,12 +592,13 @@ func (cc *Captcha) genCaptchaImage(size *Size, dots map[int]CharDot) (string, er
 		CaptchaDrawDot:    	drawDots,
 	})
 	if err != nil {
-		return "", err
+		erro = err
+		return
 	}
 
 	// 转 base64
-	dist := cc.EncodeB64string(img)
-	return dist, err
+	base64 = cc.EncodeB64string(img)
+	return
 }
 
 /**
@@ -578,14 +610,14 @@ func (cc *Captcha) genCaptchaImage(size *Size, dots map[int]CharDot) (string, er
  * @return error
  */
 func (cc *Captcha) genCaptchaThumbImage(size *Size, dots map[int]CharDot) (string, error) {
-	var drawDots []*DrawDot
+	var drawDots []DrawDot
 
 	fontWidth := size.Width / len(dots)
 	for i, dot := range dots {
-		Dx := int(math.Max(float64(fontWidth*i+fontWidth/dot.Width), 8))
-		Dy := size.Height/2 + dot.Size/2 - rand.Intn(size.Height/16*len(dot.Text))
+		Dx := int(math.Max(float64(fontWidth * i + fontWidth / dot.Width), 8))
+		Dy := size.Height / 2 + dot.Size/2 - rand.Intn(size.Height / 16 * len(dot.Text))
 
-		drawDot := &DrawDot{
+		drawDot := DrawDot{
 			Dx:      Dx,
 			Dy:      Dy,
 			FontDPI: cc.config.fontDPI,
@@ -600,11 +632,11 @@ func (cc *Captcha) genCaptchaThumbImage(size *Size, dots map[int]CharDot) (strin
 		drawDots = append(drawDots, drawDot)
 	}
 
-	params := &DrawCanvas{
+	params := DrawCanvas{
 		Width:                 size.Width,
 		Height:                size.Height,
 		CaptchaDrawDot:        drawDots,
-		BackgroundDistort:     cc.getRandDistortWithLevel(cc.config.imageFontDistort),
+		BackgroundDistort:     cc.getRandDistortWithLevel(cc.config.thumbFontDistort),
 		BackgroundCirclesNum:  cc.config.thumbBgCirclesNum,
 		BackgroundSlimLineNum: cc.config.thumbBgSlimLineNum,
 	}
@@ -714,6 +746,10 @@ func (cc *Captcha) genRandChar(length int) string {
  */
 func (cc *Captcha) genRandWithString(strs []string) string {
 	strLen := len(strs)
+	if strLen == 0 {
+		return ""
+	}
+
 	index := RandInt(0, strLen)
 	if index >= strLen {
 		index = strLen - 1

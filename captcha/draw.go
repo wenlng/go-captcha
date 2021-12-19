@@ -14,11 +14,8 @@ import (
 	"golang.org/x/image/font"
 	"image"
 	"image/color"
-	"image/jpeg"
-	"io/ioutil"
 	"math"
 	mRand "math/rand"
-	"os"
 )
 
 // DrawDot is a type
@@ -45,7 +42,7 @@ type DrawCanvas struct {
 	Height int
 	// 背景图片
 	Background string
-	// 缩略图扭曲程度，值为 ThumbBackgroundDistort...,
+	// 缩略图扭曲程度，值为 Distort...,
 	BackgroundDistort int
 	// 缩略图小圆点数量
 	BackgroundCirclesNum int
@@ -56,7 +53,7 @@ type DrawCanvas struct {
 	// FontHinting
 	FontHinting font.Hinting
 
-	CaptchaDrawDot []*DrawDot
+	CaptchaDrawDot []DrawDot
 }
 
 // AreaPoint is a type
@@ -81,7 +78,7 @@ type Draw struct{}
  * @param colorArr
  * @return *Palette
  */
-func (cd *Draw) CreateCanvasWithPalette(params *DrawCanvas, colorArr []color.RGBA) *Palette {
+func (cd *Draw) CreateCanvasWithPalette(params DrawCanvas, colorArr []color.RGBA) *Palette {
 	width := params.Width
 	height := params.Height
 	p := []color.Color{
@@ -103,10 +100,10 @@ func (cd *Draw) CreateCanvasWithPalette(params *DrawCanvas, colorArr []color.RGB
  * @param isAlpha
  * @return *image.NRGBA
  */
-func (cd *Draw) CreateCanvas(params *DrawCanvas, isAlpha bool) *image.NRGBA {
+func (cd *Draw) CreateCanvas(params DrawCanvas, isAlpha bool) (img *image.NRGBA) {
 	width := params.Width
 	height := params.Height
-	img := image.NewNRGBA(image.Rect(0, 0, width, height))
+	img = image.NewNRGBA(image.Rect(0, 0, width, height))
 	// 画背景
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
@@ -117,7 +114,7 @@ func (cd *Draw) CreateCanvas(params *DrawCanvas, isAlpha bool) *image.NRGBA {
 			}
 		}
 	}
-	return img
+	return
 }
 
 // Draw is a function
@@ -128,7 +125,7 @@ func (cd *Draw) CreateCanvas(params *DrawCanvas, isAlpha bool) *image.NRGBA {
  * @return image.Image
  * @return error
  */
-func (cd *Draw) Draw(params *DrawCanvas) (image.Image, error) {
+func (cd *Draw) Draw(params DrawCanvas) (image.Image, error) {
 	dots := params.CaptchaDrawDot
 	canvas := cd.CreateCanvas(params, true)
 
@@ -147,7 +144,7 @@ func (cd *Draw) Draw(params *DrawCanvas) (image.Image, error) {
 				co := textImg.At(x, y)
 				if _, _, _, a := co.RGBA(); a > 0 {
 					if x >= minX && x <= maxX && y >= minY && y <= maxY {
-						canvas.Set(dot.Dx+(x-minX), dot.Dy-height+(y-minY), textImg.At(x, y))
+						canvas.Set(dot.Dx + (x - minX), dot.Dy - height + (y - minY), textImg.At(x, y))
 					}
 				}
 			}
@@ -158,15 +155,15 @@ func (cd *Draw) Draw(params *DrawCanvas) (image.Image, error) {
 	}
 
 	bgFile := params.Background
-	imgBg, iErr := os.Open(bgFile)
+	imgBg, iErr := getAssetCache(bgFile)
 	if iErr != nil {
 		return canvas, iErr
 	}
-	img, dErr := jpeg.Decode(imgBg)
+
+	img, dErr := decodingBinaryToImage(imgBg)
 	if dErr != nil {
 		return canvas, dErr
 	}
-	defer imgBg.Close()
 
 	b := canvas.Bounds()
 	m := image.NewNRGBA(b)
@@ -187,7 +184,7 @@ func (cd *Draw) Draw(params *DrawCanvas) (image.Image, error) {
  * @return image.Image
  * @return error
  */
-func (cd *Draw) DrawWithPalette(params *DrawCanvas, colorA []color.Color, colorB []color.Color) (image.Image, error) {
+func (cd *Draw) DrawWithPalette(params DrawCanvas, colorA []color.Color, colorB []color.Color) (image.Image, error) {
 	dots := params.CaptchaDrawDot
 	p := []color.Color{
 		color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0x00},
@@ -211,7 +208,7 @@ func (cd *Draw) DrawWithPalette(params *DrawCanvas, colorA []color.Color, colorB
 
 	for _, dot := range dots {
 		// 读字体数据
-		fontBytes, err := ioutil.ReadFile(dot.Font)
+		fontBytes, err := getAssetCache(dot.Font)
 		if err != nil {
 			return canvas, err
 		}
@@ -245,15 +242,14 @@ func (cd *Draw) DrawWithPalette(params *DrawCanvas, colorA []color.Color, colorB
 
 	if params.Background != "" {
 		bgFile := params.Background
-		imgBg, iErr := os.Open(bgFile)
+		imgBg, iErr := getAssetCache(bgFile)
 		if iErr != nil {
 			return canvas, iErr
 		}
-		img, dErr := jpeg.Decode(imgBg)
+		img, dErr := decodingBinaryToImage(imgBg)
 		if dErr != nil {
 			return canvas, dErr
 		}
-		defer imgBg.Close()
 
 		b := img.Bounds()
 		m := image.NewNRGBA(b)
@@ -324,20 +320,20 @@ func (cd *Draw) genRandColor(co []color.Color) color.RGBA {
  * @return *AreaPoint
  * @return error
  */
-func (cd *Draw) DrawTextImg(dot *DrawDot, params *DrawCanvas) (*Palette, *AreaPoint, error) {
+func (cd *Draw) DrawTextImg(dot DrawDot, params DrawCanvas) (*Palette, *AreaPoint, error) {
 	co, _ := ParseHexColor(dot.Color)
 	var coArr = []color.RGBA{
 		co,
 	}
 
 	co.A = cd.formatAlpha(params.TextAlpha)
-	canvas := cd.CreateCanvasWithPalette(&DrawCanvas{
+	canvas := cd.CreateCanvasWithPalette(DrawCanvas{
 		Width:  dot.Width + 10,
 		Height: dot.Height + 10,
 	}, coArr)
 
 	// 读字体数据
-	fontBytes, err := ioutil.ReadFile(dot.Font)
+	fontBytes, err := getAssetCache(dot.Font)
 	if err != nil {
 		return canvas, nil, err
 	}
@@ -459,7 +455,7 @@ func (cd *Draw) centerWithImage(m image.Image) image.Image {
 	centerImage := image.NewRGBA(image.Rect(0, 0, max, max))
 	for x := m.Bounds().Min.X; x < m.Bounds().Max.X; x++ {
 		for y := m.Bounds().Min.Y; y < m.Bounds().Max.Y; y++ {
-			centerImage.Set(x, temp+y, m.At(x, y))
+			centerImage.Set(x, temp + y, m.At(x, y))
 		}
 	}
 	return centerImage
@@ -483,7 +479,7 @@ func (cd *Draw) strikeThrough(m *Palette, dotSize int) {
 		yo := amplitude * math.Sin(float64(x)*dx)
 		for yn := 0; yn < dotSize; yn++ {
 			r := RandInt(0, dotSize)
-			m.drawCircle(x+int(xo), y+int(yo)+(yn*dotSize), r/2, 1)
+			m.drawCircle(x + int(xo), y + int(yo) + (yn * dotSize), r / 2, 1)
 		}
 	}
 }
@@ -504,11 +500,11 @@ func (cd *Draw) drawSlimLine(m *Palette, num int, colorB []color.Color) {
 		point2 := Point{X: mRand.Intn(first) + end, Y: mRand.Intn(y)}
 
 		if i%2 == 0 {
-			point1.Y = mRand.Intn(y) + y*2
+			point1.Y = mRand.Intn(y) + y * 2
 			point2.Y = mRand.Intn(y)
 		} else {
-			point1.Y = mRand.Intn(y) + y*(i%2)
-			point2.Y = mRand.Intn(y) + y*2
+			point1.Y = mRand.Intn(y) + y * (i % 2)
+			point2.Y = mRand.Intn(y) + y * 2
 		}
 
 		m.drawBeeline(point1, point2, cd.genRandColor(colorB))
@@ -527,8 +523,8 @@ func (cd *Draw) fillWithCircles(m *Palette, n, maxRadius int, circleCount int) {
 	maxx := m.Bounds().Max.X
 	maxy := m.Bounds().Max.Y
 	for i := 0; i < n; i++ {
-		colorIdx := uint8(RandInt(1, circleCount-1))
+		colorIdx := uint8(RandInt(1, circleCount - 1))
 		r := RandInt(1, maxRadius)
-		m.drawCircle(RandInt(r, maxx-r), RandInt(r, maxy-r), r, colorIdx)
+		m.drawCircle(RandInt(r, maxx - r), RandInt(r, maxy - r), r, colorIdx)
 	}
 }

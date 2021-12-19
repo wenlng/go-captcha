@@ -38,6 +38,8 @@ func TestSetThumbSize(t *testing.T) {
 
 	capt.SetThumbSize(&captcha.Size{Width: 300, Height: 300})
 
+	chars := []string{"HE", "CA", "WO", "NE", "HT", "IE", "PG", "GI", "CH", "CO", "DA"}
+	_ = capt.SetRangChars(chars)
 	//capt.SetImageFontDistort(0)
 	//capt.SetImageFontDistort(0)
 	dots, b64, tb64, key, err := capt.Generate()
@@ -45,7 +47,6 @@ func TestSetThumbSize(t *testing.T) {
 		panic(err)
 		return
 	}
-
 	file := getPWD() + "/tests/.cache/" + fmt.Sprintf("%v", captcha.RandInt(1, 200)) + "Img.png"
 	logFile, _ := os.OpenFile(file, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 	defer logFile.Close()

@@ -347,18 +347,7 @@ import (
 
 func main(){
     capt := captcha.GetCaptcha()
-    
-    path, _ := os.Getwd()
-    // set configuration ...
-    // ==========================
-    capt.SetFont([]string{
-        path + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
-    })
-    capt.SetBackground([]string{
-        path + "/__example/resources/images/1.jpg",
-        path + "/__example/resources/images/2.jpg",
-    })
-    
+   
     // generate ...
     // ====================================================
     // dots:  文本字符的位置信息

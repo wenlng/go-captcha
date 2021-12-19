@@ -6,6 +6,8 @@
 
 package assets
 
+import "fmt"
+
 type AssetData struct {
 	// 路径
 	Path string

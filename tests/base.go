@@ -32,7 +32,6 @@ func getCaptcha() *captcha.Captcha {
 
 	capt.SetFont([]string{
 		getPWD() + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
-		getPWD() + "/__example/resources/fonts/fzssksxl.ttf",
 		getPWD() + "/__example/resources/fonts/hyrunyuan.ttf",
 	})
 

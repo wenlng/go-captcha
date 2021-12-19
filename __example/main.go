@@ -76,7 +76,6 @@ func getCaptchaData(w http.ResponseWriter, r *http.Request) {
 
 	// capt.SetFont([]string{
 	// 	getPWD() + "/resources/fonts/fzshengsksjw_cu.ttf",
-	// 	getPWD() + "/resources/fonts/fzssksxl.ttf",
 	// 	getPWD() + "/resources/fonts/hyrunyuan.ttf",
 	// })
 //

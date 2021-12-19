@@ -201,7 +201,6 @@ func main(){
     // ====================================================
     capt.SetFont([]string{
         path + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
-        path + "/__example/resources/fonts/fzssksxl.ttf",
     })
 
     // ====================================================
@@ -352,7 +351,6 @@ func main(){
     // ==========================
     capt.SetFont([]string{
         path + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
-        path + "/__example/resources/fonts/fzssksxl.ttf",
     })
     capt.SetBackground([]string{
         path + "/__example/resources/images/1.jpg",

@@ -286,6 +286,11 @@ func (cc *Captcha) SetTextRangAnglePos(pos []RangeVal) {
  * @param val
  */
 func (cc *Captcha) SetRangCheckTextLen(val RangeVal) {
+	// 检测验证文本范围最大值是否小于随机字符串的最小范围
+	if cc.config.rangCheckTextLen.Max > cc.config.rangTextLen.Min {
+		panic(fmt.Errorf("CaptchaConfig Error: RangCheckTextLen.max must be less than or equal to RangTextLen.min"))
+	}
+
 	cc.config.rangCheckTextLen = val
 }
 
@@ -383,20 +388,14 @@ func (cc *Captcha) SetThumbBgSlimLineNum(val int) {
  * @return error
  */
 func (cc *Captcha) checkConfig() error {
-	if len(cc.config.rangFont) <= 0 {
-		return fmt.Errorf("CaptchaConfig Error: No RangFont configured")
-	} else if len(cc.config.rangBackground) <= 0 {
-		return fmt.Errorf("CaptchaConfig Error: No RangBackground configured")
-	}
-
-	// 检测验证文本范围最大值是否小于随机字符串的最小范围
-	if cc.config.rangCheckTextLen.Max > cc.config.rangTextLen.Min {
-		return fmt.Errorf("CaptchaConfig Error: RangCheckTextLen.max must be less than or equal to RangTextLen.min")
+	// 验证颜色总和是否超出255个
+	if len(cc.config.rangFontColors) >= 255 {
+		return fmt.Errorf("CaptchaConfig Error: len(rangFontColors) must be less than or equal to 255")
 	}
 
 	// 验证颜色总和是否超出255个
-	if len(cc.config.rangFontColors)+len(cc.config.rangThumbBgColors) >= 255 {
-		return fmt.Errorf("CaptchaConfig Error: len(RangFontColors + RangThumbBgColors) must be less than or equal to 255")
+	if len(cc.config.rangThumbFontColors) + len(cc.config.rangThumbBgColors) >= 255 {
+		return fmt.Errorf("CaptchaConfig Error: len(rangThumbBgColors + RangThumbBgColors) must be less than or equal to 255")
 	}
 
 	return nil

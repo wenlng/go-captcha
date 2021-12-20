@@ -19,10 +19,10 @@ go-captcha, 一个简洁易用、交互友好、高安全性的"行为式验证�
 <br/>
 
 <div align="center">
-    <img src="http://47.104.180.148/go-captcha/go-captcha-01.png?v=5" alt="Reward Support">
+    <img src="http://47.104.180.148/go-captcha/go-captcha-01.png?v=7" alt="Reward Support">
     <br/>
     <br/> 
-    <img src="http://47.104.180.148/go-captcha/go-captcha.jpg?v=5" alt="Reward Support">
+    <img src="http://47.104.180.148/go-captcha/go-captcha.jpg?v=7" alt="Reward Support">
     <br/>
     <br/>
 </div>

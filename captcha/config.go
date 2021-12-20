@@ -115,7 +115,7 @@ func GetCaptchaDefaultChars() *[]string {
  */
 func GetCaptchaDefaultConfig() *Config {
 	return &Config{
-			rangTextLen:      	RangeVal{6, 7},
+		rangTextLen:      		RangeVal{6, 7},
 		rangCheckTextLen: 		RangeVal{2, 4},
 		rangTexAnglePos: 		[]RangeVal{
 			{1, 15},

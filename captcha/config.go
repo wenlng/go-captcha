@@ -55,45 +55,47 @@ const (
  */
 type Config struct {
 	// 随机字符串长度范围
-	rangTextLen *RangeVal
+	rangTextLen 		RangeVal
 	// 随机验证字符串长度范围, 注意：RangCheckTextLen < RangTextLen
-	rangCheckTextLen *RangeVal
+	rangCheckTextLen 	RangeVal
 	// 随机文本角度范围集合
-	rangTexAnglePos []*RangeVal
+	rangTexAnglePos 	[]RangeVal
 	// 随机文本尺寸范围集合
-	rangFontSize *RangeVal
+	rangFontSize 		RangeVal
 	// 随机缩略文本尺寸范围集合
-	rangCheckFontSize *RangeVal
+	rangCheckFontSize 	RangeVal
 	// 随机文本颜色	格式："#541245"
-	rangFontColors []string
+	rangFontColors 		[]string
+	// 缩略图随机文本颜色	格式："#541245"
+	rangThumbFontColors []string
 	// 随机字体	格式：字体绝对路径字符串, /home/..../xxx.ttf
-	rangFont []string
+	rangFont 			[]string
 	// 屏幕每英寸的分辨率
-	fontDPI int
+	fontDPI 			int
 	// 随机验证码背景图		格式：图片绝对路径字符串, /home/..../xxx.png
-	rangBackground []string
+	rangBackground 		[]string
 	// 验证码尺寸, 注意：高度 > RangFontSize.max , 长度 > RangFontSize.max * RangFontSize.max
-	imageSize *Size
+	imageSize 			Size
 	// 验证码文本扭曲程度
-	imageFontDistort int
+	imageFontDistort 	int
 	// 验证码文本透明度 0-1
-	imageFontAlpha float64
+	imageFontAlpha 		float64
 	// 缩略图尺寸, 注意：高度 > RangCheckFontSize.max , 长度 > RangCheckFontSize.max * RangFontSize.max
-	thumbnailSize *Size
+	thumbnailSize  		Size
 	// 字体Hinting
-	fontHinting font.Hinting
+	fontHinting 		font.Hinting
 	// 随机缩略背景图		格式：图片绝对路径字符串, /home/..../xxx.png
 	rangThumbBackground []string
 	// 缩略图背景随机色	格式："#541245"
-	rangThumbBgColors []string
+	rangThumbBgColors 	[]string
 	// 缩略图扭曲程度，值为 Distort...,
-	thumbBgDistort int
+	thumbBgDistort 		int
 	// 缩略图文字扭曲程度，值为 Distort...,
-	thumbFontDistort int
+	thumbFontDistort 	int
 	// 缩略图小圆点数量
-	thumbBgCirclesNum int
+	thumbBgCirclesNum 	int
 	// 缩略图线条数量
-	thumbBgSlimLineNum int
+	thumbBgSlimLineNum 	int
 }
 
 // GetCaptchaDefaultChars is a type
@@ -113,9 +115,9 @@ func GetCaptchaDefaultChars() *[]string {
  */
 func GetCaptchaDefaultConfig() *Config {
 	return &Config{
-		rangTextLen:      &RangeVal{6, 7},
-		rangCheckTextLen: &RangeVal{2, 4},
-		rangTexAnglePos: []*RangeVal{
+			rangTextLen:      	RangeVal{6, 7},
+		rangCheckTextLen: 		RangeVal{2, 4},
+		rangTexAnglePos: 		[]RangeVal{
 			{1, 15},
 			{15, 30},
 			{30, 45},
@@ -123,23 +125,54 @@ func GetCaptchaDefaultConfig() *Config {
 			{330, 345},
 			{345, 359},
 		},
-		rangFontSize:       &RangeVal{32, 42},
-		fontDPI:            72,
-		rangCheckFontSize:  &RangeVal{24, 30},
-		imageFontDistort:   DistortNone,
-		imageFontAlpha:     1,
-		rangFontColors:     getRangeDarkColors(),
-		fontHinting: 		font.HintingFull,
-		imageSize:          &Size{300, 300},
-		thumbnailSize:      &Size{150, 40},
-		rangThumbBgColors:  getRangeLightColors(),
-		thumbFontDistort:   DistortLevel3,
-		thumbBgDistort:     DistortLevel3,
-		thumbBgCirclesNum:  15,
-		thumbBgSlimLineNum: 2,
+		rangFontSize:       	RangeVal{32, 42},
+		fontDPI:            	72,
+		rangCheckFontSize:  	RangeVal{24, 30},
+		imageFontDistort:   	DistortNone,
+		imageFontAlpha:     	1,
+		rangFontColors:     	getDefaultTextColors(),
+		rangThumbFontColors:    getDefaultThumbTextColors(),
+		fontHinting: 			font.HintingFull,
+		imageSize:          	Size{300, 300},
+		thumbnailSize:      	Size{150, 40},
+		rangThumbBgColors:  	getRangeLightColors(),
+		thumbFontDistort:   	DistortLevel3,
+		thumbBgDistort:     	DistortLevel4,
+		thumbBgCirclesNum:  	15,
+		thumbBgSlimLineNum: 	2,
 
-		rangFont: assets.DefaultBinFontList(),
-		rangBackground: assets.DefaultBinImageList(),
+		rangFont: 				assets.DefaultBinFontList(),
+		rangBackground: 		assets.DefaultBinImageList(),
+	}
+}
+
+/**
+ * @Description: 获取默认文本颜色
+ * @return []string
+ */
+func getDefaultTextColors() []string {
+	return []string{
+		"#fde98e",
+		"#60c1ff",
+		"#fcb08e",
+		"#fb88ff",
+		"#b4fed4",
+		"#cbfaa9",
+	}
+}
+
+/**
+ * @Description: 获取默认缩略图文本颜色
+ * @return []string
+ */
+func getDefaultThumbTextColors() []string {
+	return []string{
+		"#006600",
+		"#005db9",
+		"#aa002a",
+		"#875400",
+		"#6e3700",
+		"#660033",
 	}
 }
 

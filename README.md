@@ -178,7 +178,7 @@ package main
 import (
     "fmt"
     "golang.org/x/image/font"
-"os"
+    "os"
     "github.com/wenlng/go-captcha/captcha"
 )
 
@@ -204,16 +204,16 @@ func main(){
     })
 
     // ====================================================
-    // Method: SetImageSize(size *Size);
+    // Method: SetImageSize(size Size);
     // Desc: Set size of captcha
     // ====================================================
-    capt.SetImageSize(&captcha.Size{300, 300})
+    capt.SetImageSize(captcha.Size{300, 300})
 
     // ====================================================
-    // Method: SetThumbSize(size *Size);
+    // Method: SetThumbSize(size Size);
     // Desc: Set size of captcha thumb
     // ====================================================
-    capt.SetThumbSize(&captcha.Size{150, 40})
+    capt.SetThumbSize(captcha.Size{150, 40})
 
     // ====================================================
     // Method: SetFontDPI(val int);
@@ -228,34 +228,43 @@ func main(){
     capt.SetFontHinting(font.HintingFull)
 
     // ====================================================
-    // Method: SetTextRangLen(val *captcha.RangeVal);
+    // Method: SetTextRangLen(val captcha.RangeVal);
     // Desc: Set random length of captcha text
     // ====================================================
-    capt.SetTextRangLen(&captcha.RangeVal{6, 7})
+    capt.SetTextRangLen(captcha.RangeVal{6, 7})
 
     // ====================================================
-    // Method: SetRangFontSize(val *captcha.RangeVal);
+    // Method: SetRangFontSize(val captcha.RangeVal);
     // Desc: Set random size of captcha text
     // ====================================================
-    capt.SetRangFontSize(&captcha.RangeVal{32, 42})
+    capt.SetRangFontSize(captcha.RangeVal{32, 42})
 
     // ====================================================
-    // Method: SetRangCheckTextLen(val *captcha.RangeVal);
+    // Method: SetRangCheckTextLen(val captcha.RangeVal);
     // Desc:Set random length of check text
     // ====================================================
-    capt.SetRangCheckTextLen(&captcha.RangeVal{2, 4})
+    capt.SetRangCheckTextLen(captcha.RangeVal{2, 4})
 
     // ====================================================
-    // Method: SetRangCheckFontSize(val *captcha.RangeVal);
+    // Method: SetRangCheckFontSize(val captcha.RangeVal);
     // Desc:Set random size of check text
     // ====================================================
-    capt.SetRangCheckFontSize(&captcha.RangeVal{24, 30})
+    capt.SetRangCheckFontSize(captcha.RangeVal{24, 30})
     
     // ====================================================
     // Method: SetTextRangFontColors(colors []string);
     // Desc: Set random hex color of captcha text
     // ====================================================
     capt.SetTextRangFontColors([]string{
+        "#1d3f84",
+        "#3a6a1e",
+    })
+ 
+    // ====================================================
+    // Method: SetThumbTextRangFontColors(colors []string);
+    // Desc: Set random hex color of captcha text
+    // ====================================================
+    capt.SetThumbTextRangFontColors([]string{
         "#1d3f84",
         "#3a6a1e",
     })
@@ -267,10 +276,10 @@ func main(){
     capt.SetImageFontAlpha(0.5)
 
     // ====================================================
-    // Method: SetTextRangAnglePos(pos []*RangeVal);
+    // Method: SetTextRangAnglePos(pos []RangeVal);
     // Desc:Set angle of captcha text
     // ====================================================
-    capt.SetTextRangAnglePos([]*captcha.RangeVal{
+    capt.SetTextRangAnglePos([]captcha.RangeVal{
         {1, 15},
         {15, 30},
         {30, 45},
@@ -314,7 +323,6 @@ func main(){
     // Desc:Set font distort of captcha thumb
     // ====================================================
     capt.SetThumbFontDistort(captcha.DistortLevel2)
-
 
     // ====================================================
     // Method: SetThumbBgCirclesNum(val int);

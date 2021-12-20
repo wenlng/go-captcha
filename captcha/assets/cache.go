@@ -31,7 +31,7 @@ func findAsset(path string) ([]byte, error) {
  */
 func DefaultBinFontList() []string {
 	return []string{
-		"assets/fonts/hyrunyuan.ttf",
+		"assets/fonts/fzshengsksjw_cu.ttf",
 	}
 }
 

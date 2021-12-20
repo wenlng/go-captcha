@@ -26,8 +26,8 @@ func main() {
 	// Example: demo
 	http.HandleFunc("/demo", demo)
 
-	log.Println("ListenAndServe 0.0.0.0:8082")
-	err := http.ListenAndServe(":8082", nil)
+	log.Println("ListenAndServe 0.0.0.0:8002")
+	err := http.ListenAndServe(":8002", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
@@ -64,28 +64,36 @@ func getCaptchaData(w http.ResponseWriter, r *http.Request) {
 	//chars := []string{"你","好","呀","这","是","点","击","验","证","码","哟"}
 	//_ = capt.SetRangChars(chars)
 
-	capt.SetTextRangFontColors([]string{
-		"#006600",
-		"#005db9",
-		"#aa002a",
-		"#875400",
-		"#6e3700",
-		"#333333",
-		"#660033",
-	})
+	//capt.SetTextRangFontColors([]string{
+	//	"#fdefac",
+	//	"#8abcff",
+	//	"#ffa37a",
+	//	"#fcb3ff",
+	//	"#b4fed4",
+	//	"#cbfaa9",
+	//})
+	//
+	//capt.SetThumbTextRangFontColors([]string{
+	//	"#006600",
+	//	"#005db9",
+	//	"#aa002a",
+	//	"#875400",
+	//	"#6e3700",
+	//	"#660033",
+	//})
 
 	// capt.SetFont([]string{
 	// 	getPWD() + "/resources/fonts/fzshengsksjw_cu.ttf",
 	// 	getPWD() + "/resources/fonts/hyrunyuan.ttf",
 	// })
-//
-	// capt.SetBackground([]string{
-	// 	getPWD() + "/resources/images/1.jpg",
-	// 	getPWD() + "/resources/images/2.jpg",
-	// 	getPWD() + "/resources/images/3.jpg",
-	// 	getPWD() + "/resources/images/4.jpg",
-	// 	getPWD() + "/resources/images/5.jpg",
-	// })
+
+	//capt.SetBackground([]string{
+	//	getPWD() + "/resources/images/1.jpg",
+	//	getPWD() + "/resources/images/2.jpg",
+	//	getPWD() + "/resources/images/3.jpg",
+	//	getPWD() + "/resources/images/4.jpg",
+	//	getPWD() + "/resources/images/5.jpg",
+	//})
 
 	//capt.SetThumbBackground([]string{
 	//	getPWD() + "/resources/images/thumb/r1.jpg",
@@ -163,9 +171,10 @@ func checkCaptcha(w http.ResponseWriter, r *http.Request) {
 		for i, dot := range dct {
 			j := i * 2
 			k := i*2 + 1
-			a, _ := strconv.Atoi(src[j])
-			b, _ := strconv.Atoi(src[k])
-			chkRet = checkDist(a, b, dot.Dx, dot.Dy, dot.Width, dot.Height)
+			sx, _ := strconv.ParseFloat(fmt.Sprintf("%v", src[j]), 64)
+			sy, _ := strconv.ParseFloat(fmt.Sprintf("%v", src[k]), 64)
+			// 检测点位置
+			chkRet = captcha.CheckPointDist(int64(sx), int64(sy), int64(dot.Dx), int64(dot.Dy), int64(dot.Width), int64(dot.Height))
 			if !chkRet {
 				break
 			}
@@ -231,7 +240,7 @@ func readCache(file string) string {
  * @param height
  * @return bool
  */
-func checkDist(sx, sy, dx, dy, width int, height int) bool {
+func checkDist(sx, sy, dx, dy, width, height int64) bool {
 	return sx >= dx &&
 		sx <= dx+width &&
 		sy <= dy &&

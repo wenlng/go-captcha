@@ -181,6 +181,7 @@ package main
 import (
     "fmt"
     "os"
+    "golang.org/x/image/font"
     "github.com/wenlng/go-captcha/captcha"
 )
 
@@ -206,20 +207,20 @@ func main(){
     })
 
     // ====================================================
-    // Method: SetImageSize(size *Size);
+    // Method: SetImageSize(size Size);
     // Desc: 设置验证码主图的尺寸
     // ====================================================
-    capt.SetImageSize(&captcha.Size{300, 300})
+    capt.SetImageSize(captcha.Size{300, 300})
 
     // ====================================================
-    // Method: SetThumbSize(size *Size);
+    // Method: SetThumbSize(size Size);
     // Desc: 设置验证码缩略图的尺寸
     // ====================================================
-    capt.SetThumbSize(&captcha.Size{150, 40})
+    capt.SetThumbSize(captcha.Size{150, 40})
 
     // ====================================================
     // Method: SetFontDPI(val int);
-    // Desc: 设置验证码字体DPI，最好是72
+    // Desc: 设置验证码字体DPI，最优72
     // ====================================================
     capt.SetFontDPI(72)
 
@@ -229,36 +230,44 @@ func main(){
     // ====================================================
     capt.SetFontHinting(font.HintingFull)
 
-
     // ====================================================
-    // Method: SetTextRangLen(val *captcha.RangeVal);
+    // Method: SetTextRangLen(val captcha.RangeVal);
     // Desc: 设置验证码文本显示的总数随机范围
     // ====================================================
-    capt.SetTextRangLen(&captcha.RangeVal{6, 7})
+    capt.SetTextRangLen(captcha.RangeVal{6, 7})
 
     // ====================================================
-    // Method: SetRangFontSize(val *captcha.RangeVal);
+    // Method: SetRangFontSize(val captcha.RangeVal);
     // Desc: 设置验证码文本的随机大小
     // ====================================================
-    capt.SetRangFontSize(&captcha.RangeVal{32, 42})
+    capt.SetRangFontSize(captcha.RangeVal{32, 42})
 
     // ====================================================
-    // Method: SetRangCheckTextLen(val *captcha.RangeVal);
+    // Method: SetRangCheckTextLen(val captcha.RangeVal);
     // Desc:设置验证码校验文本的随机长度范围
     // ====================================================
-    capt.SetRangCheckTextLen(&captcha.RangeVal{2, 4})
+    capt.SetRangCheckTextLen(captcha.RangeVal{2, 4})
 
     // ====================================================
-    // Method: SetRangCheckFontSize(val *captcha.RangeVal);
+    // Method: SetRangCheckFontSize(val captcha.RangeVal);
     // Desc:设置验证码校验文本的随机大小
     // ====================================================
-    capt.SetRangCheckFontSize(&captcha.RangeVal{24, 30})
+    capt.SetRangCheckFontSize(captcha.RangeVal{24, 30})
     
     // ====================================================
     // Method: SetTextRangFontColors(colors []string);
-    // Desc: 设置验证码校验文本的随机十六进制颜色
+    // Desc: 设置验证码文本的随机十六进制颜色
     // ====================================================
     capt.SetTextRangFontColors([]string{
+        "#1d3f84",
+        "#3a6a1e",
+    })
+   
+    // ====================================================
+    // Method: SetThumbTextRangFontColors(colors []string);
+    // Desc: 设置验证码缩略图校验文本的随机十六进制颜色
+    // ====================================================
+    capt.SetThumbTextRangFontColors([]string{
         "#1d3f84",
         "#3a6a1e",
     })
@@ -270,10 +279,10 @@ func main(){
     capt.SetImageFontAlpha(0.5)
 
     // ====================================================
-    // Method: SetTextRangAnglePos(pos []*RangeVal);
+    // Method: SetTextRangAnglePos(pos []RangeVal);
     // Desc:设置验证码文本的旋转角度
     // ====================================================
-    capt.SetTextRangAnglePos([]*captcha.RangeVal{
+    capt.SetTextRangAnglePos([]captcha.RangeVal{
         {1, 15},
         {15, 30},
         {30, 45},

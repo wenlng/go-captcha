@@ -29,6 +29,7 @@ type DrawDot struct {
 	Height  int
 	Angle   int
 	Color   string
+	Color2   string
 	Font    string
 }
 

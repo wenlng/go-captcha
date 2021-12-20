@@ -42,6 +42,8 @@ type CharDot struct {
 	Angle int
 	// 颜色
 	Color string
+	// 颜色2
+	Color2 string
 }
 
 // Captcha is a type
@@ -172,7 +174,7 @@ func (cc *Captcha) SetFont(fonts []string, args ...bool) {
  * @receiver cc
  * @param size
  */
-func (cc *Captcha) SetImageSize(size *Size) {
+func (cc *Captcha) SetImageSize(size Size) {
 	cc.config.imageSize = size
 }
 
@@ -182,7 +184,7 @@ func (cc *Captcha) SetImageSize(size *Size) {
  * @receiver cc
  * @param size
  */
-func (cc *Captcha) SetThumbSize(size *Size) {
+func (cc *Captcha) SetThumbSize(size Size) {
 	cc.config.thumbnailSize = size
 }
 
@@ -192,7 +194,7 @@ func (cc *Captcha) SetThumbSize(size *Size) {
  * @receiver cc
  * @param val
  */
-func (cc *Captcha) SetRangFontSize(val *RangeVal) {
+func (cc *Captcha) SetRangFontSize(val RangeVal) {
 	cc.config.rangFontSize = val
 }
 
@@ -202,7 +204,7 @@ func (cc *Captcha) SetRangFontSize(val *RangeVal) {
  * @receiver cc
  * @param val
  */
-func (cc *Captcha) SetTextRangLen(val *RangeVal) {
+func (cc *Captcha) SetTextRangLen(val RangeVal) {
 	cc.config.rangTextLen = val
 }
 
@@ -214,6 +216,17 @@ func (cc *Captcha) SetTextRangLen(val *RangeVal) {
  */
 func (cc *Captcha) SetTextRangFontColors(colors []string) {
 	cc.config.rangFontColors = colors
+}
+
+
+// SetThumbTextRangFontColors is a function
+/**
+ * @Description: 设置缩略图文本随机颜色
+ * @receiver cc
+ * @param colors
+ */
+func (cc *Captcha) SetThumbTextRangFontColors(colors []string) {
+	cc.config.rangThumbFontColors = colors
 }
 
 // SetFontDPI is a function
@@ -262,7 +275,7 @@ func (cc *Captcha) SetImageFontDistort(val int) {
  * @receiver cc
  * @param pos
  */
-func (cc *Captcha) SetTextRangAnglePos(pos []*RangeVal) {
+func (cc *Captcha) SetTextRangAnglePos(pos []RangeVal) {
 	cc.config.rangTexAnglePos = pos
 }
 
@@ -272,7 +285,7 @@ func (cc *Captcha) SetTextRangAnglePos(pos []*RangeVal) {
  * @receiver cc
  * @param val
  */
-func (cc *Captcha) SetRangCheckTextLen(val *RangeVal) {
+func (cc *Captcha) SetRangCheckTextLen(val RangeVal) {
 	cc.config.rangCheckTextLen = val
 }
 
@@ -282,7 +295,7 @@ func (cc *Captcha) SetRangCheckTextLen(val *RangeVal) {
  * @receiver cc
  * @param val
  */
-func (cc *Captcha) SetRangCheckFontSize(val *RangeVal) {
+func (cc *Captcha) SetRangCheckFontSize(val RangeVal) {
 	cc.config.rangCheckFontSize = val
 }
 
@@ -414,7 +427,7 @@ func (cc *Captcha) Generate() (map[int]CharDot, string, string, string, error) {
  * @return string			缩略图Base64
  * @return error
  */
-func (cc *Captcha) GenerateWithSize(imageSize *Size, thumbnailSize *Size) (map[int]CharDot, string, string, string, error) {
+func (cc *Captcha) GenerateWithSize(imageSize Size, thumbnailSize Size) (map[int]CharDot, string, string, string, error) {
 	err := cc.checkConfig()
 	length := RandInt(cc.config.rangTextLen.Min, cc.config.rangTextLen.Max)
 	chars := cc.genRandChar(length)
@@ -480,7 +493,7 @@ func (cc *Captcha) genCaptchaKey(str string) (string, error) {
  * @param padding
  * @return []*CaptchaCharDot
  */
-func (cc *Captcha) genDots(imageSize *Size, fontSize *RangeVal, chars string, padding int) map[int]CharDot {
+func (cc *Captcha) genDots(imageSize Size, fontSize RangeVal, chars string, padding int) map[int]CharDot {
 	dots := make(map[int]CharDot) // 各个文字点位置
 	width := imageSize.Width
 	height := imageSize.Height
@@ -495,7 +508,8 @@ func (cc *Captcha) genDots(imageSize *Size, fontSize *RangeVal, chars string, pa
 		// 随机角度
 		randAngle := cc.getRandAngle()
 		// 随机颜色
-		randColor := cc.getRandColor()
+		randColor := cc.getRandColor(cc.config.rangFontColors)
+		randColor2 := cc.getRandColor(cc.config.rangThumbFontColors)
 
 		// 随机文字大小
 		randFontSize := RandInt(fontSize.Min, fontSize.Max)
@@ -523,7 +537,7 @@ func (cc *Captcha) genDots(imageSize *Size, fontSize *RangeVal, chars string, pa
 		y = int(math.Min(math.Max(float64(y), 10), float64(height - randFontSize - (padding * 2))))
 		text := fmt.Sprintf("%s", str)
 
-		dot := CharDot{i, x, y, randFontSize, fontWidth, fontHeight, text, randAngle, randColor}
+		dot := CharDot{i, x, y, randFontSize, fontWidth, fontHeight, text, randAngle, randColor, randColor2}
 		dots[i] = dot
 	}
 
@@ -563,7 +577,7 @@ func (cc *Captcha) rangeCheckDots(dots map[int]CharDot) (map[int]CharDot, string
  * @return string
  * @return error
  */
-func (cc *Captcha) genCaptchaImage(size *Size, dots map[int]CharDot) (base64 string, erro error) {
+func (cc *Captcha) genCaptchaImage(size Size, dots map[int]CharDot) (base64 string, erro error) {
 	var drawDots []DrawDot
 	for _, dot := range dots {
 		drawDot := DrawDot{
@@ -609,7 +623,7 @@ func (cc *Captcha) genCaptchaImage(size *Size, dots map[int]CharDot) (base64 str
  * @return string
  * @return error
  */
-func (cc *Captcha) genCaptchaThumbImage(size *Size, dots map[int]CharDot) (string, error) {
+func (cc *Captcha) genCaptchaThumbImage(size Size, dots map[int]CharDot) (string, error) {
 	var drawDots []DrawDot
 
 	fontWidth := size.Width / len(dots)
@@ -623,7 +637,7 @@ func (cc *Captcha) genCaptchaThumbImage(size *Size, dots map[int]CharDot) (strin
 			FontDPI: cc.config.fontDPI,
 			Text:    dot.Text,
 			Angle:   dot.Angle,
-			Color:   dot.Color,
+			Color:   dot.Color2,
 			Size:    dot.Size,
 			Width:   dot.Width,
 			Height:  dot.Height,
@@ -646,7 +660,7 @@ func (cc *Captcha) genCaptchaThumbImage(size *Size, dots map[int]CharDot) (strin
 	}
 
 	var colorA []color.Color
-	for _, cStr := range cc.config.rangFontColors {
+	for _, cStr := range cc.config.rangThumbFontColors {
 		co, _ := ParseHexColor(cStr)
 		colorA = append(colorA, co)
 	}
@@ -709,10 +723,10 @@ func (cc *Captcha) getRandAngle() int {
 
 /**
  * @Description: 随机获取颜色
+ * @param colors
  * @return string
  */
-func (cc *Captcha) getRandColor() string {
-	colors := cc.config.rangFontColors
+func (cc *Captcha) getRandColor(colors []string) string {
 	colorLen := len(colors)
 	index := RandInt(0, colorLen)
 	if index >= colorLen {

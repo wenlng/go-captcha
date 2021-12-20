@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"image"
 	"image/jpeg"
+	"image/png"
 )
 
 /**
@@ -21,7 +22,7 @@ import (
  */
 func encodingImageToBinary(img image.Image) (ret []byte) {
 	var buf bytes.Buffer
-	if err := jpeg.Encode(&buf, img, nil); err != nil {
+	if err := png.Encode(&buf, img); err != nil {
 		panic(err.Error())
 	}
 	ret = buf.Bytes()

@@ -285,11 +285,11 @@ func (cd *Draw) rangCutImage(width int, height int, img image.Image) (int, int) 
 	curX := 0
 	curY := 0
 
-	if iW-width > 0 {
-		curX = RandInt(0, iW-width)
+	if iW - width > 0 {
+		curX = RandInt(0, iW - width)
 	}
-	if iH-height > 0 {
-		curY = RandInt(0, iH-height)
+	if iH - height > 0 {
+		curY = RandInt(0, iH - height)
 	}
 
 	return curX, curY
@@ -420,10 +420,10 @@ func (cd *Draw) calcImageSpace(pa *Palette) *AreaPoint {
 		}
 	}
 
-	minX = int(math.Max(float64(minX), float64(minX-5)))
-	maxX = int(math.Min(float64(maxX), float64(maxX+5)))
-	minY = int(math.Max(float64(minY), float64(minY-5)))
-	maxY = int(math.Min(float64(maxY), float64(maxY+5)))
+	minX = int(math.Max(0, float64(minX - 5)))
+	maxX = int(math.Min(float64(nW), float64(maxX + 5)))
+	minY = int(math.Max(0, float64(minY - 5)))
+	maxY = int(math.Min(float64(nH), float64(maxY + 5)))
 
 	return &AreaPoint{
 		minX,
@@ -471,13 +471,13 @@ func (cd *Draw) centerWithImage(m image.Image) image.Image {
 func (cd *Draw) strikeThrough(m *Palette, dotSize int) {
 	maxx := m.Bounds().Max.X
 	maxy := m.Bounds().Max.Y
-	y := RandInt(maxy/3, maxy-maxy/3)
+	y := RandInt(maxy / 3, maxy - maxy / 3)
 	amplitude := RandFloat(5, 20)
 	period := RandFloat(80, 180)
 	dx := 2.0 * math.Pi / period
 	for x := 0; x < maxx; x++ {
-		xo := amplitude * math.Cos(float64(y)*dx)
-		yo := amplitude * math.Sin(float64(x)*dx)
+		xo := amplitude * math.Cos(float64(y) * dx)
+		yo := amplitude * math.Sin(float64(x) * dx)
 		for yn := 0; yn < dotSize; yn++ {
 			r := RandInt(0, dotSize)
 			m.drawCircle(x + int(xo), y + int(yo) + (yn * dotSize), r / 2, 1)

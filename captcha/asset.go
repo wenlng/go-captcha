@@ -19,6 +19,25 @@ func getAssetCache(path string) (ret []byte, erro error) {
 }
 
 /**
+ * @Description: 资源是否缓存
+ * @param path
+ * @return []byte
+ * @return error
+ */
+func hasAssetCache(path string) bool {
+	return assets.HasAssetCache(path)
+}
+
+/**
+ * @Description: 清除资源缓存
+ * @param paths
+ * @return bool
+ */
+func clearAssetCache(paths []string) bool {
+	return assets.ClearAssetCache(paths)
+}
+
+/**
  * @Description: 设置缓存资源
  * @param path
  * @return error

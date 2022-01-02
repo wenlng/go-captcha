@@ -6,6 +6,11 @@
 
 package assets
 
+import (
+	"github.com/wenlng/go-captcha/captcha/assets/fonts"
+	"github.com/wenlng/go-captcha/captcha/assets/images"
+)
+
 type AssetData struct {
 	// 路径
 	Path string
@@ -15,14 +20,37 @@ type AssetData struct {
 
 var cache []*AssetData
 
+var defaultAssetsImage = []string{
+	"assets/images/1.jpg",
+	"assets/images/2.jpg",
+	"assets/images/3.jpg",
+	"assets/images/4.jpg",
+	"assets/images/5.jpg",
+}
+
+var defaultAssetsFont = []string{
+	"assets/fonts/fzshengsksjw_cu.ttf",
+	"assets/fonts/fzcujin_lfw.ttf",
+}
+
 /**
  * @Description: 获取默认资源
  * @param path
  * @return []byte
  * @return error
  */
-func findAsset(path string) ([]byte, error) {
-	return Asset(path)
+func findFontsAsset(path string) ([]byte, error) {
+	return fonts.FindAsset(path)
+}
+
+/**
+ * @Description: 获取默认资源
+ * @param path
+ * @return []byte
+ * @return error
+ */
+func findImagesAsset(path string) ([]byte, error) {
+	return images.FindAsset(path)
 }
 
 /**
@@ -30,9 +58,7 @@ func findAsset(path string) ([]byte, error) {
  * @return []string
  */
 func DefaultBinFontList() []string {
-	return []string{
-		"assets/fonts/fzshengsksjw_cu.ttf",
-	}
+	return defaultAssetsFont
 }
 
 /**
@@ -40,13 +66,7 @@ func DefaultBinFontList() []string {
  * @return []string
  */
 func DefaultBinImageList() []string {
-	return []string{
-		"assets/images/1.jpg",
-		"assets/images/2.jpg",
-		"assets/images/3.jpg",
-		"assets/images/4.jpg",
-		"assets/images/5.jpg",
-	}
+	return defaultAssetsImage
 }
 
 // GetAssetCache is a function
@@ -66,14 +86,62 @@ func GetAssetCache(path string) (ret []byte, erro error) {
 		}
 	}
 
-	ret, erro = findAsset(path)
+	ret, erro = findFontsAsset(path)
 	if len(ret) > 0{
 		cache = append(cache, &AssetData{
 			Path: path,
 			Content: ret,
 		})
+		return
+	}
+
+	ret, erro = findImagesAsset(path)
+	if len(ret) > 0{
+		cache = append(cache, &AssetData{
+			Path: path,
+			Content: ret,
+		})
+		return
 	}
 	return
+}
+
+// HasAssetCache is a function
+/**
+ * @Description: 资源是否缓存
+ * @param path
+ * @return bool
+ */
+func HasAssetCache(path string) bool {
+	if len(cache) > 0 {
+		for _, asset := range cache {
+			if asset.Path == path{
+				return true
+			}
+		}
+	}
+	return false
+}
+
+
+// ClearAssetCache is a function
+/**
+ * @Description: 清除资源缓存
+ * @param paths
+ * @return bool
+ */
+func ClearAssetCache(paths []string) bool {
+	if len(cache) > 0 {
+		for _, path := range paths {
+			for ak, asset := range cache {
+				if asset.Path == path{
+					cache = append(cache[:ak], cache[(ak+1):]...)
+					break
+				}
+			}
+		}
+	}
+	return true
 }
 
 // SetAssetCache is a function

@@ -136,8 +136,10 @@ func main(){
 ```
 
 ### Set Configuration
-You can copy the resource files under the "__example/resources" to the directory of your project
+You can copy the resource files under the "__example/resources" to the directory of your project.
+
 #### Set Chars
+Tip: Some fonts are attached by default. If other Chinese strings are set, you may need to import a font file.
 ```go
 package main
 import (
@@ -169,7 +171,8 @@ func main(){
 }
 ```
 
-#### Set image configuration
+#### Set Image Configuration
+Tip: Some images are attached by default. 
 ```go
 package main
 import (
@@ -336,6 +339,30 @@ func main(){
 
     // ====================================================
     fmt.Println(capt)
+}
+```
+
+#### Call Method
+```go
+package main
+import (
+    "fmt"
+    "os"
+    "github.com/wenlng/go-captcha/captcha"
+)
+
+func main(){
+    capt := captcha.GetCaptcha()
+    
+    path, _ := os.Getwd()    
+    // ====================================================
+    // Method: ClearAssetCacheWithPath(paths []string) bool;
+    // Desc: Clear Cache
+    // ====================================================
+    capt.ClearAssetCacheWithPaths([]string{
+    	path + "/__example/resources/images/1.jpg",
+    	path + "/__example/resources/images/2.jpg",
+    }) 
 }
 ```
 

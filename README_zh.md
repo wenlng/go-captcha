@@ -141,6 +141,7 @@ func main(){
 你可以直接拷贝实例中 "__example/resources" 的图片资源和字体文件到你的项目中使用
 
 #### 文本相关的配置
+提示：默认情况下附带了一些字体。如果设置了其他中文字符串，则可能需要设置字体文件
 ```go
 package main
 import (
@@ -339,6 +340,31 @@ func main(){
 
     // ====================================================
     fmt.Println(capt)
+}
+```
+
+
+#### 内置一些函数
+```go
+package main
+import (
+    "fmt"
+    "os"
+    "github.com/wenlng/go-captcha/captcha"
+)
+
+func main(){
+    capt := captcha.GetCaptcha()
+    
+    path, _ := os.Getwd()    
+    // ====================================================
+    // Method: ClearAssetCacheWithPath(paths []string) bool;
+    // Desc: 根据路径消除对应的资源缓存
+    // ====================================================
+    capt.ClearAssetCacheWithPaths([]string{
+    	path + "/__example/resources/images/1.jpg",
+    	path + "/__example/resources/images/2.jpg",
+    }) 
 }
 ```
 

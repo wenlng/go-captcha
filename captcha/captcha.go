@@ -134,12 +134,16 @@ func (cc *Captcha) SetBackground(images []string, args ...bool) {
 		if has, err := PathExists(path); !has || err != nil {
 			panic(fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist", path))
 		}
-		bytes, err := ioutil.ReadFile(path)
-		if err != nil {
-			panic(err)
-		}
 
-		setAssetCache(path, bytes, len(args) > 0 && args[0])
+		hasCache := hasAssetCache(path)
+		if !hasCache || (hasCache && len(args) > 0 && args[0]) {
+			bytes, err := ioutil.ReadFile(path)
+			if err != nil {
+				panic(err)
+			}
+
+			setAssetCache(path, bytes, len(args) > 0 && args[0])
+		}
 	}
 
 	cc.config.rangBackground = images
@@ -157,12 +161,15 @@ func (cc *Captcha) SetFont(fonts []string, args ...bool) {
 		if has, err := PathExists(path); !has || err != nil {
 			panic(fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist", path))
 		}
-		bytes, err := ioutil.ReadFile(path)
-		if err != nil {
-			panic(err)
-		}
+		hasCache := hasAssetCache(path)
+		if !hasCache || (hasCache && len(args) > 0 && args[0]) {
+			bytes, err := ioutil.ReadFile(path)
+			if err != nil {
+				panic(err)
+			}
 
-		setAssetCache(path, bytes, len(args) > 0 && args[0])
+			setAssetCache(path, bytes, len(args) > 0 && args[0])
+		}
 	}
 
 	cc.config.rangFont = fonts
@@ -326,12 +333,15 @@ func (cc *Captcha) SetThumbBackground(images []string, args ...bool) {
 		if has, err := PathExists(path); !has || err != nil {
 			panic(fmt.Errorf("CaptchaConfig Error: The [%s] file does not exist", path))
 		}
-		bytes, err := ioutil.ReadFile(path)
-		if err != nil {
-			panic(err)
-		}
+		hasCache := hasAssetCache(path)
+		if !hasCache || (hasCache && len(args) > 0 && args[0]) {
+			bytes, err := ioutil.ReadFile(path)
+			if err != nil {
+				panic(err)
+			}
 
-		setAssetCache(path, bytes, len(args) > 0 && args[0])
+			setAssetCache(path, bytes, len(args) > 0 && args[0])
+		}
 	}
 
 	cc.config.rangThumbBackground = images
@@ -346,7 +356,6 @@ func (cc *Captcha) SetThumbBackground(images []string, args ...bool) {
 func (cc *Captcha) SetThumbBgDistort(val int) {
 	cc.config.thumbBgDistort = val
 }
-
 
 // SetThumbFontDistort is a function
 /**
@@ -380,6 +389,16 @@ func (cc *Captcha) SetThumbBgSlimLineNum(val int) {
 
 // =============================================
 // Captcha Call API
+// =============================================
+/**
+ * @Description: 根据路径清除资源缓存
+ * @param paths
+ * @return bool
+ */
+func ClearAssetCacheWithPaths(paths []string) bool {
+	return clearAssetCache(paths)
+}
+
 // =============================================
 
 /**

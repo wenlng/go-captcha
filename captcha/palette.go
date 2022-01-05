@@ -107,10 +107,10 @@ func (p *Palette) drawCircle(x, y, radius int, colorIdx uint8) {
 		xo++
 		dfx += 2
 		f += dfx
-		p.drawHorizLine(x-xo, x+xo, y+yo, colorIdx)
-		p.drawHorizLine(x-xo, x+xo, y-yo, colorIdx)
-		p.drawHorizLine(x-yo, x+yo, y+xo, colorIdx)
-		p.drawHorizLine(x-yo, x+yo, y-xo, colorIdx)
+		p.drawHorizLine(x - xo, x + xo, y + yo, colorIdx)
+		p.drawHorizLine(x - xo, x + xo, y - yo, colorIdx)
+		p.drawHorizLine(x - yo, x + yo, y + xo, colorIdx)
+		p.drawHorizLine(x - yo, x + yo, y - xo, colorIdx)
 	}
 }
 

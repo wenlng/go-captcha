@@ -1,4 +1,4 @@
-# go-captcha - Behavioral Verification Code
+# go-captcha - Behavioral Captchas 
 
 [![Version](https://img.shields.io/github/tag/wenlng/go-captcha.svg)](https://github.com/wenlng/go-captcha/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/wenlng/go-captcha?t=1)](https://goreportcard.com/report/github.com/wenlng/go-captcha)

@@ -143,7 +143,7 @@ func GetCaptchaDefaultConfig() *Config {
 			{300, 320},
 			{320, 340},
 		},
-		rangFontSize:       	RangeVal{32, 42},
+		rangFontSize:       	RangeVal{32, 40},
 		fontDPI:            	72,
 		rangCheckFontSize:  	RangeVal{24, 30},
 		imageFontDistort:   	DistortNone,

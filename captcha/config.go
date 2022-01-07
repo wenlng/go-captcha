@@ -77,6 +77,8 @@ type Config struct {
 	rangBackground 		[]string
 	// 验证码尺寸, 注意：高度 > RangFontSize.max , 长度 > RangFontSize.max * RangFontSize.max
 	imageSize 			Size
+	// 图片清晰度 1-101
+	imageQuality 		int
 	// 验证码文本扭曲程度
 	imageFontDistort 	int
 	// 验证码文本透明度 0-1
@@ -157,6 +159,7 @@ func GetCaptchaDefaultConfig() *Config {
 		rangThumbFontColors:    getDefaultThumbTextColors(),
 		fontHinting: 			font.HintingNone,
 		imageSize:          	Size{300, 240},
+		imageQuality: 			999,
 		thumbnailSize:      	Size{150, 40},
 		rangThumbBgColors:  	getDefaultThumbTextColors(),
 		thumbFontDistort:   	DistortLevel3,

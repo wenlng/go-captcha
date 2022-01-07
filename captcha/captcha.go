@@ -185,6 +185,18 @@ func (cc *Captcha) SetImageSize(size Size) {
 	cc.config.imageSize = size
 }
 
+// SetImageQuality is a function
+/**
+ * @Description: 设置验证码清晰度1-100为压缩图，999为原图
+ * @receiver cc
+ * @param val
+ */
+func (cc *Captcha) SetImageQuality(val int) {
+	if val > 0 || val <= 100 || val == 999 {
+		cc.config.imageQuality = val
+	}
+}
+
 // SetThumbSize is a function
 /**
  * @Description: 设置缩略图尺寸
@@ -515,8 +527,23 @@ func (cc *Captcha) GenerateWithSize(imageSize Size, thumbnailSize Size) (map[int
  * @param img
  * @return string
  */
-func (cc *Captcha) EncodeB64string(img image.Image) string {
-	return EncodeB64string(img)
+func (cc *Captcha) EncodeB64stringWithJpeg(img image.Image) string {
+	if cc.config.imageQuality <= 100 {
+		return EncodeB64stringWithJpeg(img, cc.config.imageQuality)
+	}
+	return EncodeB64stringWithPng(img)
+}
+
+
+// EncodeB64string is a function
+/**
+ * @Description: base64编码
+ * @receiver cc
+ * @param img
+ * @return string
+ */
+func (cc *Captcha) EncodeB64stringWithPng(img image.Image) string {
+	return EncodeB64stringWithPng(img)
 }
 
 /**
@@ -663,7 +690,7 @@ func (cc *Captcha) genCaptchaImage(size Size, dots map[int]CharDot) (base64 stri
 	}
 
 	// 转 base64
-	base64 = cc.EncodeB64string(img)
+	base64 = cc.EncodeB64stringWithJpeg(img)
 	return
 }
 
@@ -729,7 +756,7 @@ func (cc *Captcha) genCaptchaThumbImage(size Size, dots map[int]CharDot) (string
 	}
 
 	// 转 base64
-	dist := cc.EncodeB64string(img)
+	dist := cc.EncodeB64stringWithPng(img)
 	return dist, err
 }
 

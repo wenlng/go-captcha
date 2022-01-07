@@ -136,7 +136,7 @@ func main(){
 ```
 
 ### Set Configuration
-Tip：After version v1.2.2, the default size of large drawing is 300×240px, the default size of the small drawing is 150×40px.
+Tip：After version v1.2.3, the default size of large drawing is 300×240px, the default size of the small drawing is 150×40px.
 
 
 #### Set Chars
@@ -229,10 +229,11 @@ func main(){
     capt.SetImageSize(captcha.Size{300, 300})
 
     // ====================================================
-    // Method: SetFontDPI(val int);
-    // Desc: Set random DPI of font, The best is 72
+    // Method: SetImageQuality(val int);
+    // Desc: Set quality of captcha, The range value is 1-100 compressed pictures, and the default value is 999 original pictures
+    // Tip: Clarity affects the size of the picture
     // ====================================================
-    capt.SetFontDPI(72)
+    capt.SetImageQuality(100)
 
     // ====================================================
     // Method: SetFontHinting(val font.Hinting);

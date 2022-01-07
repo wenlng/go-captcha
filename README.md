@@ -178,7 +178,6 @@ You can copy the resource files under the "__example/resources" to the directory
 package main
 import (
     "fmt"
-    "golang.org/x/image/font"
     "os"
     "github.com/wenlng/go-captcha/captcha"
 )
@@ -387,7 +386,7 @@ func main(){
 }
 ```
 
-#### Call Method
+#### Other
 ```go
 package main
 import (

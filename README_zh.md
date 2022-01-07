@@ -178,7 +178,6 @@ package main
 import (
     "fmt"
     "os"
-    "golang.org/x/image/font"
     "github.com/wenlng/go-captcha/captcha"
 )
 
@@ -390,7 +389,7 @@ func main(){
 }
 ```
 
-#### 内置一些函数
+#### 其它
 ```go
 package main
 import (

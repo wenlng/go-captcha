@@ -136,6 +136,9 @@ func main(){
 ```
 
 ### Set Configuration
+Tip：After version v1.2.2, the default size of large drawing is 300×240px, the default size of the small drawing is 150×40px.
+<br/>
+<br/>
 You can copy the resource files under the "__example/resources" to the directory of your project.
 
 #### Set Chars

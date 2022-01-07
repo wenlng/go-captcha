@@ -90,9 +90,7 @@ import (
 func main(){
     // Captcha Single Instances
     capt := captcha.GetCaptcha()
-    
-    path, _ := os.Getwd()
-    
+
     // 生成验证码
     dots, b64, tb64, key, err := capt.Generate()
     if err != nil {
@@ -238,7 +236,6 @@ func main(){
     // ====================================================
     // Method: SetImageQuality(val int);
     // Desc: 设置验证码主图清晰度，范围1-100压缩图，默认999为原图
-    // Tip: 清晰度会影响验证码图片的容量大小
     // ====================================================
     capt.SetImageQuality(100)
 

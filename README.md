@@ -231,7 +231,6 @@ func main(){
     // ====================================================
     // Method: SetImageQuality(val int);
     // Desc: Set quality of captcha, The range value is 1-100 compressed pictures, and the default value is 999 original pictures
-    // Tip: Clarity affects the size of the picture
     // ====================================================
     capt.SetImageQuality(100)
 

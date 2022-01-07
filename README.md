@@ -137,9 +137,7 @@ func main(){
 
 ### Set Configuration
 Tip：After version v1.2.2, the default size of large drawing is 300×240px, the default size of the small drawing is 150×40px.
-<br/>
-<br/>
-You can copy the resource files under the "__example/resources" to the directory of your project.
+
 
 #### Set Chars
 Tip: Some fonts are attached by default. If other Chinese strings are set, you may need to import a font file.
@@ -175,6 +173,7 @@ func main(){
 ```
 
 #### Set Font File Configuration
+You can copy the resource files under the "__example/resources" to the directory of your project.
 ```go
 package main
 import (

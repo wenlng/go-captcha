@@ -22,7 +22,7 @@ Package captcha implements generation and click location verification of image C
     <img src="http://47.104.180.148/go-captcha/go-captcha-02.png?v=7" alt="Reward Support">
     <br/>
     <br/> 
-    <img src="http://47.104.180.148/go-captcha/go-captcha.jpg?v=7" alt="Reward Support">
+    <img src="http://47.104.180.148/go-captcha/go-captcha.jpg?v=9" alt="Reward Support">
     <br/>
     <br/>   
 </div>
@@ -171,7 +171,32 @@ func main(){
 }
 ```
 
-#### Set Image Configuration
+#### Set Font File Configuration
+```go
+package main
+import (
+    "fmt"
+    "golang.org/x/image/font"
+    "os"
+    "github.com/wenlng/go-captcha/captcha"
+)
+
+func main(){
+    capt := captcha.GetCaptcha()
+    
+    path, _ := os.Getwd()    
+    // ====================================================
+    // Method: SetFont(fonts []string);
+    // Desc: Set random font of captcha text
+    // ====================================================
+    capt.SetFont([]string{
+        path + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
+    })
+}
+```
+
+
+#### Set Big Image Configuration
 Tip: Some images are attached by default. 
 ```go
 package main
@@ -188,19 +213,11 @@ func main(){
     path, _ := os.Getwd()    
     // ====================================================
     // Method: SetBackground(color []string);
-    // Desc: Set random image of captcha background
+    // Desc: Set random image of background
     // ====================================================
     capt.SetBackground([]string{
         path + "/__example/resources/images/1.jpg",
         path + "/__example/resources/images/2.jpg",
-    })
-
-    // ====================================================
-    // Method: SetFont(fonts []string);
-    // Desc: Set random font of captcha text
-    // ====================================================
-    capt.SetFont([]string{
-        path + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
     })
 
     // ====================================================
@@ -210,50 +227,32 @@ func main(){
     capt.SetImageSize(captcha.Size{300, 300})
 
     // ====================================================
-    // Method: SetThumbSize(size Size);
-    // Desc: Set size of captcha thumb
-    // ====================================================
-    capt.SetThumbSize(captcha.Size{150, 40})
-
-    // ====================================================
     // Method: SetFontDPI(val int);
-    // Desc: Set random DPI of captcha font, The best is 72
+    // Desc: Set random DPI of font, The best is 72
     // ====================================================
     capt.SetFontDPI(72)
 
     // ====================================================
     // Method: SetFontHinting(val font.Hinting);
-    // Desc: Set Hinting of captcha font (HintingNone,HintingVertical,HintingFull)
+    // Desc: Set Hinting of font (HintingNone,HintingVertical,HintingFull)
     // ====================================================
     capt.SetFontHinting(font.HintingFull)
 
     // ====================================================
     // Method: SetTextRangLen(val captcha.RangeVal);
-    // Desc: Set random length of captcha text
+    // Desc: Set random length of font
     // ====================================================
     capt.SetTextRangLen(captcha.RangeVal{6, 7})
 
     // ====================================================
     // Method: SetRangFontSize(val captcha.RangeVal);
-    // Desc: Set random size of captcha text
+    // Desc: Set random size of font
     // ====================================================
     capt.SetRangFontSize(captcha.RangeVal{32, 42})
 
     // ====================================================
-    // Method: SetRangCheckTextLen(val captcha.RangeVal);
-    // Desc:Set random length of check text
-    // ====================================================
-    capt.SetRangCheckTextLen(captcha.RangeVal{2, 4})
-
-    // ====================================================
-    // Method: SetRangCheckFontSize(val captcha.RangeVal);
-    // Desc:Set random size of check text
-    // ====================================================
-    capt.SetRangCheckFontSize(captcha.RangeVal{24, 30})
-    
-    // ====================================================
     // Method: SetTextRangFontColors(colors []string);
-    // Desc: Set random hex color of captcha text
+    // Desc: Set random hex color of font
     // ====================================================
     capt.SetTextRangFontColors([]string{
         "#1d3f84",
@@ -261,23 +260,32 @@ func main(){
     })
  
     // ====================================================
-    // Method: SetThumbTextRangFontColors(colors []string);
-    // Desc: Set random hex color of captcha text
-    // ====================================================
-    capt.SetThumbTextRangFontColors([]string{
-        "#1d3f84",
-        "#3a6a1e",
-    })
-
-    // ====================================================
     // Method: SetImageFontAlpha(val float64);
-    // Desc:Set alpha of captcha font
+    // Desc:Set alpha of font
     // ====================================================
     capt.SetImageFontAlpha(0.5)
 
     // ====================================================
+    // Method: SetTextShadow(val float64);
+    // Desc:Set shadow of font
+    // ====================================================
+    capt.SetTextShadow(true)
+
+    // ====================================================
+    // Method: SetTextShadowColor(val float64);
+    // Desc:Set shadow color of font
+    // ====================================================
+    capt.SetTextShadowColor("#101010")
+
+    // ====================================================
+    // Method: SetTextShadowPoint(val float64);
+    // Desc:Set shadow point of font
+    // ====================================================
+    capt.SetTextShadowPoint(captcha.Point{1, 1})
+
+    // ====================================================
     // Method: SetTextRangAnglePos(pos []RangeVal);
-    // Desc:Set angle of captcha text
+    // Desc:Set angle of font
     // ====================================================
     capt.SetTextRangAnglePos([]captcha.RangeVal{
         {1, 15},
@@ -290,13 +298,51 @@ func main(){
 
     // ====================================================
     // Method: SetImageFontDistort(val int);
-    // Desc:Set distort of captcha font
+    // Desc:Set distort of font
     // ====================================================
     capt.SetImageFontDistort(captcha.DistortLevel2)
-  
+}
+```
+
+#### Set Thumb Image Configuration
+Tip: Some images are attached by default. 
+```go
+package main
+import (
+    "fmt"
+    "os"
+    "github.com/wenlng/go-captcha/captcha"
+)
+
+func main(){
+    capt := captcha.GetCaptcha()
+    
+    path, _ := os.Getwd()    
+    
+    // ====================================================
+    // Method: SetRangCheckTextLen(val captcha.RangeVal);
+    // Desc:Set random length of font
+    // ====================================================
+    capt.SetRangCheckTextLen(captcha.RangeVal{2, 4})
+
+    // ====================================================
+    // Method: SetRangCheckFontSize(val captcha.RangeVal);
+    // Desc:Set random size of font
+    // ====================================================
+    capt.SetRangCheckFontSize(captcha.RangeVal{24, 30})
+ 
+    // ====================================================
+    // Method: SetThumbTextRangFontColors(colors []string);
+    // Desc: Set random hex color of font
+    // ====================================================
+    capt.SetThumbTextRangFontColors([]string{
+        "#1d3f84",
+        "#3a6a1e",
+    })
+
     // ====================================================
     // Method: SetThumbBgColors(colors []string);
-    // Desc: Sets the random hex color of the captcha thumb background
+    // Desc: Sets the random hex color of the background
     // ====================================================
     capt.SetThumbBgColors([]string{
         "#1d3f84",
@@ -305,7 +351,7 @@ func main(){
 
     // ====================================================
     // Method: SetThumbBackground(colors []string);
-    // Desc:Set random image of captcha thumb background
+    // Desc:Set random image of background
     // ====================================================
     capt.SetThumbBackground([]string{
         path + "/__example/resources/images/r1.jpg",
@@ -314,31 +360,28 @@ func main(){
 
     // ====================================================
     // Method: SetThumbBgDistort(val int);
-    // Desc:Set background distort of captcha thumb
+    // Desc:Set the distort of background
     // ====================================================
     capt.SetThumbBgDistort(captcha.DistortLevel2)
 
     // ====================================================
     // Method: SetThumbFontDistort(val int);
-    // Desc:Set font distort of captcha thumb
+    // Desc:Set the distort of font
     // ====================================================
     capt.SetThumbFontDistort(captcha.DistortLevel2)
 
     // ====================================================
     // Method: SetThumbBgCirclesNum(val int);
-    // Desc:Set circles number of captcha background
+    // Desc:Sets the number of dots
     // ====================================================
     capt.SetThumbBgCirclesNum(20)
 
     // ====================================================
     // Method: SetThumbBgSlimLineNum(val int);
-    // Desc:Set line number of captcha background
+    // Desc:Set number of lines
     // ====================================================
     capt.SetThumbBgSlimLineNum(3)
-    
-
-    // ====================================================
-    fmt.Println(capt)
+  
 }
 ```
 

@@ -18,8 +18,7 @@ import (
  * @Description: 点
  */
 type Point struct {
-	X int
-	Y int
+	X, Y int
 }
 
 // Palette is a type
@@ -63,10 +62,10 @@ func (p *Palette) Rotate(angle int) {
 			//	retImg.SetColorIndex(x, y, tarImg.ColorIndexAt(int(tx), int(ty)))
 			//}
 			tx, ty := p.angleSwapPoint(float64(x), float64(y), float64(r), float64(angle))
-			at := tarImg.ColorIndexAt(int(tx), int(ty))
-			if at > 0 {
-				retImg.SetColorIndex(x, y, tarImg.ColorIndexAt(int(tx), int(ty)))
-			}
+			//at := tarImg.ColorIndexAt(int(tx), int(ty))
+			//if at > 0 {
+			retImg.SetColorIndex(x, y, tarImg.ColorIndexAt(int(tx), int(ty)))
+			//}
 		}
 	}
 
@@ -94,9 +93,9 @@ func (p *Palette) drawCircle(x, y, radius int, colorIdx uint8) {
 	xo := 0
 	yo := radius
 
-	p.SetColorIndex(x, y+radius, colorIdx)
-	p.SetColorIndex(x, y-radius, colorIdx)
-	p.drawHorizLine(x-radius, x+radius, y, colorIdx)
+	p.SetColorIndex(x, y + radius, colorIdx)
+	p.SetColorIndex(x, y - radius, colorIdx)
+	p.drawHorizLine(x - radius, x + radius, y, colorIdx)
 
 	for xo < yo {
 		if f >= 0 {
@@ -178,10 +177,10 @@ func (p *Palette) drawBeeline(point1 Point, point2 Point, lineColor color.RGBA) 
 	err := dx - dy
 	for {
 		p.Set(point1.X, point1.Y, lineColor)
-		p.Set(point1.X+1, point1.Y, lineColor)
-		p.Set(point1.X-1, point1.Y, lineColor)
-		p.Set(point1.X+2, point1.Y, lineColor)
-		p.Set(point1.X-2, point1.Y, lineColor)
+		p.Set(point1.X + 1, point1.Y, lineColor)
+		p.Set(point1.X - 1, point1.Y, lineColor)
+		p.Set(point1.X + 2, point1.Y, lineColor)
+		p.Set(point1.X - 2, point1.Y, lineColor)
 		if point1.X == point2.X && point1.Y == point2.Y {
 			return
 		}
@@ -212,8 +211,8 @@ func (p *Palette) angleSwapPoint(x, y, r, angle float64) (tarX, tarY float64) {
 	y = r - y
 	sinVal := math.Sin(angle * (math.Pi / 180))
 	cosVal := math.Cos(angle * (math.Pi / 180))
-	tarX = x*cosVal + y*sinVal
-	tarY = -x*sinVal + y*cosVal
+	tarX = x * cosVal + y * sinVal
+	tarY = -x * sinVal + y * cosVal
 	tarX += r
 	tarY = r - tarY
 	return

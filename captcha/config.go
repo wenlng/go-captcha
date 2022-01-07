@@ -8,11 +8,8 @@
 package captcha
 
 import (
-	"fmt"
 	"github.com/wenlng/go-captcha/captcha/assets"
 	"golang.org/x/image/font"
-	"image/color"
-	"math"
 )
 
 // RangeVal is a type
@@ -21,8 +18,7 @@ import (
  * @Example: {min: 0, max: 45} 从0-45中取任意值
  */
 type RangeVal struct {
-	Min int
-	Max int
+	Min, Max int
 }
 
 // Size is a type
@@ -31,8 +27,7 @@ type RangeVal struct {
  * @Example: {width: 0, height: 45} 从0-45中取任意值
  */
 type Size struct {
-	Width  int
-	Height int
+	Width, Height int
 }
 
 /**
@@ -66,6 +61,12 @@ type Config struct {
 	rangCheckFontSize 	RangeVal
 	// 随机文本颜色	格式："#541245"
 	rangFontColors 		[]string
+	// 文本阴影偏移位置
+	showTextShadow 		bool
+	// 文本阴影颜色
+	textShadowColor 	string
+	// 文本阴影偏移位置
+	textShadowPoint 	Point
 	// 缩略图随机文本颜色	格式："#541245"
 	rangThumbFontColors []string
 	// 随机字体	格式：字体绝对路径字符串, /home/..../xxx.ttf
@@ -116,6 +117,7 @@ var thumbTextColors = []string{
 	"#6e3700",
 	"#660033",
 }
+var textShadowColor = "#101010"
 
 // GetCaptchaDefaultChars is a type
 /**
@@ -136,27 +138,30 @@ func GetCaptchaDefaultConfig() *Config {
 		rangTextLen:      		RangeVal{6, 7},
 		rangCheckTextLen: 		RangeVal{2, 4},
 		rangTexAnglePos: 		[]RangeVal{
-			{10, 30},
-			{30, 50},
-			{50, 70},
-			{280, 300},
-			{300, 320},
-			{320, 340},
+			{20, 35},
+			{35, 45},
+			{45, 60},
+			{290, 305},
+			{305, 325},
+			{325, 330},
 		},
-		rangFontSize:       	RangeVal{32, 40},
+		rangFontSize:       	RangeVal{30, 38},
 		fontDPI:            	72,
 		rangCheckFontSize:  	RangeVal{24, 30},
 		imageFontDistort:   	DistortNone,
 		imageFontAlpha:     	1,
 		rangFontColors:     	getDefaultTextColors(),
+		showTextShadow:    		true,
+		textShadowColor:    	getDefaultTextShadowColor(),
+		textShadowPoint:     	Point{-1, -1},
 		rangThumbFontColors:    getDefaultThumbTextColors(),
-		fontHinting: 			font.HintingFull,
-		imageSize:          	Size{300, 300},
+		fontHinting: 			font.HintingNone,
+		imageSize:          	Size{300, 240},
 		thumbnailSize:      	Size{150, 40},
-		rangThumbBgColors:  	getRangeLightColors(),
+		rangThumbBgColors:  	getDefaultThumbTextColors(),
 		thumbFontDistort:   	DistortLevel3,
 		thumbBgDistort:     	DistortLevel4,
-		thumbBgCirclesNum:  	15,
+		thumbBgCirclesNum:  	24,
 		thumbBgSlimLineNum: 	2,
 
 		rangFont: 				assets.DefaultBinFontList(),
@@ -172,85 +177,19 @@ func getDefaultTextColors() []string {
 	return textColors
 }
 
+
+/**
+ * @Description: 获取默认阴影文本颜色
+ * @return string
+ */
+func getDefaultTextShadowColor() string {
+	return textShadowColor
+}
+
 /**
  * @Description: 获取默认缩略图文本颜色
  * @return []string
  */
 func getDefaultThumbTextColors() []string {
 	return thumbTextColors
-}
-
-/**
- * @Description: 获取默认随机深色颜色
- * @return []string
- */
-func getRangeLightColors() []string {
-	var rColor []string
-	for {
-		rColor = append(rColor, randLightColor())
-		if len(rColor) >= 100 {
-			break
-		}
-	}
-	return rColor
-}
-
-/**
- * @Description: 获取默认随机深色颜色
- * @return []string
- */
-func getRangeDarkColors() []string {
-	var rColor []string
-	for {
-		rColor = append(rColor, randDarkColor())
-		if len(rColor) >= 100 {
-			break
-		}
-	}
-	return rColor
-}
-
-/**
- * @Description: 随机深色
- * @return string
- */
-func randDarkColor() string {
-	randColor := randRGBAColor()
-	increase := float64(30 + RandInt(0, 255))
-	red := math.Abs(math.Min(float64(randColor.R)-increase, 255))
-	green := math.Abs(math.Min(float64(randColor.G)-increase, 255))
-	blue := math.Abs(math.Min(float64(randColor.B)-increase, 255))
-
-	return fmt.Sprintf("#%v%v%v", red, green, blue)
-}
-
-/**
- * @Description: 随机亮色
- * @return string
- */
-func randLightColor() string {
-	red := RandInt(0, 55) + 200
-	green := RandInt(0, 55) + 200
-	blue := RandInt(0, 55) + 200
-	return fmt.Sprintf("#%v%v%v", red, green, blue)
-}
-
-/**
- * @Description: 随机颜色
- * @receiver cd
- * @return color.RGBA
- */
-func randRGBAColor() color.RGBA {
-	red := RandInt(0, 255)
-	green := RandInt(0, 255)
-	var blue int
-	if (red + green) > 400 {
-		blue = 0
-	} else {
-		blue = 400 - green - red
-	}
-	if blue > 255 {
-		blue = 255
-	}
-	return color.RGBA{R: uint8(red), G: uint8(green), B: uint8(blue), A: uint8(255)}
 }

@@ -266,6 +266,36 @@ func (cc *Captcha) SetImageFontAlpha(val float64) {
 	cc.config.imageFontAlpha = val
 }
 
+// SetTextShadow is a function
+/**
+ * @Description: 设置验证码文本阴影显示
+ * @receiver cc
+ * @param val
+ */
+func (cc *Captcha) SetTextShadow(val bool) {
+	cc.config.showTextShadow = val
+}
+
+// SetTextShadowColor is a function
+/**
+ * @Description: 设置验证码文本阴影颜色
+ * @receiver cc
+ * @param val
+ */
+func (cc *Captcha) SetTextShadowColor(val string) {
+	cc.config.textShadowColor = val
+}
+
+// SetTextShadowPoint is a function
+/**
+ * @Description: 设置验证码文本阴影位置
+ * @receiver cc
+ * @param val
+ */
+func (cc *Captcha) SetTextShadowPoint(val Point) {
+	cc.config.textShadowPoint = val
+}
+
 // SetImageFontDistort is a function
 /**
  * @Description: 设置验证码文本扭曲程度
@@ -395,7 +425,7 @@ func (cc *Captcha) SetThumbBgSlimLineNum(val int) {
  * @param paths
  * @return bool
  */
-func ClearAssetCacheWithPaths(paths []string) bool {
+func (cc *Captcha) ClearAssetCacheWithPaths(paths []string) bool {
 	return clearAssetCache(paths)
 }
 
@@ -550,9 +580,9 @@ func (cc *Captcha) genDots(imageSize Size, fontSize RangeVal, chars string, padd
 		_w := width / len(strs)
 		rd := math.Abs(float64(_w) - float64(fontWidth))
 		x := (i * _w) + RandInt(0, int(math.Max(rd, 1)))
-		x = int(math.Min(math.Max(float64(x), 10), float64(width - randFontSize - (padding * 2))))
-		y := RandInt(0, height-fontHeight) + fontHeight
-		y = int(math.Min(math.Max(float64(y), 10), float64(height - randFontSize - (padding * 2))))
+		x = int(math.Min(math.Max(float64(x), 10), float64(width - 10 - (padding * 2))))
+		y := RandInt(10, height + fontHeight)
+		y = int(math.Min(math.Max(float64(y), float64(fontHeight + 10)), float64(height + (fontHeight / 2) - (padding * 2))))
 		text := fmt.Sprintf("%s", str)
 
 		dot := CharDot{i, x, y, randFontSize, fontWidth, fontHeight, text, randAngle, randColor, randColor2}
@@ -622,6 +652,10 @@ func (cc *Captcha) genCaptchaImage(size Size, dots map[int]CharDot) (base64 stri
 		TextAlpha:         	cc.config.imageFontAlpha,
 		FontHinting: 	   	cc.config.fontHinting,
 		CaptchaDrawDot:    	drawDots,
+
+		ShowTextShadow: 	cc.config.showTextShadow,
+		TextShadowColor: 	cc.config.textShadowColor,
+		TextShadowPoint: 	cc.config.textShadowPoint,
 	})
 	if err != nil {
 		erro = err

@@ -30,7 +30,6 @@ var defaultAssetsImage = []string{
 
 var defaultAssetsFont = []string{
 	"assets/fonts/fzshengsksjw_cu.ttf",
-	"assets/fonts/fzcujin_lfw.ttf",
 }
 
 /**

@@ -53,8 +53,14 @@ type DrawCanvas struct {
 	TextAlpha float64
 	// FontHinting
 	FontHinting font.Hinting
-
+	// 点
 	CaptchaDrawDot []DrawDot
+	// 文本阴影偏移位置
+	ShowTextShadow 		bool
+	// 文本阴影颜色
+	TextShadowColor 	string
+	// 文本阴影偏移位置
+	TextShadowPoint 	Point
 }
 
 // AreaPoint is a type
@@ -190,11 +196,11 @@ func (cd *Draw) DrawWithPalette(params DrawCanvas, colorA []color.Color, colorB 
 	p := []color.Color{
 		color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0x00},
 	}
-	for _, co := range colorA {
-		p = append(p, co)
+	for ak := range colorA {
+		p = append(p, colorA[ak])
 	}
-	for _, co := range colorB {
-		p = append(p, co)
+	for bk := range colorB {
+		p = append(p, colorB[bk])
 	}
 
 	canvas := NewPalette(image.Rect(0, 0, params.Width, params.Height), p)
@@ -321,26 +327,161 @@ func (cd *Draw) genRandColor(co []color.Color) color.RGBA {
  * @return *AreaPoint
  * @return error
  */
+//func (cd *Draw) DrawTextImg(dot DrawDot, params DrawCanvas) (*Palette, *AreaPoint, error) {
+//	co, _ := ParseHexColor(dot.Color)
+//	var coArr = []color.RGBA{
+//		co,
+//	}
+//
+//	co.A = cd.formatAlpha(params.TextAlpha)
+//	canvas := cd.CreateCanvasWithPalette(DrawCanvas{
+//		Width:  dot.Width + 10,
+//		Height: dot.Height + 10,
+//	}, coArr)
+//
+//	// 读字体数据
+//	fontBytes, err := getAssetCache(dot.Font)
+//	if err != nil {
+//		return canvas, nil, err
+//	}
+//	fontN, err := freetype.ParseFont(fontBytes)
+//	if err != nil {
+//		return canvas, nil, err
+//	}
+//
+//	dc := freetype.NewContext()
+//	dc.SetDPI(float64(dot.FontDPI))
+//	dc.SetFont(fontN)
+//	dc.SetClip(canvas.Bounds())
+//	dc.SetDst(canvas)
+//
+//	// 文字大小
+//	dc.SetFontSize(float64(dot.Size))
+//
+//	dc.SetHinting(params.FontHinting)
+//
+//	// 文字颜色
+//	hexColor, _ := ParseHexColor(dot.Color)
+//	fontColor := image.NewUniform(hexColor)
+//	dc.SetSrc(fontColor)
+//
+//	// 画文本
+//	text := fmt.Sprintf("%s", dot.Text)
+//
+//	pt := freetype.Pt(12, dot.Height - 5) // 字出现的位置
+//	if IsChineseChar(text) {
+//		pt = freetype.Pt(10, dot.Height) // 字出现的位置
+//	}
+//
+//	_, err = dc.DrawString(text, pt)
+//	if err != nil {
+//		return nil, nil, err
+//	}
+//
+//	// 旋转
+//	canvas.Rotate(dot.Angle)
+//
+//	if params.BackgroundDistort > 0 {
+//		canvas.distort(float64(RandInt(5, 10)), float64(params.BackgroundDistort))
+//	}
+//
+//	// 计算裁剪
+//	ap := cd.calcImageSpace(canvas)
+//
+//	return canvas, ap, nil
+//}
+
+
+// DrawTextImg is a function
+/**
+ * @Description: 绘制文本的图片
+ * @receiver cd
+ * @param dot
+ * @param params
+ * @return *Palette
+ * @return *AreaPoint
+ * @return error
+ */
 func (cd *Draw) DrawTextImg(dot DrawDot, params DrawCanvas) (*Palette, *AreaPoint, error) {
-	co, _ := ParseHexColor(dot.Color)
+	// 绘制文本
+	textColor, _ := ParseHexColor(dot.Color)
 	var coArr = []color.RGBA{
-		co,
+		textColor,
+	}
+	textColor.A = cd.formatAlpha(params.TextAlpha)
+	textImg := cd.DrawStrImg(dot, coArr, textColor)
+
+	// 主画板
+	var colorArr = []color.RGBA{
+		textColor,
 	}
 
-	co.A = cd.formatAlpha(params.TextAlpha)
+	// 绘制阴影文本颜色
+	shadowColorHex := "#101010"
+	if params.TextShadowColor != "" {
+		shadowColorHex = params.TextShadowColor
+	}
+
+	shadowColor, _ := ParseHexColor(shadowColorHex)
+	if params.ShowTextShadow {
+		colorArr = append(colorArr, shadowColor)
+	}
+
 	canvas := cd.CreateCanvasWithPalette(DrawCanvas{
 		Width:  dot.Width + 10,
 		Height: dot.Height + 10,
-	}, coArr)
+	}, colorArr)
+
+	if params.ShowTextShadow {
+		// 绘制阴影文本
+		var shadowColorArr = []color.RGBA{
+			shadowColor,
+		}
+		shadowImg := cd.DrawStrImg(dot, shadowColorArr, shadowColor)
+		pointX := params.TextShadowPoint.X
+		pointY := params.TextShadowPoint.Y
+		draw.Draw(canvas, shadowImg.Bounds(), shadowImg, image.Point{X: pointX, Y: pointY}, draw.Over)
+	}
+	draw.Draw(canvas, textImg.Bounds(), textImg, image.Point{}, draw.Over)
+
+	// 旋转效果
+	canvas.Rotate(dot.Angle)
+
+	// 扭曲效果
+	if params.BackgroundDistort > 0 {
+		canvas.distort(float64(RandInt(5, 10)), float64(params.BackgroundDistort))
+	}
+
+	// 计算裁剪
+	ap := cd.calcImageSpace(canvas)
+
+	return canvas, ap, nil
+}
+
+// DrawTextImg is a function
+/**
+ * @Description: 绘制文本的图片
+ * @receiver cd
+ * @param dot
+ * @param params
+ * @return *Palette
+ * @return *AreaPoint
+ * @return error
+ */
+func (cd *Draw) DrawStrImg(dot DrawDot, colorArr []color.RGBA, fc color.Color) *Palette {
+	canvas := cd.CreateCanvasWithPalette(DrawCanvas{
+		Width:  dot.Width + 10,
+		Height: dot.Height + 10,
+	}, colorArr)
 
 	// 读字体数据
 	fontBytes, err := getAssetCache(dot.Font)
 	if err != nil {
-		return canvas, nil, err
+		return canvas
 	}
 	fontN, err := freetype.ParseFont(fontBytes)
 	if err != nil {
-		return canvas, nil, err
+		return canvas
 	}
 
 	dc := freetype.NewContext()
@@ -351,39 +492,28 @@ func (cd *Draw) DrawTextImg(dot DrawDot, params DrawCanvas) (*Palette, *AreaPoin
 
 	// 文字大小
 	dc.SetFontSize(float64(dot.Size))
-
-	dc.SetHinting(params.FontHinting)
+	dc.SetHinting(font.HintingFull)
 
 	// 文字颜色
-	hexColor, _ := ParseHexColor(dot.Color)
-	fontColor := image.NewUniform(hexColor)
+	fontColor := image.NewUniform(fc)
 	dc.SetSrc(fontColor)
 
 	// 画文本
 	text := fmt.Sprintf("%s", dot.Text)
 
-	pt := freetype.Pt(12, dot.Height-5) // 字出现的位置
+	pt := freetype.Pt(12, dot.Height - 5) // 字出现的位置
 	if IsChineseChar(text) {
 		pt = freetype.Pt(10, dot.Height) // 字出现的位置
 	}
 
 	_, err = dc.DrawString(text, pt)
 	if err != nil {
-		return nil, nil, err
+		return nil
 	}
 
-	// 旋转
-	canvas.Rotate(dot.Angle)
-
-	if params.BackgroundDistort > 0 {
-		canvas.distort(float64(RandInt(5, 10)), float64(params.BackgroundDistort))
-	}
-
-	// 计算裁剪
-	ap := cd.calcImageSpace(canvas)
-
-	return canvas, ap, nil
+	return canvas
 }
+
 
 /**
  * @Description: 计算剪裁空白多余空白
@@ -508,7 +638,9 @@ func (cd *Draw) drawSlimLine(m *Palette, num int, colorB []color.Color) {
 			point2.Y = mRand.Intn(y) + y * 2
 		}
 
-		m.drawBeeline(point1, point2, cd.genRandColor(colorB))
+		co := cd.genRandColor(colorB)
+		co.A = uint8(0xee)
+		m.drawBeeline(point1, point2, co)
 	}
 }
 

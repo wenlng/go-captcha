@@ -226,7 +226,7 @@ func main(){
 
     // ====================================================
     // Method: SetImageQuality(val int);
-    // Desc: 设置验证码主图清晰度，压缩级别范围1-5，QualityCompressNone无压缩，默认为最底压缩级别
+    // Desc: 设置验证码主图清晰度，压缩级别范围 QualityCompressLevel1 - 5，QualityCompressNone无压缩，默认为最底压缩级别
     // ====================================================
     capt.SetImageQuality(captcha.QualityCompressNone)
 

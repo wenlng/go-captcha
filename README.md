@@ -74,7 +74,7 @@ package main
 import "github.com/wenlng/go-captcha/captcha"
 
 func main(){
-   // ....
+   // ...
 }
 ```
 

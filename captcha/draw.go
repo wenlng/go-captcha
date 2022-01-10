@@ -159,6 +159,9 @@ func (cd *Draw) Draw(params DrawCanvas) (image.Image, error) {
 		// 重置尺寸
 		dot.Height = height
 		dot.Width = width
+		// 重置XY位置
+		dot.Dx = minX
+		dot.Dy = maxY
 	}
 
 	bgFile := params.Background
@@ -205,7 +208,6 @@ func (cd *Draw) DrawWithPalette(params DrawCanvas, colorA []color.Color, colorB 
 
 	canvas := NewPalette(image.Rect(0, 0, params.Width, params.Height), p)
 
-	//cd.strikeThrough(canvas, 2)
 	if params.BackgroundCirclesNum > 0 {
 		cd.fillWithCircles(canvas, params.BackgroundCirclesNum, 1, 2)
 	}
@@ -316,81 +318,6 @@ func (cd *Draw) genRandColor(co []color.Color) color.RGBA {
 	r, g, b, a := co[index].RGBA()
 	return color.RGBA{R: uint8(r), G: uint8(g), B: uint8(b), A: uint8(a)}
 }
-
-// DrawTextImg is a function
-/**
- * @Description: 绘制文本的图片
- * @receiver cd
- * @param dot
- * @param params
- * @return *Palette
- * @return *AreaPoint
- * @return error
- */
-//func (cd *Draw) DrawTextImg(dot DrawDot, params DrawCanvas) (*Palette, *AreaPoint, error) {
-//	co, _ := ParseHexColor(dot.Color)
-//	var coArr = []color.RGBA{
-//		co,
-//	}
-//
-//	co.A = cd.formatAlpha(params.TextAlpha)
-//	canvas := cd.CreateCanvasWithPalette(DrawCanvas{
-//		Width:  dot.Width + 10,
-//		Height: dot.Height + 10,
-//	}, coArr)
-//
-//	// 读字体数据
-//	fontBytes, err := getAssetCache(dot.Font)
-//	if err != nil {
-//		return canvas, nil, err
-//	}
-//	fontN, err := freetype.ParseFont(fontBytes)
-//	if err != nil {
-//		return canvas, nil, err
-//	}
-//
-//	dc := freetype.NewContext()
-//	dc.SetDPI(float64(dot.FontDPI))
-//	dc.SetFont(fontN)
-//	dc.SetClip(canvas.Bounds())
-//	dc.SetDst(canvas)
-//
-//	// 文字大小
-//	dc.SetFontSize(float64(dot.Size))
-//
-//	dc.SetHinting(params.FontHinting)
-//
-//	// 文字颜色
-//	hexColor, _ := ParseHexColor(dot.Color)
-//	fontColor := image.NewUniform(hexColor)
-//	dc.SetSrc(fontColor)
-//
-//	// 画文本
-//	text := fmt.Sprintf("%s", dot.Text)
-//
-//	pt := freetype.Pt(12, dot.Height - 5) // 字出现的位置
-//	if IsChineseChar(text) {
-//		pt = freetype.Pt(10, dot.Height) // 字出现的位置
-//	}
-//
-//	_, err = dc.DrawString(text, pt)
-//	if err != nil {
-//		return nil, nil, err
-//	}
-//
-//	// 旋转
-//	canvas.Rotate(dot.Angle)
-//
-//	if params.BackgroundDistort > 0 {
-//		canvas.distort(float64(RandInt(5, 10)), float64(params.BackgroundDistort))
-//	}
-//
-//	// 计算裁剪
-//	ap := cd.calcImageSpace(canvas)
-//
-//	return canvas, ap, nil
-//}
-
 
 // DrawTextImg is a function
 /**
@@ -550,10 +477,10 @@ func (cd *Draw) calcImageSpace(pa *Palette) *AreaPoint {
 		}
 	}
 
-	minX = int(math.Max(0, float64(minX - 5)))
-	maxX = int(math.Min(float64(nW), float64(maxX + 5)))
-	minY = int(math.Max(0, float64(minY - 5)))
-	maxY = int(math.Min(float64(nH), float64(maxY + 5)))
+	minX = int(math.Max(0, float64(minX - 2)))
+	maxX = int(math.Min(float64(nW), float64(maxX + 2)))
+	minY = int(math.Max(0, float64(minY - 2)))
+	maxY = int(math.Min(float64(nH), float64(maxY + 2)))
 
 	return &AreaPoint{
 		minX,

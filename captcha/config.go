@@ -44,6 +44,21 @@ const (
 	DistortLevel5
 )
 
+
+/**
+ * @Description: 质量压缩程度
+ */
+const (
+	// 无压缩质量,原图
+	QualityCompressNone = iota
+	// 质量压缩程度 1-5 级别，压缩级别越低图像越清晰
+	QualityCompressLevel1 = 100
+	QualityCompressLevel2 = 80
+	QualityCompressLevel3 = 60
+	QualityCompressLevel4 = 40
+	QualityCompressLevel5 = 20
+)
+
 // Config is a type
 /**
 * @Description: 验证码配置
@@ -159,7 +174,7 @@ func GetCaptchaDefaultConfig() *Config {
 		rangThumbFontColors:    getDefaultThumbTextColors(),
 		fontHinting: 			font.HintingNone,
 		imageSize:          	Size{300, 240},
-		imageQuality: 			999,
+		imageQuality: 			QualityCompressLevel1,
 		thumbnailSize:      	Size{150, 40},
 		rangThumbBgColors:  	getDefaultThumbTextColors(),
 		thumbFontDistort:   	DistortLevel3,

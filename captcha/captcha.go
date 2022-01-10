@@ -192,7 +192,7 @@ func (cc *Captcha) SetImageSize(size Size) {
  * @param val
  */
 func (cc *Captcha) SetImageQuality(val int) {
-	if val > 0 || val <= 100 || val == 999 {
+	if val == QualityCompressNone || (val <= QualityCompressLevel1 && val >= QualityCompressLevel5) {
 		cc.config.imageQuality = val
 	}
 }
@@ -315,7 +315,9 @@ func (cc *Captcha) SetTextShadowPoint(val Point) {
  * @param val
  */
 func (cc *Captcha) SetImageFontDistort(val int) {
-	cc.config.imageFontDistort = val
+	if val >= DistortNone || val <= DistortLevel5 {
+		cc.config.imageFontDistort = val
+	}
 }
 
 // SetTextRangAnglePos is a function
@@ -396,7 +398,9 @@ func (cc *Captcha) SetThumbBackground(images []string, args ...bool) {
  * @param val
  */
 func (cc *Captcha) SetThumbBgDistort(val int) {
-	cc.config.thumbBgDistort = val
+	if val >= DistortNone || val <= DistortLevel5 {
+		cc.config.thumbBgDistort = val
+	}
 }
 
 // SetThumbFontDistort is a function
@@ -406,7 +410,9 @@ func (cc *Captcha) SetThumbBgDistort(val int) {
  * @param val
  */
 func (cc *Captcha) SetThumbFontDistort(val int) {
-	cc.config.thumbFontDistort = val
+	if val >= DistortNone || val <= DistortLevel5 {
+		cc.config.thumbFontDistort = val
+	}
 }
 
 // SetThumbBgCirclesNum is a function
@@ -528,7 +534,7 @@ func (cc *Captcha) GenerateWithSize(imageSize Size, thumbnailSize Size) (map[int
  * @return string
  */
 func (cc *Captcha) EncodeB64stringWithJpeg(img image.Image) string {
-	if cc.config.imageQuality <= 100 {
+	if cc.config.imageQuality <= QualityCompressLevel1 && cc.config.imageQuality >= QualityCompressLevel1{
 		return EncodeB64stringWithJpeg(img, cc.config.imageQuality)
 	}
 	return EncodeB64stringWithPng(img)

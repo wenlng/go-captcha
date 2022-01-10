@@ -55,7 +55,7 @@ func demo(w http.ResponseWriter, r *http.Request) {
 func getCaptchaData(w http.ResponseWriter, r *http.Request) {
 	capt := captcha.GetCaptcha()
 
-	// capt.SetImageQuality(100)
+	//capt.SetImageQuality(captcha.QualityCompressLevel1)
 
 	//chars := "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	//_ = capt.SetRangChars(strings.Split(chars, ""))

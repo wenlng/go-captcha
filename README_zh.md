@@ -11,8 +11,8 @@ go-captcha, 一个简洁易用、交互友好、高安全性的"行为式验证�
 
 - Github：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
 - Go实例代码：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
-- Vue实例代码：[https://github.com/wenlng/go-captcha-example-vue](https://github.com/wenlng/go-captcha-example-vue)
-- React实例代码：[https://github.com/wenlng/go-captcha-example-react](https://github.com/wenlng/go-captcha-example-react)
+- Vue实例代码：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
+- React实例代码：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
 - 在线演示：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
 - 作者网站: [http://witkeycode.com](http://witkeycode.com)
 
@@ -34,7 +34,7 @@ go-captcha, 一个简洁易用、交互友好、高安全性的"行为式验证�
 - ChinaProxy：https://goproxy.cn
 - Other：https://gocenter.io
 
-#### 设置Go模块的代理
+### 设置Go模块的代理
 - Window
 ```shell script
 $ set GO111MODULE=on
@@ -78,7 +78,7 @@ func main(){
 }
 ```
 
-### 快速使用
+## 快速使用
 ```go
 package main
 import (
@@ -113,7 +113,7 @@ func main(){
 
 ```
 
-### 验证码实例
+## 验证码实例
 - 创建实例或者获取单例模式的实例
 ```go
 package main
@@ -135,10 +135,10 @@ func main(){
 }
 ```
 
-### 验证码配置
+## 验证码配置
 v1.2.3版本后大图默认尺寸为：300×240px，小图默认尺寸为：150×40px。
 
-#### 文本相关的配置
+#### 文本相关配置
 默认情况下内置了定制的字体。如果设置了其他中文的文字，则可能需要设置字体文件。
 ```go
 package main
@@ -195,7 +195,7 @@ func main(){
 }
 ```
 
-#### 大图相关的配置
+#### 大图相关配置
 ```go
 package main
 import (
@@ -226,9 +226,9 @@ func main(){
 
     // ====================================================
     // Method: SetImageQuality(val int);
-    // Desc: 设置验证码主图清晰度，范围1-100压缩图，默认999为原图
+    // Desc: 设置验证码主图清晰度，压缩级别范围1-5，QualityCompressNone无压缩，默认为最底压缩级别
     // ====================================================
-    capt.SetImageQuality(100)
+    capt.SetImageQuality(captcha.QualityCompressNone)
 
     // ====================================================
     // Method: SetFontHinting(val font.Hinting);
@@ -264,25 +264,25 @@ func main(){
     capt.SetImageFontAlpha(0.5)
 
     // ====================================================
-    // Method: SetTextShadow(val float64);
+    // Method: SetTextShadow(val bool);
     // Desc:设置字体阴影
     // ====================================================
     capt.SetTextShadow(true)
 
     // ====================================================
-    // Method: SetTextShadowColor(val float64);
+    // Method: SetTextShadowColor(val string);
     // Desc:设置字体阴影颜色
     // ====================================================
     capt.SetTextShadowColor("#101010")
 
     // ====================================================
-    // Method: SetTextShadowPoint(val float64);
+    // Method: SetTextShadowPoint(val captcha.Point);
     // Desc:设置字体阴影偏移位置
     // ====================================================
     capt.SetTextShadowPoint(captcha.Point{1, 1})
 
     // ====================================================
-    // Method: SetTextRangAnglePos(pos []RangeVal);
+    // Method: SetTextRangAnglePos(pos []captcha.RangeVal);
     // Desc:设置验证码文本的旋转角度
     // ====================================================
     capt.SetTextRangAnglePos([]captcha.RangeVal{
@@ -303,7 +303,7 @@ func main(){
 }
 ```
 
-#### 小图相关的配置
+#### 小图相关配置
 ```go
 package main
 import (
@@ -409,7 +409,19 @@ func main(){
     capt.ClearAssetCacheWithPaths([]string{
     	path + "/__example/resources/images/1.jpg",
     	path + "/__example/resources/images/2.jpg",
-    }) 
+    })     
+
+    // ====================================================
+    // Method: captcha.CheckPointDist(sx, sy, dx, dy, width, height int64) bool;
+    // Desc: 校验点的位置
+    // ====================================================
+    captcha.CheckPointDist(0, 30, 0, 30, 30, 30)    
+
+    // ====================================================
+    // Method: captcha.CheckPointDistWithPadding(sx, sy, dx, dy, width, height, padding int64) bool;
+    // Desc: 校验点的位置
+    // ====================================================
+    captcha.CheckPointDistWithPadding(0, 30, 0, 30, 30, 30, 5) 
 }
 ```
 

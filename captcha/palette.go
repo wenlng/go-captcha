@@ -53,19 +53,11 @@ func (p *Palette) Rotate(angle int) {
 	width := tarImg.Bounds().Max.X
 	height := tarImg.Bounds().Max.Y
 	r := width / 2
-	//trX, trY := tarImg.Bounds().Max.X / 2, tarImg.Bounds().Max.Y / 2
 	retImg := image.NewPaletted(image.Rect(0, 0, width, height), tarImg.Palette)
 	for x := 0; x <= retImg.Bounds().Max.X; x++ {
 		for y := 0; y <= retImg.Bounds().Max.Y; y++ {
-			//if (x - trX)*(x - trX) + (y - trY)*(y - trY) <= r*r {
-			//	tx, ty := p.angleSwapPoint(float64(x), float64(y), float64(r), float64(angle))
-			//	retImg.SetColorIndex(x, y, tarImg.ColorIndexAt(int(tx), int(ty)))
-			//}
 			tx, ty := p.angleSwapPoint(float64(x), float64(y), float64(r), float64(angle))
-			//at := tarImg.ColorIndexAt(int(tx), int(ty))
-			//if at > 0 {
 			retImg.SetColorIndex(x, y, tarImg.ColorIndexAt(int(tx), int(ty)))
-			//}
 		}
 	}
 
@@ -140,9 +132,9 @@ func (p *Palette) distort(amplude float64, period float64) {
 	dx := 2.0 * math.Pi / period
 	for x := 0; x < w; x++ {
 		for y := 0; y < h; y++ {
-			xo := amplude * math.Sin(float64(y)*dx)
-			yo := amplude * math.Cos(float64(x)*dx)
-			newP.SetColorIndex(x, y, p.ColorIndexAt(x+int(xo), y+int(yo)))
+			xo := amplude * math.Sin(float64(y) * dx)
+			yo := amplude * math.Cos(float64(x) * dx)
+			newP.SetColorIndex(x, y, p.ColorIndexAt(x + int(xo), y + int(yo)))
 		}
 	}
 

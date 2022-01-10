@@ -11,8 +11,8 @@ Package captcha implements generation and click location verification of image C
 
 - Github：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
 - Go Example Code：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
-- Example Code of Vue：[https://github.com/wenlng/go-captcha-example-vue](https://github.com/wenlng/go-captcha-example-vue)
-- Example Code of React：[https://github.com/wenlng/go-captcha-example-react](https://github.com/wenlng/go-captcha-example-react)
+- Example Code of Vue：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
+- Example Code of React：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
 - Online Demo：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
 - Author Website: [http://witkeycode.com](http://witkeycode.com)
 
@@ -34,7 +34,7 @@ Package captcha implements generation and click location verification of image C
 - ChinaProxy：https://goproxy.cn
 - Other：https://gocenter.io
 
-#### Set Proxy of go module 
+### Set Proxy of go module 
 - Window
 ```shell script
 $ set GO111MODULE=on
@@ -78,7 +78,7 @@ func main(){
 }
 ```
 
-### Quick Use
+## Quick Use
 ```go
 package main
 import (
@@ -113,7 +113,7 @@ func main(){
 
 ```
 
-### Captcha Instances
+## Captcha Instances
 - New Instances or Get Single Instances
 ```go
 package main
@@ -135,11 +135,11 @@ func main(){
 }
 ```
 
-### Set Configuration
+## Set Configuration
 After version v1.2.3, the default size of large drawing is 300×240px, the default size of the small drawing is 150×40px.
 
 
-#### Set Chars
+### Set Chars
 Some fonts are attached by default. If other Chinese strings are set, you may need to import a font file.
 ```go
 package main
@@ -172,7 +172,7 @@ func main(){
 }
 ```
 
-#### Set Font File Configuration
+### Set Font File Configuration
 You can copy the resource files under the "__example/resources" to the directory of your project.
 ```go
 package main
@@ -197,7 +197,7 @@ func main(){
 ```
 
 
-#### Set Big Image Configuration
+### Set Big Image Configuration
 Tip: Some images are attached by default. 
 ```go
 package main
@@ -229,9 +229,9 @@ func main(){
 
     // ====================================================
     // Method: SetImageQuality(val int);
-    // Desc: Set quality of captcha, The range value is 1-100 compressed pictures, and the default value is 999 original pictures
+    // Desc: Set quality of captcha, The compression level ranges from 1 to 5. QualityCompressNone has no compression. The default is the lowest compression level
     // ====================================================
-    capt.SetImageQuality(100)
+    capt.SetImageQuality(captcha.QualityCompressNone)
 
     // ====================================================
     // Method: SetFontHinting(val font.Hinting);
@@ -267,25 +267,25 @@ func main(){
     capt.SetImageFontAlpha(0.5)
 
     // ====================================================
-    // Method: SetTextShadow(val float64);
+    // Method: SetTextShadow(val bool);
     // Desc:Set shadow of font
     // ====================================================
     capt.SetTextShadow(true)
 
     // ====================================================
-    // Method: SetTextShadowColor(val float64);
+    // Method: SetTextShadowColor(val string);
     // Desc:Set shadow color of font
     // ====================================================
     capt.SetTextShadowColor("#101010")
 
     // ====================================================
-    // Method: SetTextShadowPoint(val float64);
+    // Method: SetTextShadowPoint(val captcha.Point);
     // Desc:Set shadow point of font
     // ====================================================
     capt.SetTextShadowPoint(captcha.Point{1, 1})
 
     // ====================================================
-    // Method: SetTextRangAnglePos(pos []RangeVal);
+    // Method: SetTextRangAnglePos(pos []captcha.RangeVal);
     // Desc:Set angle of font
     // ====================================================
     capt.SetTextRangAnglePos([]captcha.RangeVal{
@@ -406,7 +406,19 @@ func main(){
     capt.ClearAssetCacheWithPaths([]string{
     	path + "/__example/resources/images/1.jpg",
     	path + "/__example/resources/images/2.jpg",
-    }) 
+    })     
+
+    // ====================================================
+    // Method: captcha.CheckPointDist(sx, sy, dx, dy, width, height int64) bool;
+    // Desc: Check point position
+    // ====================================================
+    captcha.CheckPointDist(0, 30, 0, 30, 30, 30)    
+
+    // ====================================================
+    // Method: captcha.CheckPointDistWithPadding(sx, sy, dx, dy, width, height, padding int64) bool;
+    // Desc: Check point position
+    // ====================================================
+    captcha.CheckPointDistWithPadding(0, 30, 0, 30, 30, 30, 5) 
 }
 ```
 

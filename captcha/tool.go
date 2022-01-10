@@ -93,9 +93,9 @@ func ParseHexColor(s string) (c color.RGBA, err error) {
 
 	switch len(s) {
 	case 7:
-		c.R = hexToByte(s[1])<<4 + hexToByte(s[2])
-		c.G = hexToByte(s[3])<<4 + hexToByte(s[4])
-		c.B = hexToByte(s[5])<<4 + hexToByte(s[6])
+		c.R = hexToByte(s[1]) << 4 + hexToByte(s[2])
+		c.G = hexToByte(s[3]) << 4 + hexToByte(s[4])
+		c.B = hexToByte(s[5]) << 4 + hexToByte(s[6])
 
 	case 4:
 		c.R = hexToByte(s[1]) * 17

@@ -237,7 +237,6 @@ func (cc *Captcha) SetTextRangFontColors(colors []string) {
 	cc.config.rangFontColors = colors
 }
 
-
 // SetThumbTextRangFontColors is a function
 /**
  * @Description: 设置缩略图文本随机颜色

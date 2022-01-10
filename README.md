@@ -7,7 +7,7 @@
 
 > English | [中文](README_zh.md)
 
-Package captcha implements generation and click location verification of image CAPTCHAs. 
+Golang Package go-captcha implements generation and position verification of behavioral CAPTCHAs.
 
 - Github：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
 - Go Example Code：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)

@@ -20,7 +20,7 @@ import (
 func TestImageSize(t *testing.T) {
 	capt := getCaptcha()
 	fmt.Println(capt)
-	capt.SetImageSize(&captcha.Size{Width: 300, Height: 300})
+	capt.SetImageSize(captcha.Size{Width: 300, Height: 300})
 
 	dots, b64, tb64, key, err := capt.Generate()
 	if err != nil {
@@ -36,7 +36,7 @@ func TestImageSize(t *testing.T) {
 func TestSetThumbSize(t *testing.T) {
 	capt := getCaptcha()
 
-	capt.SetThumbSize(&captcha.Size{Width: 300, Height: 300})
+	capt.SetThumbSize(captcha.Size{Width: 300, Height: 300})
 
 	chars := []string{"HE", "CA", "WO", "NE", "HT", "IE", "PG", "GI", "CH", "CO", "DA"}
 	_ = capt.SetRangChars(chars)

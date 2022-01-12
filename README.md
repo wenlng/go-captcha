@@ -39,7 +39,7 @@
 - ChinaProxy：https://goproxy.cn
 - Other：https://gocenter.io
 
-### Set Proxy of go module 
+## Set Proxy of go module 
 - Window
 ```shell script
 $ set GO111MODULE=on
@@ -60,19 +60,19 @@ $ echo "export GOPROXY=https://goproxy.cn,direct" >> ~/.profile
 $ source ~/.profile
 ```
 
-### Dependency Library
+## Dependency Library
 ```
 $ go get -u github.com/golang/freetype
 $ go get -u golang.org/x/crypto
 $ go get -u golang.org/x/image
 ```
 
-### Install Captcha Module
+## Install Captcha Module
 ```
 $ go get -u github.com/wenlng/go-captcha/captcha
 ```
 
-### Import Captcha Module
+## Import Captcha Module
 ```go
 package main
 

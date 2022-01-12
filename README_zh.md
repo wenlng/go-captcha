@@ -62,19 +62,19 @@ $ echo "export GOPROXY=https://goproxy.cn,direct" >> ~/.profile
 $ source ~/.profile
 ```
 
-### 依赖golang官方标准库
+## 依赖golang官方标准库
 ```
 $ go get -u github.com/golang/freetype
 $ go get -u golang.org/x/crypto
 $ go get -u golang.org/x/image
 ```
 
-### 安装模块
+## 安装模块
 ```
 $ go get -u github.com/wenlng/go-captcha/captcha
 ```
 
-### 引入模块
+## 引入模块
 ```go
 package main
 

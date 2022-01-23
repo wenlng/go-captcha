@@ -189,7 +189,7 @@ func (cc *Captcha) SetImageSize(size Size) {
 
 // SetImageQuality is a function
 /**
- * @Description: 设置验证码清晰度1-100为压缩图，999为原图
+ * @Description: 设置验证码清晰度
  * @receiver cc
  * @param val
  */

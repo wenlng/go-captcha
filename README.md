@@ -12,7 +12,7 @@
 
 > English | [中文](README_zh.md)
 
-<p>Golang Package go-captcha implements generation and position verification of behavioral CAPTCHAs.</p>
+<p>Go Captcha is a behavioral captcha, which implements the generation of random verification text and the verification of click position information.</p>
 
 <p> ⭐️ If it helps you, please give a star.</p>
 

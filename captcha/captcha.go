@@ -17,6 +17,7 @@ import (
 	"math"
 	"math/rand"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -59,7 +60,8 @@ type Captcha struct {
 	captchaDraw *Draw
 }
 
-var clickCaptcha *Captcha
+var _instance *Captcha
+var _once sync.Once
 
 // NewCaptcha is a function
 /**
@@ -76,15 +78,15 @@ func NewCaptcha() *Captcha {
 
 // GetCaptcha is a function
 /**
- * @Description: 获取点选验证码
+ * @Description: 获取点选验证码,是安全的
  * @return *Captcha
  */
 func GetCaptcha() *Captcha {
-	if clickCaptcha == nil {
-		clickCaptcha = NewCaptcha()
-	}
+	_once.Do(func() {
+		_instance = NewCaptcha()
+	})
 
-	return clickCaptcha
+	return _instance
 }
 
 // SetRangChars is a function

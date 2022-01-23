@@ -45,3 +45,16 @@ func clearAssetCache(paths []string) bool {
 func setAssetCache(path string, content []byte, force bool) bool {
 	return assets.SetAssetCache(path, content, force)
 }
+
+// =============================================
+// Call API
+// =============================================
+// ClearAssetCacheWithPaths is a function
+/**
+ * @Description: 根据路径清除资源缓存
+ * @param paths
+ * @return bool
+ */
+func ClearAssetCacheWithPaths(paths []string) bool {
+	return clearAssetCache(paths)
+}

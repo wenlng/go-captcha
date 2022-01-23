@@ -14,22 +14,23 @@
 
 <p>Golang Package go-captcha implements generation and position verification of behavioral CAPTCHAs.</p>
 
+<p> ⭐️ If it helps you, please give a star.</p>
+
 - Github：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
-- Go Example Code：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
-- Example Code of Vue：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
-- Example Code of React：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
+- Go Example：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
+- Vue Example：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
+- React Example：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
 - Online Demo：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
-- Author Website: [http://witkeycode.com](http://witkeycode.com)
 
 <br/>
 
-<div align="center">
-    <img src="http://47.104.180.148/go-captcha/go-captcha-02.png?v=7" alt="Reward Support">
-    <br/>
-    <br/> 
+<div align="center"> 
     <img src="http://47.104.180.148/go-captcha/go-captcha.jpg?v=9" alt="Reward Support">
     <br/>
     <br/>   
+    <img src="http://47.104.180.148/go-captcha/go-captcha-02.png?v=7" alt="Reward Support">
+    <br/>
+    <br/>
 </div>
 
 ## Installation of proxy go module in China
@@ -88,7 +89,6 @@ func main(){
 package main
 import (
     "fmt"
-    "os"
     "github.com/wenlng/go-captcha/captcha"
 )
 
@@ -178,7 +178,7 @@ func main(){
 ```
 
 ### Set Font File Configuration
-You can copy the resource files under the "__example/resources" to the directory of your project.
+You can copy the resource files under the "https://github.com/wenlng/go-captcha-example/tree/main/resources" to the directory of your project.
 ```go
 package main
 import (
@@ -391,7 +391,7 @@ func main(){
 }
 ```
 
-#### Other
+## Other
 ```go
 package main
 import (
@@ -401,16 +401,14 @@ import (
 )
 
 func main(){
-    capt := captcha.GetCaptcha()
-    
     path, _ := os.Getwd()    
     // ====================================================
     // Method: ClearAssetCacheWithPath(paths []string) bool;
     // Desc: Clear Cache
     // ====================================================
-    capt.ClearAssetCacheWithPaths([]string{
+    captcha.ClearAssetCacheWithPaths([]string{
     	path + "/__example/resources/images/1.jpg",
-    	path + "/__example/resources/images/2.jpg",
+    	path + "/__example/resources/fonts/fonts.ttf",
     })     
 
     // ====================================================
@@ -427,7 +425,7 @@ func main(){
 }
 ```
 
-### Generate Captcha Data
+## Generate Captcha Data
 ```go
 package main
 import (
@@ -459,10 +457,9 @@ func main(){
 }
 ```
 
-### Api Params Of Fronted Example
+## Api Params
 ```
 // Example: Get captcha data
-API = http://....../captcha/captcha-data
     Respose Data = {
         "code": 0,
         "image_base64": "...",
@@ -471,7 +468,6 @@ API = http://....../captcha/captcha-data
     }     
 
 // Example: Post check data
-API = http://....../captcha/check-data
     Request Data = {
         dots: "x1,y1,x2,y2,...."
         key: "......"

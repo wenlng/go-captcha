@@ -14,8 +14,24 @@ import (
 	"log"
 	"os"
 	"strings"
+	"sync"
 	"testing"
 )
+
+// go test -race base.go captcha_test.go
+func TestGetCaptchaGoroutine(t *testing.T) {
+	var wg sync.WaitGroup
+	n := 30
+	wg.Add(n)
+	for i := 0; i < n; i++ {
+		go func() {
+			t.Logf(">>> %p\n", getCaptcha())
+			wg.Done()
+		}()
+	}
+
+	wg.Wait()
+}
 
 func TestImageSize(t *testing.T) {
 	capt := getCaptcha()
@@ -143,7 +159,7 @@ func TestImageFontDistort(t *testing.T) {
 func TestRangAnglePos(t *testing.T) {
 	capt := getCaptcha()
 
-	rang := []*captcha.RangeVal{
+	rang := []captcha.RangeVal{
 		{1, 15},
 		{15, 30},
 		{30, 45},
@@ -167,13 +183,13 @@ func TestRangAnglePos(t *testing.T) {
 func TestThumbBackground(t *testing.T) {
 	capt := getCaptcha()
 
-	capt.SetThumbBackground([]string{
-		getPWD() + "/__example/resources/images/thumb/r1.jpg",
-		getPWD() + "/__example/resources/images/thumb/r2.jpg",
-		getPWD() + "/__example/resources/images/thumb/r3.jpg",
-		getPWD() + "/__example/resources/images/thumb/r4.jpg",
-		getPWD() + "/__example/resources/images/thumb/r5.jpg",
-	})
+	//capt.SetThumbBackground([]string{
+	//	getPWD() + "/__example/resources/images/thumb/r1.jpg",
+	//	getPWD() + "/__example/resources/images/thumb/r2.jpg",
+	//	getPWD() + "/__example/resources/images/thumb/r3.jpg",
+	//	getPWD() + "/__example/resources/images/thumb/r4.jpg",
+	//	getPWD() + "/__example/resources/images/thumb/r5.jpg",
+	//})
 
 	dots, b64, tb64, key, err := capt.Generate()
 	if err != nil {

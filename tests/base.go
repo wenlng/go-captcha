@@ -30,18 +30,18 @@ func getPWD() string {
 func getCaptcha() *captcha.Captcha {
 	capt := captcha.GetCaptcha()
 
-	capt.SetFont([]string{
-		getPWD() + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
-		getPWD() + "/__example/resources/fonts/hyrunyuan.ttf",
-	})
-
-	capt.SetBackground([]string{
-		getPWD() + "/__example/resources/images/1.jpg",
-		getPWD() + "/__example/resources/images/2.jpg",
-		getPWD() + "/__example/resources/images/3.jpg",
-		getPWD() + "/__example/resources/images/4.jpg",
-		getPWD() + "/__example/resources/images/5.jpg",
-	})
+	//capt.SetFont([]string{
+	//	getPWD() + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
+	//	getPWD() + "/__example/resources/fonts/hyrunyuan.ttf",
+	//})
+	//
+	//capt.SetBackground([]string{
+	//	getPWD() + "/__example/resources/images/1.jpg",
+	//	getPWD() + "/__example/resources/images/2.jpg",
+	//	getPWD() + "/__example/resources/images/3.jpg",
+	//	getPWD() + "/__example/resources/images/4.jpg",
+	//	getPWD() + "/__example/resources/images/5.jpg",
+	//})
 
 	return capt
 }

@@ -16,20 +16,21 @@
 go-captcha, 一个简洁易用、交互友好、高安全性的"行为式验证码" Go库 ，采用 “验证码展示-采集用户行为-验证行为数据” 为流程，用户无需键盘手动输入，极大优化传统验证码用户体验不佳的问题，支持PC端及移动端，支持前端Vue、React...等项目。
 </p>
 
+<p> ⭐️ 如果能帮助到你，记得随手给点一个star。</p>
+
 - Github：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
-- Go实例代码：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
-- Vue实例代码：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
-- React实例代码：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
+- 后端Go实例：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
+- 前端Vue实例：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
+- 前端React实例：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
 - 在线演示：[http://47.104.180.148:8081/go_captcha_demo](http://47.104.180.148:8081/go_captcha_demo)
-- 作者网站: [http://witkeycode.com](http://witkeycode.com)
 
 <br/>
 
-<div align="center">
-    <img src="http://47.104.180.148/go-captcha/go-captcha-01.png?v=7" alt="Reward Support">
-    <br/>
-    <br/> 
+<div align="center"> 
     <img src="http://47.104.180.148/go-captcha/go-captcha.jpg?v=9" alt="Reward Support">
+    <br/>
+    <br/>
+    <img src="http://47.104.180.148/go-captcha/go-captcha-01.png?v=7" alt="Reward Support">
     <br/>
     <br/>
 </div>
@@ -90,7 +91,6 @@ func main(){
 package main
 import (
     "fmt"
-    "os"
     "github.com/wenlng/go-captcha/captcha"
 )
 
@@ -179,7 +179,7 @@ func main(){
 ```
 
 #### 设置字体文件
-你可以拷贝实例中 "__example/resources" 的图片资源和字体文件到你的项目中使用。
+你可以拷贝实例仓库中 "https://github.com/wenlng/go-captcha-example/tree/main/resources" 的图片资源和字体文件到你的项目中使用。
 ```go
 package main
 import (
@@ -194,7 +194,7 @@ func main(){
     path, _ := os.Getwd()
     // ====================================================
     // Method: SetFont(fonts []string);
-    // Desc: 设置验证码字体
+    // Desc: 设置验证码字体，自动仅读取一次并加载到内存中缓存，如需重置可清除缓存
     // ====================================================
     capt.SetFont([]string{
         path + "/__example/resources/fonts/fzshengsksjw_cu.ttf",
@@ -218,7 +218,7 @@ func main(){
     path, _ := os.Getwd()    
     // ====================================================
     // Method: SetBackground(color []string);
-    // Desc: 设置验证码背景图
+    // Desc: 设置验证码背景图，自动仅读取一次并加载到内存中缓存，如需重置可清除缓存
     // ====================================================
     capt.SetBackground([]string{
         path + "/__example/resources/images/1.jpg",
@@ -362,7 +362,7 @@ func main(){
 
     // ====================================================
     // Method: SetThumbBackground(colors []string);
-    // Desc:设置缩略图的随机图像背景
+    // Desc:设置缩略图的随机图像背景，自动仅读取一次并加载到内存中缓存，如需重置可清除缓存
     // ====================================================
     capt.SetThumbBackground([]string{
         path + "/__example/resources/images/r1.jpg",
@@ -396,7 +396,7 @@ func main(){
 }
 ```
 
-#### 其它
+## 其它
 ```go
 package main
 import (
@@ -405,18 +405,16 @@ import (
     "github.com/wenlng/go-captcha/captcha"
 )
 
-func main(){
-    capt := captcha.GetCaptcha()
-    
+func main(){    
     path, _ := os.Getwd()    
     // ====================================================
     // Method: ClearAssetCacheWithPath(paths []string) bool;
-    // Desc: 根据路径消除对应的资源缓存
+    // Desc: 根据路径清除应资源的缓存
     // ====================================================
-    capt.ClearAssetCacheWithPaths([]string{
+    captcha.ClearAssetCacheWithPaths([]string{
     	path + "/__example/resources/images/1.jpg",
-    	path + "/__example/resources/images/2.jpg",
-    })     
+    	path + "/__example/resources/fonts/fonts.ttf",
+    }) 
 
     // ====================================================
     // Method: captcha.CheckPointDist(sx, sy, dx, dy, width, height int64) bool;
@@ -426,13 +424,13 @@ func main(){
 
     // ====================================================
     // Method: captcha.CheckPointDistWithPadding(sx, sy, dx, dy, width, height, padding int64) bool;
-    // Desc: 校验点的位置
+    // Desc: 校验点的位置,可设置文本范围的偏移量
     // ====================================================
     captcha.CheckPointDistWithPadding(0, 30, 0, 30, 30, 30, 5) 
 }
 ```
 
-### 生成验证码数据
+## 生成验证码数据
 ```go
 package main
 import (
@@ -464,10 +462,9 @@ func main(){
 }
 ```
 
-### 在 __example 中的前端在数据请求或提交验证数据时的格式： 
+## 前端在数据请求或提交验证数据时的格式： 
 ```
 // Example: 获取验证码数据
-API = http://....../captcha/captcha-data
     Respose Data = {
         "code": 0,
         "image_base64": "...",
@@ -476,7 +473,6 @@ API = http://....../captcha/captcha-data
     }     
 
 // Example: 提交校验数据 
-API = http://....../captcha/check-data
     Request Data = {
         dots: "x1,y1,x2,y2,...."
         key: "xxxxxx"

@@ -420,14 +420,14 @@ func main(){
     // Method: captcha.CheckPointDist(sx, sy, dx, dy, width, height int64) bool;
     // Desc: 校验点的位置
     // ====================================================
-    captcha.CheckPointDist(0, 30, 0, 30, 30, 30)    
+    captcha.CheckPointDist(12, 22, 10, 15, 30, 30)    
 
     // ====================================================
     // Method: captcha.CheckPointDistWithPadding(sx, sy, dx, dy, width, height, padding int64) bool;
-    // Desc: 校验点的位置,可设置文本范围的偏移量
+    // Desc: 校验点的位置,可设置文本范围的偏移量来提高校验通过率
     // 例如：文本的宽和高为30，校验范围x为10-40，y为15-55，此时扩充5像素后校验范围宽和高为40，则校验范围x为5-45，位置y为10-60
     // ====================================================
-    captcha.CheckPointDistWithPadding(0, 30, 0, 30, 30, 30, 5) 
+    captcha.CheckPointDistWithPadding(12, 22, 10, 15, 30, 30, 5) 
 }
 ```
 

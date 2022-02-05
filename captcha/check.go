@@ -36,7 +36,7 @@ func CheckPointDist(sx, sy, dx, dy, width, height int64) bool {
  * @param dy		校验文本的y轴
  * @param width		校验文本的宽度
  * @param height	校验文本的高度
- * @param padding 	在原有的区域上添加额外边距进行扩张计算区域，不推荐设置padding
+ * @param padding 	在原有的区域上添加额外边距进行扩张计算区域，不推荐设置过大的padding
  * @return bool
  */
 func CheckPointDistWithPadding(sx, sy, dx, dy, width, height, padding int64) bool {

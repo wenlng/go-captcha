@@ -6,6 +6,7 @@
 <a href="https://github.com/wenlng/go-captcha/releases"><img src="https://img.shields.io/github/v/release/wenlng/go-captcha.svg"/></a>
 <a href="https://github.com/wenlng/go-captcha/blob/master/LICENSE"><img src="https://img.shields.io/github/license/wenlng/go-captcha.svg"/></a>
 <a href="https://github.com/wenlng/go-captcha"><img src="https://img.shields.io/github/stars/wenlng/go-captcha.svg"/></a>
+<a href="https://github.com/wenlng/go-captcha"><img src="https://img.shields.io/github/last-commit/wenlng/go-captcha.svg"/></a>
 </div>
 
 <br/>
@@ -424,7 +425,7 @@ func main(){
 
     // ====================================================
     // Method: captcha.CheckPointDistWithPadding(sx, sy, dx, dy, width, height, padding int64) bool;
-    // Desc: 校验点的位置,可设置文本范围的偏移量来提高校验通过率
+    // Desc: 校验点的位置,在原有的区域上添加额外边距进行扩张计算区域,不推荐设置过大的padding
     // 例如：文本的宽和高为30，校验范围x为10-40，y为15-45，此时扩充5像素后校验范围宽和高为40，则校验范围x为5-45，位置y为10-50
     // ====================================================
     captcha.CheckPointDistWithPadding(12, 22, 10, 15, 30, 30, 5) 

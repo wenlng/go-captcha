@@ -34,34 +34,6 @@
     <br/>
 </div>
 
-## Installation of proxy go module in China
-- GoProxy https://github.com/goproxy/goproxy.cn
-- AliProxy： https://mirrors.aliyun.com/goproxy/
-- OfficialProxy： https://goproxy.io/
-- ChinaProxy：https://goproxy.cn
-- Other：https://gocenter.io
-
-## Set Proxy of go module 
-- Window
-```shell script
-$ set GO111MODULE=on
-$ set GOPROXY=https://goproxy.io,direct
-
-### The Golang 1.13+ can be executed directly
-$ go env -w GO111MODULE=on
-$ go env -w GOPROXY=https://goproxy.io,direct
-```
-- Linux or Mac
-```shell script
-$ export GO111MODULE=on
-$ export GOPROXY=https://goproxy.io,direct
-
-### or
-$ echo "export GO111MODULE=on" >> ~/.profile
-$ echo "export GOPROXY=https://goproxy.cn,direct" >> ~/.profile
-$ source ~/.profile
-```
-
 ## Dependency Library
 ```
 $ go get -u github.com/golang/freetype

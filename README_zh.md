@@ -36,14 +36,7 @@ go-captcha, 一个简洁易用、交互友好、高安全性的"行为式验证�
     <br/>
 </div>
 
-## 中国Go模块代理
-- GoProxy https://github.com/goproxy/goproxy.cn
-- AliProxy： https://mirrors.aliyun.com/goproxy/
-- OfficialProxy： https://goproxy.io/
-- ChinaProxy：https://goproxy.cn
-- Other：https://gocenter.io
-
-### 设置Go模块的代理
+### 设置Go代理
 - Window
 ```shell script
 $ set GO111MODULE=on

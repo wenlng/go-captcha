@@ -38,7 +38,7 @@ go-captcha, 一个简洁易用、交互友好、高安全性的"行为式验证�
 
 ### 设置Go代理
 - Window
-```shell script
+```shell
 $ set GO111MODULE=on
 $ set GOPROXY=https://goproxy.io,direct
 
@@ -47,7 +47,7 @@ $ go env -w GO111MODULE=on
 $ go env -w GOPROXY=https://goproxy.io,direct
 ```
 - Linux or Mac
-```shell script
+```shell
 $ export GO111MODULE=on
 $ export GOPROXY=https://goproxy.io,direct
 
@@ -58,14 +58,14 @@ $ source ~/.profile
 ```
 
 ## 依赖golang官方标准库
-```
+```shell
 $ go get -u github.com/golang/freetype
 $ go get -u golang.org/x/crypto
 $ go get -u golang.org/x/image
 ```
 
 ## 安装模块
-```
+```shell
 $ go get -u github.com/wenlng/go-captcha/captcha
 ```
 

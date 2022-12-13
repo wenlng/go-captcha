@@ -35,14 +35,14 @@
 </div>
 
 ## Dependency Library
-```
+```shell
 $ go get -u github.com/golang/freetype
 $ go get -u golang.org/x/crypto
 $ go get -u golang.org/x/image
 ```
 
 ## Install Captcha Module
-```
+```shell
 $ go get -u github.com/wenlng/go-captcha/captcha
 ```
 

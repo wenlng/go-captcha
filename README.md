@@ -1,8 +1,7 @@
 <div align="center">
-<img width="120" style="padding-top: 50px" src="http://47.104.180.148/go-captcha/gocaptcha_logo.svg"/>
+<img width="120" style="padding-top: 50px; margin: 0;" src="http://47.104.180.148/go-captcha/gocaptcha_logo.svg"/>
 <h1 style="margin: 0; padding: 0">Go Captcha</h1>
-<p>行为式安全验证码</p>
-<p>Behavioral Captcha</p>
+<p>Behavior Security Captcha</p>
 <a href="https://goreportcard.com/report/github.com/wenlng/go-captcha"><img src="https://goreportcard.com/badge/github.com/wenlng/go-captcha"/></a>
 <a href="https://godoc.org/github.com/wenlng/go-captcha"><img src="https://godoc.org/github.com/wenlng/go-captcha?status.svg"/></a>
 <a href="https://github.com/wenlng/go-captcha/releases"><img src="https://img.shields.io/github/v/release/wenlng/go-captcha.svg"/></a>
@@ -15,7 +14,7 @@
 
 > English | [中文](README_zh.md)
 
-<p>Go Captcha is a behavioral captcha, which implements the generation of random verification text and the verification of click position information.</p>
+<p><a href="https://github.com/wenlng/go-captcha">Go-Captcha</a> is a behavior security CAPTCHA, which implements the generation of random verification text and the verification of click position information.</p>
 
 <p> ⭐️ If it helps you, please give a star.</p>
 

@@ -1,5 +1,5 @@
 <div align="center">
-<img width="120" style="padding-top: 50px" src="http://47.104.180.148/go-captcha/gocaptcha_logo.svg"/>
+<img width="120" style="padding-top: 50px; margin: 0;" src="http://47.104.180.148/go-captcha/gocaptcha_logo.svg"/>
 <h1 style="margin: 0; padding: 0">Go Captcha</h1>
 <p>行为式安全验证码</p>
 <a href="https://goreportcard.com/report/github.com/wenlng/go-captcha"><img src="https://goreportcard.com/badge/github.com/wenlng/go-captcha"/></a>
@@ -15,7 +15,7 @@
 > [English](README.md) | 中文
 
 <p>
-go-captcha, 一个简洁易用、交互友好、高安全性的"行为式验证码" Go库 ，采用 “验证码展示-采集用户行为-验证行为数据” 为流程，用户无需键盘手动输入，极大优化传统验证码用户体验不佳的问题，支持PC端及移动端，支持前端Vue、React...等项目。
+<a href="https://github.com/wenlng/go-captcha">go-captcha</a> 是一个简洁易用、交互友好、高安全性的 "行为式验证码" Go库 ，采用 “验证码展示-采集用户行为-验证行为数据” 为流程，用户无需键盘手动输入，极大优化传统验证码用户体验不佳的问题，支持PC端及移动端，支持前端Vue、React...等项目。
 </p>
 
 <p> ⭐️ 如果能帮助到你，记得随手给点一个star。</p>

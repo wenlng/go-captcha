@@ -28,10 +28,8 @@
 
 <div align="center"> 
     <img src="http://47.104.180.148/go-captcha/go-captcha.jpg?v=9" alt="Reward Support">
-    <br/>
-    <br/>   
+    <br/> 
     <img src="http://47.104.180.148/go-captcha/go-captcha-02.png?v=7" alt="Reward Support">
-    <br/>
     <br/>
 </div>
 

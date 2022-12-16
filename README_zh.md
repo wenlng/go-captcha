@@ -31,11 +31,10 @@
 <div align="center"> 
     <img src="http://47.104.180.148/go-captcha/go-captcha.jpg?v=9" alt="Reward Support">
     <br/>
-    <br/>
     <img src="http://47.104.180.148/go-captcha/go-captcha-01.png?v=7" alt="Reward Support">
     <br/>
-    <br/>
 </div>
+
 
 ### 设置Go代理
 - Window
@@ -156,15 +155,15 @@ func main(){
     // Method: SetRangChars (chars []string) error;
     // Desc: 设置验证码文本随机种子
     // ====================================================
-    // 字符
+    // 字符 - 推荐设置 50+ 以上的随机种子
     //chars := "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     //_ = capt.SetRangChars(strings.Split(chars, ""))
     
-    // 双字母
+    // 双字母 - 推荐设置 50+ 以上的随机种子
     //chars := []string{"HE","CA","WO","NE","HT","IE","PG","GI","CH","CO","DA"}
     //_ = capt.SetRangChars(chars)
 
-    // 汉字
+    // 汉字 - 推荐设置 50+ 以上的随机种子
     chars := []string{"你","好","呀","这","是","点","击","验","证","码","哟"}
     _ = capt.SetRangChars(chars)
 
@@ -475,6 +474,41 @@ func main(){
     }
 ```
 <br/>
+
+
+### 验证模块计划
+<p><label><input checked disabled type="checkbox" value="0"/></label> <span style="">文字点选式</span></p>
+
+<p><label><input disabled type="checkbox" value="1"/>
+</label> <span style="opacity: 0.75">滑动式</span></p>
+
+<p><label><input disabled type="checkbox" value="2"/></label> <span style="opacity: 0.75"> 旋转式</span></p>
+
+<p><label><input disabled type="checkbox" value="3"/></label>  <span style="opacity: 0.75">图形点选式</span></p>
+
+<p><label><input disabled type="checkbox" value="3"/></label>  <span style="opacity: 0.75">图案识别式</span></p>
+
+<p><label><input disabled type="checkbox" value="4"/></label>  <span style="opacity: 0.75">...</span></p>
+
+### B端 / C端 实例计划
+<p><label><input checked disabled type="checkbox" value="0"/></label>  <span style="">Vue</span></p>
+
+<p><label><input checked disabled type="checkbox" value="0"/></label>  <span style="">React</span></p>
+
+<p><label><input disabled type="checkbox" value="2"/></label>  <span style="opacity: 0.75">小程序</span></p>
+
+<p><label><input disabled type="checkbox" value="2"/></label>  <span style="opacity: 0.75">UniApp</span></p>
+
+<p><label><input disabled type="checkbox" value="1"/></label>  <span style="opacity: 0.75">Android App</span></p>
+
+<p><label><input disabled type="checkbox" value="2"/></label>  <span style="opacity: 0.75">IOS App</span></p>
+
+<p><label><input disabled type="checkbox" value="2"/></label>  <span style="opacity: 0.75">Flutter APP</span></p>
+
+<p><label><input disabled type="checkbox" value="4"/></label>  <span style="opacity: 0.75">...</span></p>
+
+<br/>
+
 
 > 请作者喝咖啡：[http://witkeycode.com/sponsor](http://witkeycode.com/sponsor)
 

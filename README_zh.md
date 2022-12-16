@@ -15,7 +15,7 @@
 > [English](README.md) | 中文
 
 <p>
-<a href="https://github.com/wenlng/go-captcha">go-captcha</a> 是一个简洁易用、交互友好、高安全性的 "行为式验证码" Go库 ，采用 “验证码展示-采集用户行为-验证行为数据” 为流程，用户无需键盘手动输入，极大优化传统验证码用户体验不佳的问题，支持PC端及移动端，支持前端Vue、React...等项目。
+<a href="https://github.com/wenlng/go-captcha">Go Captcha</a> 是一个简洁易用、交互友好、高安全性的 "行为式验证码" Go 库 ，采用 “验证码展示-采集用户行为-验证行为数据” 为流程，用户无需键盘手动输入，极大优化传统验证码用户体验不佳的问题，支持 PC 端及移动端，支持前端 Vue、React...等项目。
 </p>
 
 <p> ⭐️ 如果能帮助到你，记得随手给点一个star。</p>

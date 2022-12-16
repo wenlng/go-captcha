@@ -14,7 +14,7 @@
 
 > English | [中文](README_zh.md)
 
-<p><a href="https://github.com/wenlng/go-captcha">Go-Captcha</a> is a behavior security CAPTCHA, which implements the generation of random verification text and the verification of click position information.</p>
+<p><a href="https://github.com/wenlng/go-captcha">Go Captcha</a> is a behavior security CAPTCHA, which implements the generation of random verification text and the verification of click position information.</p>
 
 <p> ⭐️ If it helps you, please give a star.</p>
 

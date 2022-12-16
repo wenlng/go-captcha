@@ -477,35 +477,23 @@ func main(){
 
 
 ### 验证模块计划
-<p><label><input checked disabled type="checkbox" value="0"/></label> <span style="">文字点选式</span></p>
-
-<p><label><input disabled type="checkbox" value="1"/>
-</label> <span style="opacity: 0.75">滑动式</span></p>
-
-<p><label><input disabled type="checkbox" value="2"/></label> <span style="opacity: 0.75"> 旋转式</span></p>
-
-<p><label><input disabled type="checkbox" value="3"/></label>  <span style="opacity: 0.75">图形点选式</span></p>
-
-<p><label><input disabled type="checkbox" value="3"/></label>  <span style="opacity: 0.75">图案识别式</span></p>
-
-<p><label><input disabled type="checkbox" value="4"/></label>  <span style="opacity: 0.75">...</span></p>
+- <p>文字点选式 ✔</p>
+- <p>滑动式 </p>
+- <p>旋转式 </p>
+- <p>图形点选式 </p>
+- <p>图案识别式 </p>
+- <p>... </p>
 
 ### B端 / C端 实例计划
-<p><label><input checked disabled type="checkbox" value="0"/></label>  <span style="">Vue</span></p>
+- <p>Vue ✔</p>
+- <p>React ✔</p>
+- <p>小程序</p>
+- <p>UniApp</p>
+- <p>Android App</p>
+- <p>IOS App</p>
+- <p>Flutter App</p>
+- <p>... </p>
 
-<p><label><input checked disabled type="checkbox" value="0"/></label>  <span style="">React</span></p>
-
-<p><label><input disabled type="checkbox" value="2"/></label>  <span style="opacity: 0.75">小程序</span></p>
-
-<p><label><input disabled type="checkbox" value="2"/></label>  <span style="opacity: 0.75">UniApp</span></p>
-
-<p><label><input disabled type="checkbox" value="1"/></label>  <span style="opacity: 0.75">Android App</span></p>
-
-<p><label><input disabled type="checkbox" value="2"/></label>  <span style="opacity: 0.75">IOS App</span></p>
-
-<p><label><input disabled type="checkbox" value="2"/></label>  <span style="opacity: 0.75">Flutter APP</span></p>
-
-<p><label><input disabled type="checkbox" value="4"/></label>  <span style="opacity: 0.75">...</span></p>
 
 <br/>
 

@@ -462,7 +462,7 @@ func (cc *Captcha) checkConfig() error {
 	}
 
 	// 验证颜色总和是否超出255个
-	if len(cc.config.rangThumbFontColors) + len(cc.config.rangThumbBgColors) >= 255 {
+	if len(cc.config.rangThumbFontColors)+len(cc.config.rangThumbBgColors) >= 255 {
 		return fmt.Errorf("CaptchaConfig Error: len(rangThumbBgColors + RangThumbBgColors) must be less than or equal to 255")
 	}
 
@@ -527,6 +527,50 @@ func (cc *Captcha) GenerateWithSize(imageSize Size, thumbnailSize Size) (map[int
 	return checkDots, imageBase64, tImageBase64, key, err
 }
 
+// GenerateImageWithSize is a function
+/**
+ * @Description: 			生成验证码图片
+ * @param imageSize			主图尺寸
+ * @param thumbnailSize		缩略图尺寸
+ * @return CaptchaCharDot	位置信息
+ * @return Image			主图Image
+ * @return Image			缩略图Image
+ * @return string			验证码KEY
+ * @return error
+ */
+func (cc *Captcha) GenerateImageWithSize(imageSize Size, thumbnailSize Size) (map[int]CharDot, image.Image, image.Image, string, error) {
+	err := cc.checkConfig()
+	length := RandInt(cc.config.rangTextLen.Min, cc.config.rangTextLen.Max)
+	chars := cc.genRandChar(length)
+	if chars == "" {
+		return nil, nil, nil, "", fmt.Errorf("genCaptchaImage Error: No character generation")
+	}
+
+	var allDots, thumbDots, checkDots map[int]CharDot
+	var mImage, tImage image.Image
+	var checkChars string
+
+	allDots = cc.genDots(imageSize, cc.config.rangFontSize, chars, 10)
+	// checkChars = "A:B:C"
+	checkDots, checkChars = cc.rangeCheckDots(allDots)
+	thumbDots = cc.genDots(thumbnailSize, cc.config.rangCheckFontSize, checkChars, 0)
+	if err != nil {
+		return nil, nil, nil, "", err
+	}
+	mImage, err = cc.genCaptchaImageX(imageSize, allDots)
+	if err != nil {
+		return nil, nil, nil, "", err
+	}
+	tImage, err = cc.genCaptchaThumbImageX(thumbnailSize, thumbDots)
+	if err != nil {
+		return nil, nil, nil, "", err
+	}
+
+	str, _ := json.Marshal(checkDots)
+	key, _ := cc.genCaptchaKey(string(str))
+	return checkDots, mImage, tImage, key, err
+}
+
 // EncodeB64string is a function
 /**
  * @Description: base64编码
@@ -535,12 +579,11 @@ func (cc *Captcha) GenerateWithSize(imageSize Size, thumbnailSize Size) (map[int
  * @return string
  */
 func (cc *Captcha) EncodeB64stringWithJpeg(img image.Image) string {
-	if cc.config.imageQuality <= QualityCompressLevel1 && cc.config.imageQuality >= QualityCompressLevel1{
+	if cc.config.imageQuality <= QualityCompressLevel1 && cc.config.imageQuality >= QualityCompressLevel1 {
 		return EncodeB64stringWithJpeg(img, cc.config.imageQuality)
 	}
 	return EncodeB64stringWithPng(img)
 }
-
 
 // EncodeB64string is a function
 /**
@@ -614,9 +657,9 @@ func (cc *Captcha) genDots(imageSize Size, fontSize RangeVal, chars string, padd
 		_w := width / len(strs)
 		rd := math.Abs(float64(_w) - float64(fontWidth))
 		x := (i * _w) + RandInt(0, int(math.Max(rd, 1)))
-		x = int(math.Min(math.Max(float64(x), 10), float64(width - 10 - (padding * 2))))
-		y := RandInt(10, height + fontHeight)
-		y = int(math.Min(math.Max(float64(y), float64(fontHeight + 10)), float64(height + (fontHeight / 2) - (padding * 2))))
+		x = int(math.Min(math.Max(float64(x), 10), float64(width-10-(padding*2))))
+		y := RandInt(10, height+fontHeight)
+		y = int(math.Min(math.Max(float64(y), float64(fontHeight+10)), float64(height+(fontHeight/2)-(padding*2))))
 		text := fmt.Sprintf("%s", str)
 
 		dot := CharDot{i, x, y, randFontSize, fontWidth, fontHeight, text, randAngle, randColor, randColor2}
@@ -672,24 +715,24 @@ func (cc *Captcha) genCaptchaImage(size Size, dots map[int]CharDot) (base64 stri
 			Size:    dot.Size,
 			Width:   dot.Width,
 			Height:  dot.Height,
-			Font:   cc.genRandWithString(cc.config.rangFont),
+			Font:    cc.genRandWithString(cc.config.rangFont),
 		}
 
 		drawDots = append(drawDots, drawDot)
 	}
 
 	img, err := cc.captchaDraw.Draw(DrawCanvas{
-		Width:             	size.Width,
-		Height:            	size.Height,
-		Background:        	cc.genRandWithString(cc.config.rangBackground),
-		BackgroundDistort: 	cc.getRandDistortWithLevel(cc.config.imageFontDistort),
-		TextAlpha:         	cc.config.imageFontAlpha,
-		FontHinting: 	   	cc.config.fontHinting,
-		CaptchaDrawDot:    	drawDots,
+		Width:             size.Width,
+		Height:            size.Height,
+		Background:        cc.genRandWithString(cc.config.rangBackground),
+		BackgroundDistort: cc.getRandDistortWithLevel(cc.config.imageFontDistort),
+		TextAlpha:         cc.config.imageFontAlpha,
+		FontHinting:       cc.config.fontHinting,
+		CaptchaDrawDot:    drawDots,
 
-		ShowTextShadow: 	cc.config.showTextShadow,
-		TextShadowColor: 	cc.config.textShadowColor,
-		TextShadowPoint: 	cc.config.textShadowPoint,
+		ShowTextShadow:  cc.config.showTextShadow,
+		TextShadowColor: cc.config.textShadowColor,
+		TextShadowPoint: cc.config.textShadowPoint,
 	})
 	if err != nil {
 		erro = err
@@ -714,8 +757,8 @@ func (cc *Captcha) genCaptchaThumbImage(size Size, dots map[int]CharDot) (string
 
 	fontWidth := size.Width / len(dots)
 	for i, dot := range dots {
-		Dx := int(math.Max(float64(fontWidth * i + fontWidth / dot.Width), 8))
-		Dy := size.Height / 2 + dot.Size/2 - rand.Intn(size.Height / 16 * len(dot.Text))
+		Dx := int(math.Max(float64(fontWidth*i+fontWidth/dot.Width), 8))
+		Dy := size.Height/2 + dot.Size/2 - rand.Intn(size.Height/16*len(dot.Text))
 
 		drawDot := DrawDot{
 			Dx:      Dx,
@@ -765,6 +808,115 @@ func (cc *Captcha) genCaptchaThumbImage(size Size, dots map[int]CharDot) (string
 	// 转 base64
 	dist := cc.EncodeB64stringWithPng(img)
 	return dist, err
+}
+
+/**
+ * @Description: 验证码画图
+ * @receiver cc
+ * @param size
+ * @param dots
+ * @return string
+ * @return error
+ */
+func (cc *Captcha) genCaptchaImageX(size Size, dots map[int]CharDot) (img image.Image, err error) {
+	var drawDots []DrawDot
+	for _, dot := range dots {
+		drawDot := DrawDot{
+			Dx:      dot.Dx,
+			Dy:      dot.Dy,
+			FontDPI: cc.config.fontDPI,
+			Text:    dot.Text,
+			Angle:   dot.Angle,
+			Color:   dot.Color,
+			Size:    dot.Size,
+			Width:   dot.Width,
+			Height:  dot.Height,
+			Font:    cc.genRandWithString(cc.config.rangFont),
+		}
+
+		drawDots = append(drawDots, drawDot)
+	}
+
+	img, err = cc.captchaDraw.Draw(DrawCanvas{
+		Width:             size.Width,
+		Height:            size.Height,
+		Background:        cc.genRandWithString(cc.config.rangBackground),
+		BackgroundDistort: cc.getRandDistortWithLevel(cc.config.imageFontDistort),
+		TextAlpha:         cc.config.imageFontAlpha,
+		FontHinting:       cc.config.fontHinting,
+		CaptchaDrawDot:    drawDots,
+
+		ShowTextShadow:  cc.config.showTextShadow,
+		TextShadowColor: cc.config.textShadowColor,
+		TextShadowPoint: cc.config.textShadowPoint,
+	})
+	if err != nil {
+		return
+	}
+	return
+}
+
+/**
+ * @Description: 验证码缩略画图
+ * @receiver cc
+ * @param size
+ * @param dots
+ * @return string
+ * @return error
+ */
+func (cc *Captcha) genCaptchaThumbImageX(size Size, dots map[int]CharDot) (image.Image, error) {
+	var drawDots []DrawDot
+
+	fontWidth := size.Width / len(dots)
+	for i, dot := range dots {
+		Dx := int(math.Max(float64(fontWidth*i+fontWidth/dot.Width), 8))
+		Dy := size.Height/2 + dot.Size/2 - rand.Intn(size.Height/16*len(dot.Text))
+
+		drawDot := DrawDot{
+			Dx:      Dx,
+			Dy:      Dy,
+			FontDPI: cc.config.fontDPI,
+			Text:    dot.Text,
+			Angle:   dot.Angle,
+			Color:   dot.Color2,
+			Size:    dot.Size,
+			Width:   dot.Width,
+			Height:  dot.Height,
+			Font:    cc.genRandWithString(cc.config.rangFont),
+		}
+		drawDots = append(drawDots, drawDot)
+	}
+
+	params := DrawCanvas{
+		Width:                 size.Width,
+		Height:                size.Height,
+		CaptchaDrawDot:        drawDots,
+		BackgroundDistort:     cc.getRandDistortWithLevel(cc.config.thumbFontDistort),
+		BackgroundCirclesNum:  cc.config.thumbBgCirclesNum,
+		BackgroundSlimLineNum: cc.config.thumbBgSlimLineNum,
+	}
+
+	if len(cc.config.rangThumbBackground) > 0 {
+		params.Background = cc.genRandWithString(cc.config.rangThumbBackground)
+	}
+
+	var colorA []color.Color
+	for _, cStr := range cc.config.rangThumbFontColors {
+		co, _ := ParseHexColor(cStr)
+		colorA = append(colorA, co)
+	}
+
+	var colorB []color.Color
+	for _, co := range cc.config.rangThumbBgColors {
+		rc, _ := ParseHexColor(co)
+		colorB = append(colorB, rc)
+	}
+
+	img, err := cc.captchaDraw.DrawWithPalette(params, colorA, colorB)
+	if err != nil {
+		return nil, err
+	}
+	return img, err
 }
 
 /**

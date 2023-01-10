@@ -483,6 +483,20 @@ func (cc *Captcha) Generate() (map[int]CharDot, string, string, string, error) {
 	return dots, ib64, tb64, key, err
 }
 
+// GenerateX is a function
+/**
+ * @Description: 			根据设置的尺寸生成验证码图片
+ * @return CaptchaCharDot	位置信息
+ * @return Image			主图Image
+ * @return Image			缩略图Image
+ * @return string			验证码KEY
+ * @return error
+ */
+func (cc *Captcha) GenerateX() (map[int]CharDot, image.Image, image.Image, string, error) {
+	dots, ib64, tb64, key, err := cc.GenerateImageWithSize(cc.config.imageSize, cc.config.thumbnailSize)
+	return dots, ib64, tb64, key, err
+}
+
 // GenerateWithSize is a function
 /**
  * @Description: 			生成验证码图片

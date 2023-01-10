@@ -703,42 +703,10 @@ func (cc *Captcha) rangeCheckDots(dots map[int]CharDot) (map[int]CharDot, string
  * @return error
  */
 func (cc *Captcha) genCaptchaImage(size Size, dots map[int]CharDot) (base64 string, erro error) {
-	var drawDots []DrawDot
-	for _, dot := range dots {
-		drawDot := DrawDot{
-			Dx:      dot.Dx,
-			Dy:      dot.Dy,
-			FontDPI: cc.config.fontDPI,
-			Text:    dot.Text,
-			Angle:   dot.Angle,
-			Color:   dot.Color,
-			Size:    dot.Size,
-			Width:   dot.Width,
-			Height:  dot.Height,
-			Font:    cc.genRandWithString(cc.config.rangFont),
-		}
-
-		drawDots = append(drawDots, drawDot)
-	}
-
-	img, err := cc.captchaDraw.Draw(DrawCanvas{
-		Width:             size.Width,
-		Height:            size.Height,
-		Background:        cc.genRandWithString(cc.config.rangBackground),
-		BackgroundDistort: cc.getRandDistortWithLevel(cc.config.imageFontDistort),
-		TextAlpha:         cc.config.imageFontAlpha,
-		FontHinting:       cc.config.fontHinting,
-		CaptchaDrawDot:    drawDots,
-
-		ShowTextShadow:  cc.config.showTextShadow,
-		TextShadowColor: cc.config.textShadowColor,
-		TextShadowPoint: cc.config.textShadowPoint,
-	})
+	img, err := cc.genCaptchaImageX(size, dots)
 	if err != nil {
-		erro = err
-		return
+		return "", err
 	}
-
 	// 转 base64
 	base64 = cc.EncodeB64stringWithJpeg(img)
 	return
@@ -753,58 +721,10 @@ func (cc *Captcha) genCaptchaImage(size Size, dots map[int]CharDot) (base64 stri
  * @return error
  */
 func (cc *Captcha) genCaptchaThumbImage(size Size, dots map[int]CharDot) (string, error) {
-	var drawDots []DrawDot
-
-	fontWidth := size.Width / len(dots)
-	for i, dot := range dots {
-		Dx := int(math.Max(float64(fontWidth*i+fontWidth/dot.Width), 8))
-		Dy := size.Height/2 + dot.Size/2 - rand.Intn(size.Height/16*len(dot.Text))
-
-		drawDot := DrawDot{
-			Dx:      Dx,
-			Dy:      Dy,
-			FontDPI: cc.config.fontDPI,
-			Text:    dot.Text,
-			Angle:   dot.Angle,
-			Color:   dot.Color2,
-			Size:    dot.Size,
-			Width:   dot.Width,
-			Height:  dot.Height,
-			Font:    cc.genRandWithString(cc.config.rangFont),
-		}
-		drawDots = append(drawDots, drawDot)
-	}
-
-	params := DrawCanvas{
-		Width:                 size.Width,
-		Height:                size.Height,
-		CaptchaDrawDot:        drawDots,
-		BackgroundDistort:     cc.getRandDistortWithLevel(cc.config.thumbFontDistort),
-		BackgroundCirclesNum:  cc.config.thumbBgCirclesNum,
-		BackgroundSlimLineNum: cc.config.thumbBgSlimLineNum,
-	}
-
-	if len(cc.config.rangThumbBackground) > 0 {
-		params.Background = cc.genRandWithString(cc.config.rangThumbBackground)
-	}
-
-	var colorA []color.Color
-	for _, cStr := range cc.config.rangThumbFontColors {
-		co, _ := ParseHexColor(cStr)
-		colorA = append(colorA, co)
-	}
-
-	var colorB []color.Color
-	for _, co := range cc.config.rangThumbBgColors {
-		rc, _ := ParseHexColor(co)
-		colorB = append(colorB, rc)
-	}
-
-	img, err := cc.captchaDraw.DrawWithPalette(params, colorA, colorB)
+	img, err := cc.genCaptchaThumbImageX(size, dots)
 	if err != nil {
 		return "", err
 	}
-
 	// 转 base64
 	dist := cc.EncodeB64stringWithPng(img)
 	return dist, err

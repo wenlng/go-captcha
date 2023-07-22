@@ -199,12 +199,8 @@ func (cd *Draw) DrawWithPalette(params DrawCanvas, colorA []color.Color, colorB 
 	p := []color.Color{
 		color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0x00},
 	}
-	for ak := range colorA {
-		p = append(p, colorA[ak])
-	}
-	for bk := range colorB {
-		p = append(p, colorB[bk])
-	}
+	p = append(p, colorA...)
+	p = append(p, colorB...)
 
 	canvas := NewPalette(image.Rect(0, 0, params.Width, params.Height), p)
 

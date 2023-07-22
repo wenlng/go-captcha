@@ -617,7 +617,7 @@ func (cc *Captcha) genDots(imageSize Size, fontSize RangeVal, chars string, padd
 		x = int(math.Min(math.Max(float64(x), 10), float64(width - 10 - (padding * 2))))
 		y := RandInt(10, height + fontHeight)
 		y = int(math.Min(math.Max(float64(y), float64(fontHeight + 10)), float64(height + (fontHeight / 2) - (padding * 2))))
-		text := fmt.Sprintf("%s", str)
+		text := str
 
 		dot := CharDot{i, x, y, randFontSize, fontWidth, fontHeight, text, randAngle, randColor, randColor2}
 		dots[i] = dot

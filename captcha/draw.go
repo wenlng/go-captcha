@@ -8,7 +8,6 @@
 package captcha
 
 import (
-	"fmt"
 	"github.com/golang/freetype"
 	"golang.org/x/image/draw"
 	"golang.org/x/image/font"
@@ -241,7 +240,7 @@ func (cd *Draw) DrawWithPalette(params DrawCanvas, colorA []color.Color, colorB 
 		dc.SetSrc(fontColor)
 
 		// 画文本
-		text := fmt.Sprintf("%s", dot.Text)
+		text := dot.Text
 		pt := freetype.Pt(dot.Dx, dot.Dy) // 字出现的位置
 		_, err = dc.DrawString(text, pt)
 		if err != nil {
@@ -426,7 +425,7 @@ func (cd *Draw) DrawStrImg(dot DrawDot, colorArr []color.RGBA, fc color.Color) *
 	dc.SetSrc(fontColor)
 
 	// 画文本
-	text := fmt.Sprintf("%s", dot.Text)
+	text := dot.Text
 
 	pt := freetype.Pt(12, dot.Height - 5) // 字出现的位置
 	if IsChineseChar(text) {

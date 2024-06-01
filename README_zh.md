@@ -66,7 +66,7 @@ $ source ~/.profile
 
 ## 安装模块
 ```shell
-$ go get -u github.com/wenlng/go-captcha/v2
+$ go get -u github.com/wenlng/go-captcha/v2@v2.0.0-beta.1
 ```
 
 ## 引入模块

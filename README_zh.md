@@ -66,14 +66,14 @@ $ source ~/.profile
 
 ## 安装模块
 ```shell
-$ go get -u github.com/wenlng/go-captcha
+$ go get -u github.com/wenlng/go-captcha/v2
 ```
 
 ## 引入模块
 ```go
 package main
 
-import "github.com/wenlng/go-captcha/capts"
+import "github.com/wenlng/go-captcha/v2"
 
 func main(){
    // ....
@@ -96,9 +96,9 @@ import (
 
 	"github.com/golang/freetype"
 	"github.com/golang/freetype/truetype"
-	"github.com/wenlng/go-captcha/capts/base/option"
-	"github.com/wenlng/go-captcha/capts/click"
-	"github.com/wenlng/go-captcha/capts/base/codec"
+	"github.com/wenlng/go-captcha/v2/base/option"
+	"github.com/wenlng/go-captcha/v2/click"
+	"github.com/wenlng/go-captcha/v2/base/codec"
 )
 
 var textCapt click.Captcha
@@ -227,9 +227,9 @@ import (
 	"log"
 	"io/ioutil"
 
-	"github.com/wenlng/go-captcha/capts/base/option"
-	"github.com/wenlng/go-captcha/capts/slide"
-	"github.com/wenlng/go-captcha/capts/base/codec"
+	"github.com/wenlng/go-captcha/v2/base/option"
+	"github.com/wenlng/go-captcha/v2/slide"
+	"github.com/wenlng/go-captcha/v2/base/codec"
 )
 
 var slideTileCapt slide.Captcha
@@ -357,8 +357,8 @@ import (
 	"log"
 	"io/ioutil"
 
-	"github.com/wenlng/go-captcha/capts/rotate"
-	"github.com/wenlng/go-captcha/capts/base/codec"
+	"github.com/wenlng/go-captcha/v2/rotate"
+	"github.com/wenlng/go-captcha/v2/base/codec"
 )
 
 var rotateCapt rotate.Captcha

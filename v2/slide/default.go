@@ -27,7 +27,7 @@ func defaultOptions() Option {
 		opts.rangeGraphAnglePos = []*option.RangeVal{
 			{Min: 0, Max: 0},
 		}
-		opts.rangeGraphSize = &option.RangeVal{Min: 72, Max: 82}
+		opts.rangeGraphSize = &option.RangeVal{Min: 62, Max: 72}
 	}
 }
 

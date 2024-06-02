@@ -68,7 +68,7 @@ func defaultOptions() Option {
 			{Min: 305, Max: 325},
 			{Min: 325, Max: 330},
 		}
-		opts.rangeSize = &option.RangeVal{Min: 28, Max: 34}
+		opts.rangeSize = &option.RangeVal{Min: 26, Max: 32}
 		opts.rangeColors = getDefaultColors()
 		opts.displayShadow = true
 		opts.shadowColor = getDefaultShadowColor()

@@ -5,7 +5,7 @@
 <a href="https://goreportcard.com/report/github.com/wenlng/go-captcha"><img src="https://goreportcard.com/badge/github.com/wenlng/go-captcha"/></a>
 <a href="https://godoc.org/github.com/wenlng/go-captcha"><img src="https://godoc.org/github.com/wenlng/go-captcha?status.svg"/></a>
 <a href="https://github.com/wenlng/go-captcha/releases"><img src="https://img.shields.io/github/v/release/wenlng/go-captcha.svg"/></a>
-<a href="https://github.com/wenlng/go-captcha/blob/v2/LICENSE"><img src="https://img.shields.io/github/license/wenlng/go-captcha.svg"/></a>
+<a href="https://github.com/wenlng/go-captcha/blob/v2/LICENSE"><img src="https://img.shields.io/badge/License-Apache2.0-green.svg"/></a>
 <a href="https://github.com/wenlng/go-captcha"><img src="https://img.shields.io/github/stars/wenlng/go-captcha.svg"/></a>
 <a href="https://github.com/wenlng/go-captcha"><img src="https://img.shields.io/github/last-commit/wenlng/go-captcha.svg"/></a>
 </div>
@@ -465,14 +465,18 @@ xxx.SetResources(rotate.WithXxx(), ...)
 - <p>文字点选式 ✔</p>
 - <p>图形点选式 ✔</p>
 - <p>滑动式 ✔ </p>
+- <p>拖拽式 ✔ </p>
 - <p>旋转式 ✔ </p>
 
 
 ## B端 / C端 依赖包
-- <p>Web原生 ✔</p>
+- <p>Web Native ✔</p>
 - <p>Vue ✔</p>
 - <p>React ✔</p>
-- <p>小程序</p>
+- <p>Angular</p>
+- <p>Svelte</p>
+- <p>Svelte</p>
+- <p>MinProgram</p>
 - <p>UniApp</p>
 - <p>Android App</p>
 - <p>IOS App</p>
@@ -481,7 +485,13 @@ xxx.SetResources(rotate.WithXxx(), ...)
 
 <br/>
 
-请作者喝杯咖啡：[http://witkeycode.com/sponsor](http://witkeycode.com/sponsor)
+## 👍赞助一下
+
+<p>如果觉得项目有帮助，可以请作者喝杯咖啡 🍹</p>
+<div>
+<a href="http://witkeycode.com/sponsor" target="_blank"><img src="http://47.104.180.148/payment-code/wxpay.png" alt="Buy Me A Coffee" style="width: 217px !important;" ></a>
+<a href="http://witkeycode.com/sponsor" target="_blank"><img src="http://47.104.180.148/payment-code/alipay.png" alt="Buy Me A Coffee" style="width: 217px !important;" ></a>
+</div>
 
 <br/>
 

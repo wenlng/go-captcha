@@ -418,6 +418,7 @@ func (c *captcha) genThumbImage(size *option.Size, dots map[int]*Dot) (image.Ima
 		BackgroundDistort:     c.randDistortWithLevel(c.opts.thumbBgDistort),
 		BackgroundCirclesNum:  c.opts.thumbBgCirclesNum,
 		BackgroundSlimLineNum: c.opts.thumbBgSlimLineNum,
+		ThumbDisturbAlpha:     c.opts.thumbDisturbAlpha,
 	}
 
 	if len(c.resources.rangThumbBackgrounds) > 0 {

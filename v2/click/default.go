@@ -21,12 +21,12 @@ var colors = []string{
 }
 
 var thumbColors = []string{
-	"#006600",
-	"#005db9",
-	"#aa002a",
-	"#875400",
-	"#6e3700",
-	"#660033",
+	"#1f62ee",
+	"#4e87ff",
+	"#9f0bd9",
+	"#db1042",
+	"#b15c07",
+	"#b7055e",
 }
 
 var shadowColor = "#101010"
@@ -73,7 +73,7 @@ func defaultOptions() Option {
 		opts.displayShadow = true
 		opts.shadowColor = getDefaultShadowColor()
 		opts.shadowPoint = &option.Point{X: -1, Y: -1}
-		opts.imageSize = &option.Size{Width: 300, Height: 240}
+		opts.imageSize = &option.Size{Width: 300, Height: 220}
 		opts.imageAlpha = 1
 
 		opts.rangeVerifyLen = &option.RangeVal{Min: 2, Max: 4}
@@ -85,6 +85,7 @@ func defaultOptions() Option {
 		opts.thumbBgCirclesNum = 24
 		opts.thumbBgSlimLineNum = 2
 		opts.isThumbNonDeformAbility = true
+		opts.thumbDisturbAlpha = 1
 	}
 }
 

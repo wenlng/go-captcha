@@ -25,8 +25,8 @@ type Palette interface {
 	Rotate(angle int)
 	Distort(amplude float64, period float64)
 	DrawBeeline(point1 image.Point, point2 image.Point, lineColor color.RGBA)
-	DrawCircle(x, y, radius int, colorIdx uint8)
-	DrawHorizLine(fromX, toX, y int, colorIdx uint8)
+	DrawCircle(x, y, radius int, c color.RGBA)
+	DrawHorizLine(fromX, toX, y int, c color.RGBA)
 	AngleSwapPoint(x, y, r, angle float64) (tarX, tarY float64)
 	DrawString(params *DrawStringParams, pt fixed.Point26_6) error
 }
@@ -78,16 +78,16 @@ func (p *palette) Rotate(angle int) {
 }
 
 // DrawCircle is drawing circle
-func (p *palette) DrawCircle(x, y, radius int, colorIdx uint8) {
+func (p *palette) DrawCircle(x, y, radius int, c color.RGBA) {
 	f := 1 - radius
 	dfx := 1
 	dfy := -2 * radius
 	xo := 0
 	yo := radius
 
-	p.SetColorIndex(x, y+radius, colorIdx)
-	p.SetColorIndex(x, y-radius, colorIdx)
-	p.DrawHorizLine(x-radius, x+radius, y, colorIdx)
+	p.Set(x, y+radius, c)
+	p.Set(x, y-radius, c)
+	p.DrawHorizLine(x-radius, x+radius, y, c)
 
 	for xo < yo {
 		if f >= 0 {
@@ -98,17 +98,17 @@ func (p *palette) DrawCircle(x, y, radius int, colorIdx uint8) {
 		xo++
 		dfx += 2
 		f += dfx
-		p.DrawHorizLine(x-xo, x+xo, y+yo, colorIdx)
-		p.DrawHorizLine(x-xo, x+xo, y-yo, colorIdx)
-		p.DrawHorizLine(x-yo, x+yo, y+xo, colorIdx)
-		p.DrawHorizLine(x-yo, x+yo, y-xo, colorIdx)
+		p.DrawHorizLine(x-xo, x+xo, y+yo, c)
+		p.DrawHorizLine(x-xo, x+xo, y-yo, c)
+		p.DrawHorizLine(x-yo, x+yo, y+xo, c)
+		p.DrawHorizLine(x-yo, x+yo, y-xo, c)
 	}
 }
 
 // DrawHorizLine is drawing horiz line
-func (p *palette) DrawHorizLine(fromX, toX, y int, colorIdx uint8) {
+func (p *palette) DrawHorizLine(fromX, toX, y int, c color.RGBA) {
 	for x := fromX; x <= toX; x++ {
-		p.SetColorIndex(x, y, colorIdx)
+		p.Set(x, y, c)
 	}
 }
 

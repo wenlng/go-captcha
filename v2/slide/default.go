@@ -13,7 +13,7 @@ import (
 // defaultOptions is the default configuration
 func defaultOptions() Option {
 	return func(opts *Options) {
-		opts.imageSize = &option.Size{Width: 300, Height: 240}
+		opts.imageSize = &option.Size{Width: 300, Height: 220}
 		opts.imageAlpha = 1
 		opts.rangeDeadZoneDirections = []DeadZoneDirectionType{
 			DeadZoneDirectionTypeLeft,
@@ -27,7 +27,7 @@ func defaultOptions() Option {
 		opts.rangeGraphAnglePos = []*option.RangeVal{
 			{Min: 0, Max: 0},
 		}
-		opts.rangeGraphSize = &option.RangeVal{Min: 62, Max: 72}
+		opts.rangeGraphSize = &option.RangeVal{Min: 60, Max: 70}
 	}
 }
 

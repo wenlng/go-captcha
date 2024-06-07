@@ -36,6 +36,7 @@ type Options struct {
 	thumbBgCirclesNum       int
 	thumbBgSlimLineNum      int
 	isThumbNonDeformAbility bool
+	thumbDisturbAlpha       float32
 
 	useShapeOriginalColor bool
 }
@@ -169,6 +170,11 @@ func (o *Options) GetIsThumbNonDeformAbility() bool {
 	return o.isThumbNonDeformAbility
 }
 
+// GetThumbDisturbAlpha .
+func (o *Options) GetThumbDisturbAlpha() float32 {
+	return o.thumbDisturbAlpha
+}
+
 type Option func(*Options)
 
 // NewOptions .
@@ -256,6 +262,9 @@ func WithShadowPoint(val option.Point) Option {
 // WithImageAlpha .
 func WithImageAlpha(val float32) Option {
 	return func(opts *Options) {
+		if val > 1 {
+			val = 1
+		}
 		opts.imageAlpha = val
 	}
 }
@@ -349,5 +358,12 @@ func WithUseShapeOriginalColor(val bool) Option {
 func WithIsThumbNonDeformAbility(val bool) Option {
 	return func(opts *Options) {
 		opts.isThumbNonDeformAbility = val
+	}
+}
+
+// WithThumbDisturbAlpha .
+func WithThumbDisturbAlpha(val float32) Option {
+	return func(opts *Options) {
+		opts.thumbDisturbAlpha = val
 	}
 }

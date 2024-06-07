@@ -43,6 +43,7 @@ type DrawImageParams struct {
 	ShowShadow            bool
 	ShadowColor           string
 	ShadowPoint           *option.Point
+	ThumbDisturbAlpha     float32
 }
 
 type DrawImage interface {
@@ -107,14 +108,21 @@ func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Col
 		color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0x00},
 	}
 	p = append(p, tColors...)
-	p = append(p, bgColors...)
+
+	nBgColors := make([]color.Color, 0, len(bgColors))
+	for _, bgColor := range bgColors {
+		r, g, b, _ := bgColor.RGBA()
+		aa := helper.FormatAlpha(params.ThumbDisturbAlpha)
+		nBgColors = append(nBgColors, color.RGBA{R: uint8(r), G: uint8(g), B: uint8(b), A: aa})
+	}
+	p = append(p, nBgColors...)
 
 	cvs := canvas.NewPalette(image.Rect(0, 0, params.Width, params.Height), p)
 	if params.BackgroundCirclesNum > 0 {
-		d.randomFillWithCircles(cvs, params.BackgroundCirclesNum, 1, 2)
+		d.randomFillWithCircles(cvs, params.BackgroundCirclesNum, 1, nBgColors)
 	}
 	if params.BackgroundSlimLineNum > 0 {
-		d.randomDrawSlimLine(cvs, params.BackgroundSlimLineNum, bgColors)
+		d.randomDrawSlimLine(cvs, params.BackgroundSlimLineNum, nBgColors)
 	}
 
 	for i := 0; i < len(dots); i++ {
@@ -174,11 +182,19 @@ func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Col
 // DrawWithNRGBA2 is drawing with a NRGBA
 func (d *drawImage) DrawWithNRGBA2(params *DrawImageParams, tColors []color.Color, bgColors []color.Color) (image.Image, error) {
 	dots := params.CaptchaDrawDot
+
 	p := []color.Color{
 		color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0x00},
 	}
 	p = append(p, tColors...)
-	p = append(p, bgColors...)
+
+	nBgColors := make([]color.Color, 0, len(bgColors))
+	for _, bgColor := range bgColors {
+		r, g, b, _ := bgColor.RGBA()
+		aa := helper.FormatAlpha(params.ThumbDisturbAlpha)
+		nBgColors = append(nBgColors, color.RGBA{R: uint8(r), G: uint8(g), B: uint8(b), A: aa})
+	}
+	p = append(p, nBgColors...)
 
 	ccvs := canvas.NewNRGBA(image.Rect(0, 0, params.Width, params.Height), true)
 	if params.Background != nil {
@@ -193,10 +209,10 @@ func (d *drawImage) DrawWithNRGBA2(params *DrawImageParams, tColors []color.Colo
 
 	cvs := canvas.NewPalette(image.Rect(0, 0, params.Width, params.Height), p)
 	if params.BackgroundCirclesNum > 0 {
-		d.randomFillWithCircles(cvs, params.BackgroundCirclesNum, 1, 2)
+		d.randomFillWithCircles(cvs, params.BackgroundCirclesNum, 1, nBgColors)
 	}
 	if params.BackgroundSlimLineNum > 0 {
-		d.randomDrawSlimLine(cvs, params.BackgroundSlimLineNum, bgColors)
+		d.randomDrawSlimLine(cvs, params.BackgroundSlimLineNum, nBgColors)
 	}
 	if params.BackgroundDistort > 0 {
 		cvs.Distort(float64(random.RandInt(5, 10)), float64(params.BackgroundDistort))
@@ -255,13 +271,14 @@ func (d *drawImage) DrawWithNRGBA2(params *DrawImageParams, tColors []color.Colo
 }
 
 // randomFillWithCircles is to draw circle randomly
-func (d *drawImage) randomFillWithCircles(m canvas.Palette, n, maxRadius int, circleCount int) {
+func (d *drawImage) randomFillWithCircles(m canvas.Palette, n, maxRadius int, colorB []color.Color) {
 	maxx := m.Bounds().Max.X
 	maxy := m.Bounds().Max.Y
 	for i := 0; i < n; i++ {
-		colorIdx := uint8(random.RandInt(1, circleCount-1))
+		co := randgen.RandColor(colorB)
+		//co.A = uint8(0xee)
 		r := random.RandInt(1, maxRadius)
-		m.DrawCircle(random.RandInt(r, maxx-r), random.RandInt(r, maxy-r), r, colorIdx)
+		m.DrawCircle(random.RandInt(r, maxx-r), random.RandInt(r, maxy-r), r, co)
 	}
 }
 
@@ -283,7 +300,7 @@ func (d *drawImage) randomDrawSlimLine(m canvas.Palette, num int, colorB []color
 		}
 
 		co := randgen.RandColor(colorB)
-		co.A = uint8(0xee)
+		//co.A = uint8(0xee)
 		m.DrawBeeline(point1, point2, co)
 	}
 }

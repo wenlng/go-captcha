@@ -13,15 +13,13 @@ import (
 // defaultOptions is the default configuration
 func defaultOptions() Option {
 	return func(opts *Options) {
-		opts.imageSquareSize = 240
+		opts.imageSquareSize = 220
 		opts.rangeAnglePos = []*option.RangeVal{
-			{Min: 290, Max: 305},
-			{Min: 305, Max: 325},
-			{Min: 325, Max: 330},
+			{Min: 30, Max: 330},
 		}
 
 		opts.thumbImageAlpha = 1
-		opts.rangeThumbImageSquareSize = []int{150, 160, 170, 180}
+		opts.rangeThumbImageSquareSize = []int{140, 150, 160, 170}
 	}
 }
 

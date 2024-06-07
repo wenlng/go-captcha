@@ -30,13 +30,13 @@
 - Go Assets：[https://github.com/wenlng/go-captcha-assets](https://github.com/wenlng/go-captcha-assets)
 - Vue Package：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
 - React Package：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
+- Angular Package：[https://github.com/wenlng/go-captcha-angular](https://github.com/wenlng/go-captcha-angular)
+- Svelte Package：[https://github.com/wenlng/go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)
+- Solid Package：[https://github.com/wenlng/go-captcha-solid](https://github.com/wenlng/go-captcha-solid)
 - Online Demo：[http://gocaptcha.wencodes.com/demo](http://gocaptcha.wencodes.com/demo)
 - ...
--
+
 <br/>
-
-> ⚠️ v1 will be removed after v2.1, please upgrade to v2 as soon as possible
-
 
 ## Install Captcha Module
 ```shell
@@ -449,7 +449,7 @@ xxx.SetResources(rotate.WithXxx(), ...)
 - <p>React ✔</p>
 - <p>Angular</p>
 - <p>Svelte</p>
-- <p>Svelte</p>
+- <p>Solid</p>
 - <p>MinProgram</p>
 - <p>UniApp</p>
 - <p>Android App</p>

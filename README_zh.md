@@ -15,7 +15,7 @@
 > [English](README.md) | 中文 
 
 <p style="text-align: center">
-<a style="font-weight: bold" href="https://github.com/wenlng/go-captcha">Go Captcha</a> 是一个简洁易用、交互友好、高安全性的 "行为式验证码" Go 库 ，支持文本点选式、图形点选式、滑动式、拖拽式、旋转式类型验证。
+<a style="font-weight: bold" href="https://github.com/wenlng/go-captcha">Go Captcha</a> 是一个简洁易用、交互友好、高安全的行为式验证码库 (Golang)，支持文本点/图形点选、滑动/拖拽、旋转等验证模式。
 </p>
 
 <p style="text-align: center"> ⭐️ 如果能帮助到你，请随手给点一个star</p>
@@ -34,12 +34,11 @@
 - 内嵌Go资源：[https://github.com/wenlng/go-captcha-assets](https://github.com/wenlng/go-captcha-assets)
 - Vue Package：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
 - React Package：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
+- Angular Package：[https://github.com/wenlng/go-captcha-angular](https://github.com/wenlng/go-captcha-angular)
+- Svelte Package：[https://github.com/wenlng/go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)
+- Solid Package：[https://github.com/wenlng/go-captcha-solid](https://github.com/wenlng/go-captcha-solid)
 - 在线演示：[http://gocaptcha.wencodes.com/demo](http://gocaptcha.wencodes.com/demo)
 - ...
-- 
-<br/>
-
-> ⚠️ v1 版本将在 v2.1 版本后移除，请尽快升级到 v2 版本
 
 <br/>
 
@@ -178,7 +177,7 @@ func main() {
 
 ### 配置选项
 click.New(click.WithXxx(), ...)
-- click.WithImageSize(option.Size)  设置主图尺寸，默认 300x240
+- click.WithImageSize(option.Size)  设置主图尺寸，默认 300x220
 - click.WithRangeLen(option.RangeVal)  设置随机内容长度范围
 - click.WithRangeAnglePos([]option.RangeVal)  设置随机角度范围
 - click.WithRangeSize(option.RangeVal)  设置随机内容大小范围
@@ -323,7 +322,7 @@ func loadPng(p string) (image.Image, error) {
 
 ### 配置选项
 slide.New(slide.WithXxx(), ...)
-- slide.WithImageSize(*option.Size)  设置主图尺寸，默认 300x240
+- slide.WithImageSize(*option.Size)  设置主图尺寸，默认 300x220
 - slide.WithImageAlpha(float32)  设置主图透明度
 - slide.WithRangeGraphSize(val option.RangeVal)  设置图形随机尺寸范围
 - slide.WithRangeGraphAnglePos([]option.RangeVal)  设置图形随机角度范围
@@ -442,9 +441,9 @@ xxx.SetResources(rotate.WithXxx(), ...)
 
 <br/>
 
-## 验证码图片对象
+## 验证码图片
 
-### JPEGImageData 对象方法
+### JPEGImageData
 - Get() image.Image  获取原图像
 - ToBytes() []byte  转为JPEG字节数组
 - ToBytesWithQuality(imageQuality int) []byte   指定清晰度转为JPEG字节数组
@@ -453,7 +452,7 @@ xxx.SetResources(rotate.WithXxx(), ...)
 - SaveToFile(filepath string, quality int) error 保存 JPEG 到文件
 
 
-### PNGImageData 对象方法
+### PNGImageData
 - Get() image.Image  获取原图像
 - ToBytes() []byte  转为PNG字节数组
 - ToBase64() string   转为 PNG Base64 字符串
@@ -468,19 +467,20 @@ xxx.SetResources(rotate.WithXxx(), ...)
 - <p>拖拽式 ✔ </p>
 - <p>旋转式 ✔ </p>
 
+<br />
 
 ## B端 / C端 依赖包
 - <p>Web Native ✔</p>
 - <p>Vue ✔</p>
 - <p>React ✔</p>
-- <p>Angular</p>
-- <p>Svelte</p>
-- <p>Svelte</p>
+- <p>Angular ✔</p>
+- <p>Solid ✔</p>
+- <p>Svelte ✔</p>
 - <p>MinProgram</p>
 - <p>UniApp</p>
+- <p>Flutter App</p>
 - <p>Android App</p>
 - <p>IOS App</p>
-- <p>Flutter App</p>
 - <p>... </p>
 
 <br/>

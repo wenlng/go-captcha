@@ -14,9 +14,9 @@ import (
 var slideTileCapt slide.Captcha
 
 func init() {
-	slideTileCapt = slide.New(
-		//slide.WithGenGraphNumber(2),
-		//slide.WithEnableGraphVerticalRandom(true),
+	builder := slide.NewBuilder(
+	//slide.WithGenGraphNumber(2),
+	//slide.WithEnableGraphVerticalRandom(true),
 	)
 
 	bgImage, err := loadPng("../.cache/bg.png")
@@ -31,7 +31,7 @@ func init() {
 
 	graphs := getSlideTileGraphArr()
 
-	slideTileCapt.SetResources(
+	builder.SetResources(
 		slide.WithGraphImages(graphs),
 		slide.WithBackgrounds([]image.Image{
 			bgImage,
@@ -41,6 +41,8 @@ func init() {
 		//	img1,
 		//}),
 	)
+
+	slideTileCapt = builder.MakeWithRegion()
 }
 
 func getSlideTileGraphArr() []*slide.GraphImage {

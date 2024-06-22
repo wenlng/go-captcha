@@ -6,27 +6,17 @@ import (
 	"github.com/wenlng/go-captcha/v2/slide"
 )
 
-// NewClick .
-func NewClick(opts ...click.Option) click.Captcha {
-	return click.New(opts...)
+// NewClickBuilder .
+func NewClickBuilder(opts ...click.Option) click.Builder {
+	return click.NewBuilder(opts...)
 }
 
-// NewClickWithShape .
-func NewClickWithShape(opts ...click.Option) click.Captcha {
-	return click.NewWithShape(opts...)
+// NewSlideBuilder .
+func NewSlideBuilder(opts ...slide.Option) slide.Builder {
+	return slide.NewBuilder(opts...)
 }
 
-// NewSlide .
-func NewSlide(opts ...slide.Option) slide.Captcha {
-	return slide.New(opts...)
-}
-
-// NewSlideWithRegion .
-func NewSlideWithRegion(opts ...slide.Option) slide.Captcha {
-	return slide.NewWithRegion(opts...)
-}
-
-// NewRotate .
-func NewRotate(opts ...rotate.Option) rotate.Captcha {
-	return rotate.New(opts...)
+// NewRotateBuilder .
+func NewRotateBuilder(opts ...rotate.Option) rotate.Builder {
+	return rotate.NewBuilder(opts...)
 }

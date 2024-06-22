@@ -22,9 +22,9 @@ const Version = "2.0.0"
 
 // Captcha .
 type Captcha interface {
-	SetOptions(opts ...Option)
+	setOptions(opts ...Option)
+	setResources(resources ...Resource)
 	GetOptions() *Options
-	SetResources(resources ...Resource)
 	Generate() (CaptchaData, error)
 }
 
@@ -39,13 +39,8 @@ type captcha struct {
 	resources *Resources
 }
 
-// GetOptions is to get options
-func (c *captcha) GetOptions() *Options {
-	return c.opts
-}
-
-// New .
-func New(opts ...Option) Captcha {
+// newRotate .
+func newRotate(opts ...Option) Captcha {
 	capt := &captcha{
 		version:   Version,
 		logger:    logger.New(),
@@ -57,23 +52,28 @@ func New(opts ...Option) Captcha {
 	defaultOptions()(capt.opts)
 	defaultResource()(capt.resources)
 
-	capt.SetOptions(opts...)
+	capt.setOptions(opts...)
 
 	return capt
 }
 
-// SetOptions is the set option
-func (c *captcha) SetOptions(opts ...Option) {
+// setOptions is the set option
+func (c *captcha) setOptions(opts ...Option) {
 	for _, opt := range opts {
 		opt(c.opts)
 	}
 }
 
-// SetResources is the set resource
-func (c *captcha) SetResources(resources ...Resource) {
+// setResources is the set resource
+func (c *captcha) setResources(resources ...Resource) {
 	for _, resource := range resources {
 		resource(c.resources)
 	}
+}
+
+// GetOptions is to get options
+func (c *captcha) GetOptions() *Options {
+	return c.opts
 }
 
 // Generate is to generate the captcha data

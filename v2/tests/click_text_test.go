@@ -15,7 +15,7 @@ import (
 var textCapt click.Captcha
 
 func init() {
-	textCapt = click.New(
+	builder := click.NewBuilder(
 		click.WithRangeLen(option.RangeVal{Min: 4, Max: 6}),
 		click.WithRangeVerifyLen(option.RangeVal{Min: 2, Max: 4}),
 	)
@@ -30,7 +30,7 @@ func init() {
 		log.Fatalln(err)
 	}
 
-	textCapt.SetResources(
+	builder.SetResources(
 		click.WithChars([]string{"这", "是", "随", "机", "的", "文", "本", "种", "子", "呀"}),
 		click.WithFonts([]*truetype.Font{
 			fontN,
@@ -42,6 +42,8 @@ func init() {
 		//	thumbImage,
 		//}),
 	)
+
+	textCapt = builder.Make()
 }
 
 func TestClickTextCaptcha(t *testing.T) {

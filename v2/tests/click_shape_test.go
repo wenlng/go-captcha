@@ -22,7 +22,7 @@ import (
 var shapeCapt click.Captcha
 
 func init() {
-	shapeCapt = click.NewWithShape(
+	builder := click.NewBuilder(
 		click.WithRangeLen(option.RangeVal{Min: 3, Max: 6}),
 		click.WithRangeVerifyLen(option.RangeVal{Min: 2, Max: 3}),
 		click.WithRangeThumbBgDistort(1),
@@ -40,7 +40,7 @@ func init() {
 
 	shapes := getShapeMaps()
 
-	shapeCapt.SetResources(
+	builder.SetResources(
 		click.WithShapes(shapes),
 		click.WithBackgrounds([]image.Image{
 			bgImage,
@@ -50,6 +50,8 @@ func init() {
 		//	img1,
 		//}),
 	)
+
+	shapeCapt = builder.MakeWithShape()
 }
 
 func getShapeMaps() map[string]image.Image {

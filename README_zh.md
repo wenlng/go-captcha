@@ -15,7 +15,7 @@
 > [English](README.md) | 中文 
 
 <p style="text-align: center">
-<a style="font-weight: bold" href="https://github.com/wenlng/go-captcha">Go Captcha</a> 是一个简洁易用、交互友好、高安全的行为式验证码库 (Golang)，支持文本点/图形点选、滑动/拖拽、旋转等验证模式。
+<a style="font-weight: bold" href="https://github.com/wenlng/go-captcha">Go Captcha</a> 是一个简洁易用、交互友好、高安全的行为式验证码库 (Golang)，支持文本/图形点选、滑动/拖拽、旋转等验证模式。
 </p>
 
 <p style="text-align: center"> ⭐️ 如果能帮助到你，请随手给点一个star</p>
@@ -37,7 +37,7 @@
 - Angular Package：[https://github.com/wenlng/go-captcha-angular](https://github.com/wenlng/go-captcha-angular)
 - Svelte Package：[https://github.com/wenlng/go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)
 - Solid Package：[https://github.com/wenlng/go-captcha-solid](https://github.com/wenlng/go-captcha-solid)
-- 在线演示：[http://gocaptcha.wencodes.com/demo](http://gocaptcha.wencodes.com/demo)
+- 在线演示：[http://gocaptcha.wencodes.com/demo/](http://gocaptcha.wencodes.com/demo/)
 - ...
 
 <br/>
@@ -65,7 +65,7 @@ $ source ~/.profile
 
 ## 安装模块
 ```shell
-$ go get -u github.com/wenlng/go-captcha/v2@v2.0.0-beta.2
+$ go get -u github.com/wenlng/go-captcha/v2@latest
 ```
 
 ## 引入模块
@@ -103,7 +103,7 @@ import (
 var textCapt click.Captcha
 
 func init() {
-	textCapt = click.New(
+	builder := click.NewBuilder(
 		click.WithRangeLen(option.RangeVal{Min: 4, Max: 6}),
 		click.WithRangeVerifyLen(option.RangeVal{Min: 2, Max: 4}),
 	)
@@ -118,7 +118,7 @@ func init() {
 		log.Fatalln(err)
 	}
 
-	textCapt.SetResources(
+	builder.SetResources(
 		click.WithChars([]string{"这", "是", "随", "机", "的", "文", "本", "种", "子", "呀"}),
 		click.WithFonts([]*truetype.Font{
 			fontN,
@@ -127,6 +127,8 @@ func init() {
 			bgImage,
 		}),
 	)
+
+	textCapt = builder.Make()
 }
 
 func loadPng(p string) (image.Image, error) {
@@ -172,11 +174,11 @@ func main() {
 ```
 
 ### 创建实例方法
-- click.New()  中文文本、字母数字混合点选
-- click.NewWithShape()  图形点选
+- builder.Make()  中文文本、字母数字混合点选
+- builder.MakeWithShape()  图形点选
 
 ### 配置选项
-click.New(click.WithXxx(), ...)
+> click.NewBuilder(click.WithXxx(), ...) 或 builder.SetOptions(click.WithXxx(), ...)
 - click.WithImageSize(option.Size)  设置主图尺寸，默认 300x220
 - click.WithRangeLen(option.RangeVal)  设置随机内容长度范围
 - click.WithRangeAnglePos([]option.RangeVal)  设置随机角度范围
@@ -200,7 +202,7 @@ click.New(click.WithXxx(), ...)
 
 
 ### 设置资源
-xxx.SetResources(click.WithXxx(), ...)
+> builder.SetResources(click.WithXxx(), ...)
 - click.WithChars([]string)  设置文本种子
 - click.WithShapes(map[string]image.Image)  设置图形种子
 - click.WithFonts([]*truetype.Font)  设置字体
@@ -234,7 +236,7 @@ import (
 var slideTileCapt slide.Captcha
 
 func init() {
-	slideTileCapt = slide.New()
+	builder := slide.NewBuilder()
 
 	bgImage, err := loadPng("../resources/bg.png")
 	if err != nil {
@@ -248,13 +250,15 @@ func init() {
 
 	graphs := getSlideTileGraphArr()
 
-	slideTileCapt.SetResources(
+	builder.SetResources(
 		slide.WithGraphImages(graphs),
 		slide.WithBackgrounds([]image.Image{
 			bgImage,
 			bgImage1,
 		}),
 	)
+
+	slideTileCapt = builder.Make()
 }
 
 func getSlideTileGraphArr() []*slide.GraphImage {
@@ -316,12 +320,12 @@ func loadPng(p string) (image.Image, error) {
 
 
 ### 创建实例方法
-- slide.New() 滑动式
-- slide.NewWithRegion()  区域内拖拽滑动式
+- builder.Make() 滑动式
+- builder.MakeWithRegion()  区域内拖拽滑动式
 
 
 ### 配置选项
-slide.New(slide.WithXxx(), ...)
+> slide.NewBuilder(slide.WithXxx(), ...) 或 builder.SetOptions(slide.WithXxx(), ...)
 - slide.WithImageSize(*option.Size)  设置主图尺寸，默认 300x220
 - slide.WithImageAlpha(float32)  设置主图透明度
 - slide.WithRangeGraphSize(val option.RangeVal)  设置图形随机尺寸范围
@@ -332,7 +336,7 @@ slide.New(slide.WithXxx(), ...)
 
 
 ### 设置资源
-xxx.SetResources(slide.WithXxx(), ...)
+> builder.SetResources(slide.WithXxx(), ...)
 - slide.WithBackgrounds([]image.Image)  设置主图背景
 - slide.WithGraphImages(images []*GraphImage)  设置贴图的图形
 
@@ -363,7 +367,7 @@ import (
 var rotateCapt rotate.Captcha
 
 func init() {
-	rotateCapt = rotate.New()
+	builder := rotate.NewBuilder()
 
 	bgImage, err := loadPng("../resources/bg.png")
 	if err != nil {
@@ -375,12 +379,14 @@ func init() {
 		log.Fatalln(err)
 	}
 
-	rotateCapt.SetResources(
+	builder.SetResources(
 		rotate.WithImages([]image.Image{
 			bgImage,
 			bgImage1,
 		}),
 	)
+
+	rotateCapt = builder.Make()
 }
 
 func main() {
@@ -418,11 +424,11 @@ func loadPng(p string) (image.Image, error) {
 
 
 ### 创建实例方法
-- rotate.New() 旋转式
+- builder.Make() 旋转式
 
 
 ### 配置选项
-rotate.New(rotate.WithXxx(), ...)
+> rotate.NewBuilder(rotate.WithXxx(), ...) 或 builder.SetOptions(rotate.WithXxx(), ...)
 - rotate.WithImageSquareSize(val int)  设置主图大小
 - rotate.WithRangeAnglePos(vals []option.RangeVal)  设置校验随机角度范围
 - rotate.WithRangeThumbImageSquareSize(val []int)  设置缩略图大小
@@ -430,7 +436,7 @@ rotate.New(rotate.WithXxx(), ...)
 
 
 ### 设置资源
-xxx.SetResources(rotate.WithXxx(), ...)
+> builder.SetResources(rotate.WithXxx(), ...)
 - rotate.WithBackgrounds([]image.Image)  设置主图图片
 
 ### 验证码数据

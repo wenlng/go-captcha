@@ -31,9 +31,9 @@ const (
 
 // Captcha .
 type Captcha interface {
-	SetOptions(opts ...Option)
+	setOptions(opts ...Option)
+	setResources(resources ...Resource)
 	GetOptions() *Options
-	SetResources(resources ...Resource)
 	Generate() (CaptchaData, error)
 }
 
@@ -49,22 +49,7 @@ type captcha struct {
 	mode      Mode
 }
 
-// GetOptions is to get options
-func (c *captcha) GetOptions() *Options {
-	return c.opts
-}
-
-// New .
-func New(opts ...Option) Captcha {
-	return newWithMode(ModeBasic, opts...)
-}
-
-// NewWithRegion .
-func NewWithRegion(opts ...Option) Captcha {
-	return newWithMode(ModeRegion, opts...)
-}
-
-// NewWithMode .
+// newWithMode .
 func newWithMode(mode Mode, opts ...Option) Captcha {
 	capt := &captcha{
 		version:   Version,
@@ -78,7 +63,7 @@ func newWithMode(mode Mode, opts ...Option) Captcha {
 	defaultOptions()(capt.opts)
 	defaultResource()(capt.resources)
 
-	capt.SetOptions(opts...)
+	capt.setOptions(opts...)
 
 	if mode == ModeBasic {
 		capt.opts.rangeDeadZoneDirections = []DeadZoneDirectionType{DeadZoneDirectionTypeLeft}
@@ -88,18 +73,23 @@ func newWithMode(mode Mode, opts ...Option) Captcha {
 	return capt
 }
 
-// SetOptions is the set option
-func (c *captcha) SetOptions(opts ...Option) {
+// setOptions is the set option
+func (c *captcha) setOptions(opts ...Option) {
 	for _, opt := range opts {
 		opt(c.opts)
 	}
 }
 
-// SetResources is the set resource
-func (c *captcha) SetResources(resources ...Resource) {
+// setResources is the set resource
+func (c *captcha) setResources(resources ...Resource) {
 	for _, resource := range resources {
 		resource(c.resources)
 	}
+}
+
+// GetOptions is to get options
+func (c *captcha) GetOptions() *Options {
+	return c.opts
 }
 
 // Generate is to generate the captcha data

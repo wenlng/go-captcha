@@ -18,15 +18,17 @@ var colors = []string{
 	"#fb88ff",
 	"#b4fed4",
 	"#cbfaa9",
+	"#78d6f8",
 }
 
 var thumbColors = []string{
-	"#1f62ee",
-	"#4e87ff",
-	"#9f0bd9",
-	"#db1042",
-	"#b15c07",
-	"#b7055e",
+	"#1f55c4",
+	"#780592",
+	"#2f6b00",
+	"#910000",
+	"#864401",
+	"#675901",
+	"#016e5c",
 }
 
 var shadowColor = "#101010"

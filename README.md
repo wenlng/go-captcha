@@ -40,7 +40,7 @@
 
 ## Install Captcha Module
 ```shell
-$ go get -u github.com/wenlng/go-captcha/v2@v2.0.0-beta.2
+$ go get -u github.com/wenlng/go-captcha/v2@latest
 ```
 
 ## Import Captcha Module
@@ -78,7 +78,7 @@ import (
 var textCapt click.Captcha
 
 func init() {
-	textCapt = click.New(
+	builder := click.NewBuilder(
 		click.WithRangeLen(option.RangeVal{Min: 4, Max: 6}),
 		click.WithRangeVerifyLen(option.RangeVal{Min: 2, Max: 4}),
 	)
@@ -93,7 +93,7 @@ func init() {
 		log.Fatalln(err)
 	}
 
-	textCapt.SetResources(
+	builder.SetResources(
 		click.WithChars([]string{
 			"1A",
 			"5E",
@@ -112,6 +112,8 @@ func init() {
 			bgImage,
 		}),
 	)
+
+	textCapt= builder.Make()
 }
 
 func loadPng(p string) (image.Image, error) {
@@ -157,11 +159,11 @@ func main() {
 ```
 
 ### Create instance method
-- click.New()
-- click.NewWithShape()
+- builder.Make()
+- builder.MakeWithShape()
 
 ### Configuration options
-click.New(click.WithXxx(), ...)
+> click.NewBuilder(click.WithXxx(), ...) OR builder.SetOptions()(click.WithXxx(), ...)
 - click.WithImageSize(option.Size)
 - click.WithRangeLen(option.RangeVal) 
 - click.WithRangeAnglePos([]option.RangeVal) 
@@ -185,7 +187,7 @@ click.New(click.WithXxx(), ...)
 
 
 ### Set resources
-xxx.SetResources(click.WithXxx(), ...)
+> builder.SetResources(click.WithXxx(), ...)
 - click.WithChars([]string) 
 - click.WithShapes(map[string]image.Image) 
 - click.WithFonts([]*truetype.Font) 
@@ -219,7 +221,7 @@ import (
 var slideTileCapt slide.Captcha
 
 func init() {
-	slideTileCapt = slide.New()
+	builder := slide.NewBuilder()
 
 	bgImage, err := loadPng("../resources/bg.png")
 	if err != nil {
@@ -233,13 +235,15 @@ func init() {
 
 	graphs := getSlideTileGraphArr()
 
-	slideTileCapt.SetResources(
+	builder.SetResources(
 		slide.WithGraphImages(graphs),
 		slide.WithBackgrounds([]image.Image{
 			bgImage,
 			bgImage1,
 		}),
 	)
+
+	slideTileCapt = builder.Make()
 }
 
 func getSlideTileGraphArr() []*slide.GraphImage {
@@ -301,12 +305,12 @@ func loadPng(p string) (image.Image, error) {
 
 
 ### Create instance method
-- slide.New()
-- slide.NewWithRegion() 
+- builder.Make()
+- builder.MakeWithRegion() 
 
 
 ### Configuration options
-slide.New(slide.WithXxx(), ...)
+> slide.NewBuilder(slide.WithXxx(), ...) OR builder.SetOptions(slide.WithXxx(), ...)
 - slide.WithImageSize(*option.Size)
 - slide.WithImageAlpha(float32) 
 - slide.WithRangeGraphSize(val option.RangeVal) 
@@ -317,7 +321,7 @@ slide.New(slide.WithXxx(), ...)
 
 
 ### Set resources
-xxx.SetResources(slide.WithXxx(), ...)
+builder.SetResources(slide.WithXxx(), ...)
 - slide.WithBackgrounds([]image.Image) 
 - slide.WithGraphImages(images []*GraphImage)
 
@@ -348,7 +352,7 @@ import (
 var rotateCapt rotate.Captcha
 
 func init() {
-	rotateCapt = rotate.New()
+	builder := rotate.NewBuilder()
 
 	bgImage, err := loadPng("../resources/bg.png")
 	if err != nil {
@@ -360,12 +364,14 @@ func init() {
 		log.Fatalln(err)
 	}
 
-	rotateCapt.SetResources(
+	builder.SetResources(
 		rotate.WithImages([]image.Image{
 			bgImage,
 			bgImage1,
 		}),
 	)
+
+	rotateCapt = builder.Make()
 }
 
 func main() {
@@ -403,11 +409,11 @@ func loadPng(p string) (image.Image, error) {
 
 
 ### Create instance method
-- rotate.New()
+- builder.Make()
 
 
 ### Configuration options
-rotate.New(rotate.WithXxx(), ...)
+> rotate.NewBuilder(rotate.WithXxx(), ...) OR builder.SetOptions(rotate.WithXxx(), ...)
 - rotate.WithImageSquareSize(val int) 
 - rotate.WithRangeAnglePos(vals []option.RangeVal)
 - rotate.WithRangeThumbImageSquareSize(val []int) 
@@ -415,7 +421,7 @@ rotate.New(rotate.WithXxx(), ...)
 
 
 ### Set resources
-xxx.SetResources(rotate.WithXxx(), ...)
+builder.SetResources(rotate.WithXxx(), ...)
 - rotate.WithBackgrounds([]image.Image)
 
 ### Captcha Data
@@ -447,9 +453,9 @@ xxx.SetResources(rotate.WithXxx(), ...)
 - <p>Web Native ✔</p>
 - <p>Vue ✔</p>
 - <p>React ✔</p>
-- <p>Angular</p>
-- <p>Svelte</p>
-- <p>Solid</p>
+- <p>Angular ✔</p>
+- <p>Svelte ✔</p>
+- <p>Solid ✔</p>
 - <p>MinProgram</p>
 - <p>UniApp</p>
 - <p>Android App</p>

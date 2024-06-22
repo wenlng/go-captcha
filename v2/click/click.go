@@ -26,9 +26,9 @@ const Version = "2.0.0"
 
 // Captcha .
 type Captcha interface {
-	SetOptions(opts ...Option)
+	setOptions(opts ...Option)
+	setResources(resources ...Resource)
 	GetOptions() *Options
-	SetResources(resources ...Resource)
 	Generate() (CaptchaData, error)
 }
 
@@ -51,21 +51,6 @@ type captcha struct {
 	mode      Mode
 }
 
-// GetOptions is to get options
-func (c *captcha) GetOptions() *Options {
-	return c.opts
-}
-
-// New is to create a text captcha
-func New(opts ...Option) Captcha {
-	return newWithMode(ModeText, opts...)
-}
-
-// NewWithShape is to create a graphical captcha
-func NewWithShape(opts ...Option) Captcha {
-	return newWithMode(ModeShape, opts...)
-}
-
 // newWithMode is to create a captcha
 func newWithMode(mode Mode, opts ...Option) *captcha {
 	capt := &captcha{
@@ -86,23 +71,28 @@ func newWithMode(mode Mode, opts ...Option) *captcha {
 		capt.opts.rangeThumbSize = &option.RangeVal{Min: 14, Max: 20}
 	}
 
-	capt.SetOptions(opts...)
+	capt.setOptions(opts...)
 
 	return capt
 }
 
-// SetOptions is the set option
-func (c *captcha) SetOptions(opts ...Option) {
+// setOptions is the set option
+func (c *captcha) setOptions(opts ...Option) {
 	for _, opt := range opts {
 		opt(c.opts)
 	}
 }
 
-// SetResources is the set resource
-func (c *captcha) SetResources(resources ...Resource) {
+// setResources is the set resource
+func (c *captcha) setResources(resources ...Resource) {
 	for _, resource := range resources {
 		resource(c.resources)
 	}
+}
+
+// GetOptions is to get options
+func (c *captcha) GetOptions() *Options {
+	return c.opts
 }
 
 // Generate is to generate the captcha data

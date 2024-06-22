@@ -13,7 +13,7 @@ import (
 var rotateCapt rotate.Captcha
 
 func init() {
-	rotateCapt = rotate.New()
+	builder := rotate.NewBuilder()
 
 	bgImage, err := loadPng("../.cache/bg.png")
 	if err != nil {
@@ -25,12 +25,14 @@ func init() {
 		log.Fatalln(err)
 	}
 
-	rotateCapt.SetResources(
+	builder.SetResources(
 		rotate.WithImages([]image.Image{
 			bgImage,
 			bgImage1,
 		}),
 	)
+
+	rotateCapt = builder.Make()
 }
 
 func TestRotateDirectionCaptcha(t *testing.T) {

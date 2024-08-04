@@ -52,7 +52,7 @@ func NewDrawImage() DrawImage {
 type drawImage struct {
 }
 
-// DrawWithTemplate is drawing with a template
+// DrawWithTemplate is draw with a template
 func (d *drawImage) DrawWithTemplate(params *DrawTplImageParams) (image.Image, error) {
 	block := params.CaptchaDrawBlock
 	bgImage := params.Background
@@ -76,7 +76,7 @@ func (d *drawImage) DrawWithTemplate(params *DrawTplImageParams) (image.Image, e
 	return cvs, nil
 }
 
-// DrawWithNRGBA is drawing with a NRGBA
+// DrawWithNRGBA is draw with a NRGBA
 func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (img image.Image, bgImg image.Image, err error) {
 	blocks := params.CaptchaDrawBlocks
 	cvs := canvas.CreateNRGBACanvas(params.Width, params.Height, true)
@@ -110,7 +110,7 @@ func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (img image.Image, bgI
 	return cvs, rcm, nil
 }
 
-// drawGraphImage is drawing graphics
+// drawGraphImage is draw graphics
 func (d *drawImage) drawGraphImage(width, height int, img image.Image) (canvas.NRGBA, error) {
 	cvs := canvas.CreateNRGBACanvas(width, height, true)
 	draw.BiLinear.Scale(cvs.Get(), cvs.Bounds(), img, img.Bounds(), draw.Over, nil)

@@ -67,7 +67,7 @@ func (d *drawImage) DrawWithCropCircle(params *DrawCropCircleImageParams) (image
 	return cvs, nil
 }
 
-// DrawWithNRGBA is drawing with a NRGBA
+// DrawWithNRGBA is draw with a NRGBA
 func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (img image.Image, err error) {
 	var rcm = canvas.CreateNRGBACanvas(params.SquareSize, params.SquareSize, true)
 	if params.Background != nil {

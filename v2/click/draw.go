@@ -22,11 +22,11 @@ import (
 	"golang.org/x/image/font"
 )
 
-type DrawType = int
+type DrawType int
 
 const (
 	DrawTypeString DrawType = iota
-	DrawTypeImage  DrawType = iota
+	DrawTypeImage
 )
 
 // DrawImageParams .
@@ -63,7 +63,7 @@ func NewDrawImage() DrawImage {
 	return &drawImage{}
 }
 
-// DrawWithNRGBA is drawing with a NRGBA
+// DrawWithNRGBA is draw with a NRGBA
 func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (image.Image, error) {
 	dots := params.CaptchaDrawDot
 	cvs := canvas.CreateNRGBACanvas(params.Width, params.Height, true)
@@ -101,7 +101,7 @@ func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (image.Image, error) 
 	return m, nil
 }
 
-// DrawWithPalette is drawing with a palette
+// DrawWithPalette is draw with a palette
 func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Color, bgColors []color.Color) (image.Image, error) {
 	dots := params.CaptchaDrawDot
 	p := []color.Color{
@@ -179,7 +179,7 @@ func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Col
 
 }
 
-// DrawWithNRGBA2 is drawing with a NRGBA
+// DrawWithNRGBA2 is draw with a NRGBA
 func (d *drawImage) DrawWithNRGBA2(params *DrawImageParams, tColors []color.Color, bgColors []color.Color) (image.Image, error) {
 	dots := params.CaptchaDrawDot
 
@@ -305,7 +305,7 @@ func (d *drawImage) randomDrawSlimLine(m canvas.Palette, num int, colorB []color
 	}
 }
 
-// DrawDotImage is drawing dot image
+// DrawDotImage is draw dot image
 func (d *drawImage) DrawDotImage(dot *DrawDot, params *DrawImageParams) (canvas.NRGBA, *canvas.AreaRect, error) {
 	cColor, _ := helper.ParseHexColor(dot.Color)
 	cColor.A = helper.FormatAlpha(params.Alpha)
@@ -358,7 +358,7 @@ func (d *drawImage) DrawDotImage(dot *DrawDot, params *DrawImageParams) (canvas.
 	return cvs, ap, nil
 }
 
-// DrawStringImage is drawing string image
+// DrawStringImage is draw string image
 func (d *drawImage) DrawStringImage(dot *DrawDot, textColor color.Color) (canvas.NRGBA, error) {
 	cvs := canvas.CreateNRGBACanvas(dot.Width+10, dot.Height+10, true)
 
@@ -384,7 +384,7 @@ func (d *drawImage) DrawStringImage(dot *DrawDot, textColor color.Color) (canvas
 	return cvs, nil
 }
 
-// DrawShapeImage is drawing shape image
+// DrawShapeImage is draw shape image
 func (d *drawImage) DrawShapeImage(dot *DrawDot, cColor color.Color) (canvas.NRGBA, error) {
 	cr, cg, cb, ca := cColor.RGBA()
 	var colorArr = []color.RGBA{

@@ -108,6 +108,7 @@ func init() {
 		click.WithRangeVerifyLen(option.RangeVal{Min: 2, Max: 4}),
 	)
 
+	// 可以使用预置的素材资源：https://github.com/wenlng/go-captcha-assets
 	fontN, err := loadFont("../resources/fzshengsksjw_cu.ttf")
 	if err != nil {
 		log.Fatalln(err)
@@ -238,6 +239,7 @@ var slideTileCapt slide.Captcha
 func init() {
 	builder := slide.NewBuilder()
 
+	// 可以使用预置的素材资源：https://github.com/wenlng/go-captcha-assets
 	bgImage, err := loadPng("../resources/bg.png")
 	if err != nil {
 		log.Fatalln(err)
@@ -369,6 +371,7 @@ var rotateCapt rotate.Captcha
 func init() {
 	builder := rotate.NewBuilder()
 
+	// 可以使用预置的素材资源：https://github.com/wenlng/go-captcha-assets
 	bgImage, err := loadPng("../resources/bg.png")
 	if err != nil {
 		log.Fatalln(err)

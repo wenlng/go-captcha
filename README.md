@@ -83,6 +83,7 @@ func init() {
 		click.WithRangeVerifyLen(option.RangeVal{Min: 2, Max: 4}),
 	)
 
+	// You can use preset material resources：https://github.com/wenlng/go-captcha-assets
 	fontN, err := loadFont("../resources/fzshengsksjw_cu.ttf")
 	if err != nil {
 		log.Fatalln(err)
@@ -223,6 +224,7 @@ var slideTileCapt slide.Captcha
 func init() {
 	builder := slide.NewBuilder()
 
+	// You can use preset material resources：https://github.com/wenlng/go-captcha-assets
 	bgImage, err := loadPng("../resources/bg.png")
 	if err != nil {
 		log.Fatalln(err)
@@ -354,6 +356,7 @@ var rotateCapt rotate.Captcha
 func init() {
 	builder := rotate.NewBuilder()
 
+	// You can use preset material resources：https://github.com/wenlng/go-captcha-assets
 	bgImage, err := loadPng("../resources/bg.png")
 	if err != nil {
 		log.Fatalln(err)

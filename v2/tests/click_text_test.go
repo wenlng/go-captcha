@@ -18,6 +18,7 @@ func init() {
 	builder := click.NewBuilder(
 		click.WithRangeLen(option.RangeVal{Min: 4, Max: 6}),
 		click.WithRangeVerifyLen(option.RangeVal{Min: 2, Max: 4}),
+		click.WithDisabledRangeVerifyLen(true),
 	)
 
 	fontN, err := loadFont("../.cache/fzshengsksjw_cu.ttf")
@@ -31,7 +32,8 @@ func init() {
 	}
 
 	builder.SetResources(
-		click.WithChars([]string{"这", "是", "随", "机", "的", "文", "本", "种", "子", "呀"}),
+		//click.WithChars([]string{"这", "是", "随", "机", "的", "文", "本", "种", "子", "呀"}),
+		click.WithChars([]string{"A1", "B2", "C3", "D4", "E5", "F6", "G7", "H8", "I9", "J0"}),
 		click.WithFonts([]*truetype.Font{
 			fontN,
 		}),

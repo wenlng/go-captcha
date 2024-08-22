@@ -178,6 +178,7 @@ func main() {
 
 - click.WithThumbImageSize(option.Size)
 - click.WithRangeVerifyLen(option.RangeVal)
+- click.WithDisabledRangeVerifyLen(bool)
 - click.WithRangeThumbSize(option.RangeVal)
 - click.WithRangeThumbColors([]string)
 - click.WithRangeThumbBgColors([]string)

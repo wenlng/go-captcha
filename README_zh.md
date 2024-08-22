@@ -193,6 +193,7 @@ func main() {
 
 - click.WithThumbImageSize(option.Size)  设置缩略尺寸，默认 150x40
 - click.WithRangeVerifyLen(option.RangeVal) 设置校验内容的随机长度范围
+- click.WithDisabledRangeVerifyLen(bool) 禁用校验内容的随机长度，与主图内容的长度保持一致
 - click.WithRangeThumbSize(option.RangeVal)  设置随机缩略内容随机大小范围
 - click.WithRangeThumbColors([]string)  设置缩略随机颜色范围
 - click.WithRangeThumbBgColors([]string)  设置缩略随机背景颜色范围

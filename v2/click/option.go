@@ -29,6 +29,7 @@ type Options struct {
 
 	thumbImageSize          *option.Size
 	rangeVerifyLen          *option.RangeVal
+	disabledRangeVerifyLen  bool
 	rangeThumbSize          *option.RangeVal
 	rangeThumbColors        []string
 	rangeThumbBgColors      []string
@@ -121,6 +122,11 @@ func (o *Options) GetRangeVerifyLen() *option.RangeVal {
 		Min: o.rangeVerifyLen.Min,
 		Max: o.rangeVerifyLen.Max,
 	}
+}
+
+// GetDisabledRangeVerifyLen .
+func (o *Options) GetDisabledRangeVerifyLen() bool {
+	return o.disabledRangeVerifyLen
 }
 
 // GetRangeThumbSize .
@@ -289,6 +295,13 @@ func WithRangeVerifyLen(val option.RangeVal) Option {
 		}
 
 		opts.rangeVerifyLen = &option.RangeVal{Min: val.Min, Max: val.Max}
+	}
+}
+
+// WithDisabledRangeVerifyLen .
+func WithDisabledRangeVerifyLen(disabled bool) Option {
+	return func(opts *Options) {
+		opts.disabledRangeVerifyLen = disabled
 	}
 }
 

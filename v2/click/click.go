@@ -297,9 +297,10 @@ func (c *captcha) rangeCheckDots(dots map[int]*Dot) (map[int]*Dot, []string) {
 	count := random.RandInt(c.opts.rangeVerifyLen.Min, c.opts.rangeVerifyLen.Max)
 	var values []string
 	for i, value := range rs {
-		if i >= count {
-			continue
+		if !c.opts.disabledRangeVerifyLen && i >= count {
+			break
 		}
+
 		dot := dots[value]
 		dot.Index = i
 		chkDots[i] = dot

@@ -79,6 +79,7 @@ func defaultOptions() Option {
 		opts.imageAlpha = 1
 
 		opts.rangeVerifyLen = &option.RangeVal{Min: 2, Max: 4}
+		opts.disabledRangeVerifyLen = false
 		opts.thumbImageSize = &option.Size{Width: 150, Height: 40}
 		opts.rangeThumbSize = &option.RangeVal{Min: 22, Max: 28}
 		opts.rangeThumbColors = getDefaultThumbColors()

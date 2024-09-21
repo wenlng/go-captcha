@@ -10,12 +10,12 @@ import (
 	"math"
 )
 
-// RotatePoint is the point of rotation
+// RotatePoint is to the point of rotation
 func RotatePoint(x, y, sin, cos float64) (float64, float64) {
 	return x*cos - y*sin, x*sin + y*cos
 }
 
-// RotatedSize is the size of rotation
+// RotatedSize is to the size of rotation
 func RotatedSize(w, h int, angle float64) (int, int) {
 	if w <= 0 || h <= 0 {
 		return 0, 0

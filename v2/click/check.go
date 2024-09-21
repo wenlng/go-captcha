@@ -10,7 +10,7 @@ import (
 	"math"
 )
 
-// CheckPoint is the position of the detection point
+// CheckPoint is to the position of the detection point
 func CheckPoint(sx, sy, dx, dy, width, height, padding int64) bool {
 	newWidth := width + (padding * 2)
 	newHeight := height + (padding * 2)

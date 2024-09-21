@@ -6,7 +6,7 @@
 
 package slide
 
-// CheckPoint is the position of the detection point
+// CheckPoint is to the position of the detection point
 func CheckPoint(sx, sy, dx, dy, padding int64) bool {
 	newX := padding * 2
 	newY := padding * 2

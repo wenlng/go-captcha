@@ -28,7 +28,7 @@ func t2x(t int64) string {
 	return result
 }
 
-// FormatAlpha is formatting transparent
+// FormatAlpha is to formatting transparent
 func FormatAlpha(val float32) uint8 {
 	a := math.Min(float64(val), 1)
 	alpha := a * 255
@@ -119,12 +119,12 @@ func IsChineseChar(str string) bool {
 	return false
 }
 
-// LenChineseChar is calc Chinese and letter length
+// LenChineseChar is to calc Chinese and letter length
 func LenChineseChar(str string) int {
 	return utf8.RuneCountInString(str)
 }
 
-// RandIndex is the random length range value
+// RandIndex is to the random length range value
 func RandIndex(length int) int {
 	if length == 0 {
 		return -1

@@ -10,7 +10,7 @@ import (
 	"github.com/wenlng/go-captcha/v2/base/option"
 )
 
-// defaultOptions is the default configuration
+// defaultOptions is to the default configuration
 func defaultOptions() Option {
 	return func(opts *Options) {
 		opts.imageSquareSize = 220
@@ -23,7 +23,7 @@ func defaultOptions() Option {
 	}
 }
 
-// defaultResource is the default resource
+// defaultResource is to the default resource
 func defaultResource() Resource {
 	return func(resources *Resources) {
 		// ...

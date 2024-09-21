@@ -13,7 +13,7 @@ type Matrix struct {
 	XX, YX, XY, YY, X0, Y0 float64
 }
 
-// Translate is the matrix calculation of translate
+// Translate is to the matrix calculation of translate
 func (a Matrix) Translate(x, y float64) Matrix {
 	return Matrix{
 		1, 0,
@@ -22,7 +22,7 @@ func (a Matrix) Translate(x, y float64) Matrix {
 	}.Multiply(a)
 }
 
-// Multiply is the matrix calculation of multiply
+// Multiply is to the matrix calculation of multiply
 func (a Matrix) Multiply(b Matrix) Matrix {
 	return Matrix{
 		a.XX*b.XX + a.YX*b.XY,
@@ -34,7 +34,7 @@ func (a Matrix) Multiply(b Matrix) Matrix {
 	}
 }
 
-// Rotate is the matrix calculation of rotation
+// Rotate is to the matrix calculation of rotation
 func (a Matrix) Rotate(angle float64) Matrix {
 	c := math.Cos(angle)
 	s := math.Sin(angle)

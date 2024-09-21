@@ -76,14 +76,14 @@ func newWithMode(mode Mode, opts ...Option) *captcha {
 	return capt
 }
 
-// setOptions is the set option
+// setOptions is to set option
 func (c *captcha) setOptions(opts ...Option) {
 	for _, opt := range opts {
 		opt(c.opts)
 	}
 }
 
-// setResources is the set resource
+// setResources is to set resource
 func (c *captcha) setResources(resources ...Resource) {
 	for _, resource := range resources {
 		resource(c.resources)
@@ -313,7 +313,7 @@ func (c *captcha) rangeCheckDots(dots map[int]*Dot) (map[int]*Dot, []string) {
 	return chkDots, values
 }
 
-// genMasterImage is the master image of drawing captcha
+// genMasterImage is to the master image of drawing captcha
 func (c *captcha) genMasterImage(size *option.Size, dots map[int]*Dot) (image.Image, error) {
 	var drawDots = make([]*DrawDot, 0, len(dots))
 
@@ -360,7 +360,7 @@ func (c *captcha) genMasterImage(size *option.Size, dots map[int]*Dot) (image.Im
 	})
 }
 
-// genThumbImage is the thumbnail image of drawing captcha
+// genThumbImage is to the thumbnail image of drawing captcha
 func (c *captcha) genThumbImage(size *option.Size, dots map[int]*Dot) (image.Image, error) {
 	var drawDots = make([]*DrawDot, 0, len(dots))
 

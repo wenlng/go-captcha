@@ -30,7 +30,7 @@ func NewResources() *Resources {
 
 type Resource func(*Resources)
 
-// WithChars is set characters
+// WithChars is to set characters
 func WithChars(chars []string) Resource {
 	return func(resources *Resources) {
 		if len(chars) > 0 {
@@ -51,7 +51,7 @@ func WithChars(chars []string) Resource {
 	}
 }
 
-// WithShapes is set shape
+// WithShapes is to set shape
 func WithShapes(shapeMaps map[string]image.Image) Resource {
 	return func(resources *Resources) {
 		resources.shapeMaps = shapeMaps
@@ -63,21 +63,21 @@ func WithShapes(shapeMaps map[string]image.Image) Resource {
 	}
 }
 
-// WithFonts is set font
+// WithFonts is to set font
 func WithFonts(fonts []*truetype.Font) Resource {
 	return func(resources *Resources) {
 		resources.rangFonts = fonts
 	}
 }
 
-// WithBackgrounds is set background image
+// WithBackgrounds is to set background image
 func WithBackgrounds(images []image.Image) Resource {
 	return func(resources *Resources) {
 		resources.rangBackgrounds = images
 	}
 }
 
-// WithThumbBackgrounds is set thumbnail background image
+// WithThumbBackgrounds is to set thumbnail background image
 func WithThumbBackgrounds(images []image.Image) Resource {
 	return func(resources *Resources) {
 		resources.rangThumbBackgrounds = images

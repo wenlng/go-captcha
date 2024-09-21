@@ -50,7 +50,7 @@ func (p *palette) Get() *image.Paletted {
 	return p.Paletted
 }
 
-// Rotate is rotation at any Angle
+// Rotate is to rotation at any Angle
 func (p *palette) Rotate(angle int) {
 	if angle == 0 {
 		return
@@ -105,14 +105,14 @@ func (p *palette) DrawCircle(x, y, radius int, c color.RGBA) {
 	}
 }
 
-// DrawHorizLine is drawing horiz line
+// DrawHorizLine is to draw horiz line
 func (p *palette) DrawHorizLine(fromX, toX, y int, c color.RGBA) {
 	for x := fromX; x <= toX; x++ {
 		p.Set(x, y, c)
 	}
 }
 
-// Distort is distorting the image
+// Distort is to distort the image
 func (p *palette) Distort(amplude float64, period float64) {
 	w := p.Bounds().Max.X
 	h := p.Bounds().Max.Y
@@ -137,7 +137,7 @@ func (p *palette) Distort(amplude float64, period float64) {
 	newP.Get().Palette = nil
 }
 
-// DrawBeeline is drawing beelines
+// DrawBeeline is to draw beelines
 func (p *palette) DrawBeeline(point1 image.Point, point2 image.Point, lineColor color.RGBA) {
 	dx := math.Abs(float64(point1.X - point2.X))
 	dy := math.Abs(float64(point2.Y - point1.Y))
@@ -170,7 +170,7 @@ func (p *palette) DrawBeeline(point1 image.Point, point2 image.Point, lineColor 
 	}
 }
 
-// AngleSwapPoint is the angular conversion point coordinate
+// AngleSwapPoint is to the angular conversion point coordinate
 func (p *palette) AngleSwapPoint(x, y, r, angle float64) (tarX, tarY float64) {
 	x -= r
 	y = r - y
@@ -183,7 +183,7 @@ func (p *palette) AngleSwapPoint(x, y, r, angle float64) (tarX, tarY float64) {
 	return
 }
 
-// CalcMarginBlankArea is the calculation of margin space
+// CalcMarginBlankArea is to the calculation of margin space
 func (p *palette) CalcMarginBlankArea() *AreaRect {
 	nW := p.Bounds().Max.X
 	nH := p.Bounds().Max.Y
@@ -225,7 +225,7 @@ func (p *palette) CalcMarginBlankArea() *AreaRect {
 	}
 }
 
-// DrawString draws a string
+// DrawString is to draw a string
 func (p *palette) DrawString(params *DrawStringParams, pt fixed.Point26_6) error {
 	dc := freetype.NewContext()
 	dc.SetDPI(float64(params.FontDPI))

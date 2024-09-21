@@ -38,7 +38,7 @@ func Perm(n int) []int {
 	return rand.Perm(n)
 }
 
-// RandInt is the safe random number of the interval [n, m]
+// RandInt is to the safe random number of the interval [n, m]
 func RandInt(min, max int) int {
 	if min > max {
 		return max

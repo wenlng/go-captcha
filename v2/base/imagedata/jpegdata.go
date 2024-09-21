@@ -38,7 +38,7 @@ func NewJPEGImageData(img image.Image) JPEGImageData {
 	}
 }
 
-// Get is get the original picture
+// Get is to get the original picture
 func (c *jpegImageDta) Get() image.Image {
 	return c.image
 }

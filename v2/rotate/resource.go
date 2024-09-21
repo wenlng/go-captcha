@@ -22,7 +22,7 @@ func NewResources() *Resources {
 
 type Resource func(*Resources)
 
-// WithImages is set image
+// WithImages is to set image
 func WithImages(images []image.Image) Resource {
 	return func(resources *Resources) {
 		resources.rangImages = images

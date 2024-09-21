@@ -42,14 +42,14 @@ func (b *builder) Clear() {
 	b.resources = make([]Resource, 0)
 }
 
-// SetOptions is the set option
+// SetOptions is to the set option
 func (b *builder) SetOptions(opts ...Option) {
 	if len(opts) > 0 {
 		b.opts = append(b.opts, opts...)
 	}
 }
 
-// SetResources is the set resource
+// SetResources is to the set resource
 func (b *builder) SetResources(resources ...Resource) {
 	if len(resources) > 0 {
 		b.resources = append(b.resources, resources...)

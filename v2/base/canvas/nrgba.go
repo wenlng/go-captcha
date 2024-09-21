@@ -61,7 +61,7 @@ func (n *nRGBA) Get() *image.NRGBA {
 	return n.NRGBA
 }
 
-// DrawString draws a string
+// DrawString is to draws a string
 func (n *nRGBA) DrawString(params *DrawStringParams, pt fixed.Point26_6) error {
 	dc := freetype.NewContext()
 	dc.SetDPI(float64(params.FontDPI))
@@ -84,7 +84,7 @@ func (n *nRGBA) DrawString(params *DrawStringParams, pt fixed.Point26_6) error {
 	return nil
 }
 
-// DrawImage draws a picture
+// DrawImage is to draws a picture
 func (n *nRGBA) DrawImage(img Palette, dotRect *PositionRect, posRect *AreaRect) {
 	nW := img.Bounds().Max.X
 	nH := img.Bounds().Max.Y
@@ -110,7 +110,7 @@ func (n *nRGBA) DrawImage(img Palette, dotRect *PositionRect, posRect *AreaRect)
 	}
 }
 
-// CalcMarginBlankArea is the calculation of margin space
+// CalcMarginBlankArea is to the calculation of margin space
 func (n *nRGBA) CalcMarginBlankArea() *AreaRect {
 	nW := n.Bounds().Max.X
 	nH := n.Bounds().Max.Y
@@ -152,7 +152,7 @@ func (n *nRGBA) CalcMarginBlankArea() *AreaRect {
 	}
 }
 
-// Rotate is rotation at any Angle
+// Rotate is to rotation at any Angle
 func (n *nRGBA) Rotate(a int) {
 	if a == 0 {
 		return
@@ -186,7 +186,7 @@ func (n *nRGBA) Rotate(a int) {
 	n.NRGBA = im
 }
 
-// CropCircle is cut the circle
+// CropCircle is to cut the circle
 func (n *nRGBA) CropCircle(x, y, radius, zoom int) {
 	bounds := n.Bounds()
 	mask := image.NewNRGBA(bounds)
@@ -212,7 +212,7 @@ func (n *nRGBA) CropCircle(x, y, radius, zoom int) {
 	n.NRGBA = mask
 }
 
-// SubImage is captured the image
+// SubImage is to capture the image
 func (n *nRGBA) SubImage(r image.Rectangle) {
 	n.NRGBA = n.Get().SubImage(r).(*image.NRGBA)
 }

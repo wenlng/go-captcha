@@ -73,14 +73,14 @@ func newWithMode(mode Mode, opts ...Option) Captcha {
 	return capt
 }
 
-// setOptions is the set option
+// setOptions is to set option
 func (c *captcha) setOptions(opts ...Option) {
 	for _, opt := range opts {
 		opt(c.opts)
 	}
 }
 
-// setResources is the set resource
+// setResources is to set resource
 func (c *captcha) setResources(resources ...Resource) {
 	for _, resource := range resources {
 		resource(c.resources)

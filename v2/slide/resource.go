@@ -30,14 +30,14 @@ func NewResources() *Resources {
 
 type Resource func(*Resources)
 
-// WithBackgrounds is set background image
+// WithBackgrounds is to set background image
 func WithBackgrounds(images []image.Image) Resource {
 	return func(resources *Resources) {
 		resources.rangBackgrounds = images
 	}
 }
 
-// WithGraphImages is set graphic image
+// WithGraphImages is to set graphic image
 func WithGraphImages(images []*GraphImage) Resource {
 	return func(resources *Resources) {
 		resources.rangGraphImage = images

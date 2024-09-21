@@ -36,7 +36,7 @@ func NewPNGImageData(img image.Image) PNGImageData {
 	}
 }
 
-// Get is get the original picture
+// Get is to get the original picture
 func (c *pngImageDta) Get() image.Image {
 	return c.image
 }

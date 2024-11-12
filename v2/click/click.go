@@ -416,16 +416,22 @@ func (c *captcha) genThumbImage(size *option.Size, dots map[int]*Dot) (image.Ima
 		params.Background = randgen.RandImage(c.resources.rangThumbBackgrounds)
 	}
 
-	var mTextColors []color.Color
-	for _, cStr := range c.opts.rangeThumbColors {
-		co, _ := helper.ParseHexColor(cStr)
-		mTextColors = append(mTextColors, co)
+	mTextColors := make([]color.Color, len(c.opts.rangeThumbColors))
+	for index, cStr := range c.opts.rangeThumbColors {
+		co, err := helper.ParseHexColor(cStr)
+		if err != nil {
+			return nil, err
+		}
+		mTextColors[index] = co
 	}
 
-	var bgColors []color.Color
-	for _, co := range c.opts.rangeThumbBgColors {
-		rc, _ := helper.ParseHexColor(co)
-		bgColors = append(bgColors, rc)
+	bgColors := make([]color.Color, len(c.opts.rangeThumbBgColors))
+	for index, co := range c.opts.rangeThumbBgColors {
+		rc, err := helper.ParseHexColor(co)
+		if err != nil {
+			return nil, err
+		}
+		bgColors[index] = rc
 	}
 
 	if c.opts.useShapeOriginalColor || c.opts.isThumbNonDeformAbility {
@@ -436,7 +442,7 @@ func (c *captcha) genThumbImage(size *option.Size, dots map[int]*Dot) (image.Ima
 
 // genRandShape is to generate random shape array
 func (c *captcha) genRandShape(length int) []string {
-	var nameA []string
+	nameA := make([]string, 0, length)
 	for len(nameA) < length {
 		img := randgen.RandString(c.resources.shapes)
 		if !helper.InArrayWithStr(nameA, img) {

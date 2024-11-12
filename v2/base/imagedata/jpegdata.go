@@ -17,10 +17,10 @@ import (
 // JPEGImageData .
 type JPEGImageData interface {
 	Get() image.Image
-	ToBytes() []byte
-	ToBytesWithQuality(imageQuality int) []byte
-	ToBase64() string
-	ToBase64WithQuality(imageQuality int) string
+	ToBytes() ([]byte, error)
+	ToBytesWithQuality(imageQuality int) ([]byte, error)
+	ToBase64() (string, error)
+	ToBase64WithQuality(imageQuality int) (string, error)
 	SaveToFile(filepath string, quality int) error
 }
 
@@ -53,18 +53,18 @@ func (c *jpegImageDta) SaveToFile(filepath string, quality int) error {
 }
 
 // ToBytes is to convert JPEG into byte array
-func (c *jpegImageDta) ToBytes() []byte {
+func (c *jpegImageDta) ToBytes() ([]byte, error) {
 	if c.image == nil {
-		return []byte{}
+		return []byte{}, nil
 	}
 
 	return codec.EncodeJPEGToByte(c.image, option.QualityNone)
 }
 
 // ToBytesWithQuality is to convert JPEG into byte array with quality
-func (c *jpegImageDta) ToBytesWithQuality(imageQuality int) []byte {
+func (c *jpegImageDta) ToBytesWithQuality(imageQuality int) ([]byte, error) {
 	if c.image == nil {
-		return []byte{}
+		return []byte{}, nil
 	}
 
 	if imageQuality <= option.QualityNone && imageQuality >= option.QualityLevel5 {
@@ -74,18 +74,18 @@ func (c *jpegImageDta) ToBytesWithQuality(imageQuality int) []byte {
 }
 
 // ToBase64 is to convert JPEG into base64
-func (c *jpegImageDta) ToBase64() string {
+func (c *jpegImageDta) ToBase64() (string, error) {
 	if c.image == nil {
-		return ""
+		return "", nil
 	}
 
 	return codec.EncodeJPEGToBase64(c.image, option.QualityNone)
 }
 
 // ToBase64WithQuality is to convert JPEG into base64 with quality
-func (c *jpegImageDta) ToBase64WithQuality(imageQuality int) string {
+func (c *jpegImageDta) ToBase64WithQuality(imageQuality int) (string, error) {
 	if c.image == nil {
-		return ""
+		return "", nil
 	}
 
 	if imageQuality <= option.QualityNone && imageQuality >= option.QualityLevel5 {

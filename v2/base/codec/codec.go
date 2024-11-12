@@ -16,10 +16,10 @@ import (
 )
 
 // EncodePNGToByte is to encode the png into a byte array
-func EncodePNGToByte(img image.Image) (ret []byte) {
+func EncodePNGToByte(img image.Image) (ret []byte, err error) {
 	var buf bytes.Buffer
-	if err := png.Encode(&buf, img); err != nil {
-		panic(err.Error())
+	if err = png.Encode(&buf, img); err != nil {
+		return
 	}
 	ret = buf.Bytes()
 	buf.Reset()
@@ -27,10 +27,10 @@ func EncodePNGToByte(img image.Image) (ret []byte) {
 }
 
 // EncodeJPEGToByte is to encode the image into a byte array
-func EncodeJPEGToByte(img image.Image, quality int) (ret []byte) {
+func EncodeJPEGToByte(img image.Image, quality int) (ret []byte, err error) {
 	var buf bytes.Buffer
-	if err := jpeg.Encode(&buf, img, &jpeg.Options{Quality: quality}); err != nil {
-		panic(err.Error())
+	if err = jpeg.Encode(&buf, img, &jpeg.Options{Quality: quality}); err != nil {
+		return
 	}
 	ret = buf.Bytes()
 	buf.Reset()
@@ -56,11 +56,19 @@ func DecodeByteToPng(b []byte) (img image.Image, err error) {
 }
 
 // EncodePNGToBase64 is to encode the png into string
-func EncodePNGToBase64(img image.Image) string {
-	return fmt.Sprintf("data:%s;base64,%s", "image/png", base64.StdEncoding.EncodeToString(EncodePNGToByte(img)))
+func EncodePNGToBase64(img image.Image) (string, error) {
+	b, err := EncodePNGToByte(img)
+	if err != nil {
+		return ``, err
+	}
+	return fmt.Sprintf("data:%s;base64,%s", "image/png", base64.StdEncoding.EncodeToString(b)), err
 }
 
 // EncodeJPEGToBase64 is to encode the image into string
-func EncodeJPEGToBase64(img image.Image, quality int) string {
-	return fmt.Sprintf("data:%s;base64,%s", "image/jpeg", base64.StdEncoding.EncodeToString(EncodeJPEGToByte(img, quality)))
+func EncodeJPEGToBase64(img image.Image, quality int) (string, error) {
+	b, err := EncodeJPEGToByte(img, quality)
+	if err != nil {
+		return ``, err
+	}
+	return fmt.Sprintf("data:%s;base64,%s", "image/jpeg", base64.StdEncoding.EncodeToString(b)), err
 }

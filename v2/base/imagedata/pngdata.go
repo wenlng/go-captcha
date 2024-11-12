@@ -17,8 +17,8 @@ import (
 // PNGImageData .
 type PNGImageData interface {
 	Get() image.Image
-	ToBytes() []byte
-	ToBase64() string
+	ToBytes() ([]byte, error)
+	ToBase64() (string, error)
 	SaveToFile(filepath string) error
 }
 
@@ -51,18 +51,18 @@ func (c *pngImageDta) SaveToFile(filepath string) error {
 }
 
 // ToBytes is to convert PNG into byte array
-func (c *pngImageDta) ToBytes() []byte {
+func (c *pngImageDta) ToBytes() ([]byte, error) {
 	if c.image == nil {
-		return []byte{}
+		return []byte{}, nil
 	}
 
 	return codec.EncodePNGToByte(c.image)
 }
 
 // ToBase64 is to convert PNG into base64
-func (c *pngImageDta) ToBase64() string {
+func (c *pngImageDta) ToBase64() (string, error) {
 	if c.image == nil {
-		return ""
+		return "", nil
 	}
 	return codec.EncodePNGToBase64(c.image)
 }

@@ -7,7 +7,6 @@
 package canvas
 
 import (
-	"fmt"
 	"image"
 	"image/color"
 	"math"
@@ -239,9 +238,7 @@ func (p *palette) DrawString(params *DrawStringParams, pt fixed.Point26_6) error
 	fontColor := image.NewUniform(params.Color)
 	dc.SetSrc(fontColor)
 
-	text := fmt.Sprintf("%s", params.Text)
-
-	if _, err := dc.DrawString(text, pt); err != nil {
+	if _, err := dc.DrawString(params.Text, pt); err != nil {
 		return err
 	}
 

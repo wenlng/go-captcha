@@ -236,7 +236,7 @@ func WithRangeSize(val option.RangeVal) Option {
 func WithRangeColors(colors []string) Option {
 	return func(opts *Options) {
 		if len(colors) > 255 {
-			logger.New().Errorf("withRangeColors error: the max value of rangColors must be less than or equal to 255")
+			logger.Errorf("withRangeColors error: the max value of rangColors must be less than or equal to 255")
 			return
 		}
 
@@ -290,7 +290,7 @@ func WithRangeThumbImageSize(val option.Size) Option {
 func WithRangeVerifyLen(val option.RangeVal) Option {
 	return func(opts *Options) {
 		if val.Max > opts.rangeLen.Min {
-			logger.New().Errorf("withRangeVerifyLen error: the max value of rangeVerifyLen must be less than or equal to the min value of rangeLen")
+			logger.Errorf("withRangeVerifyLen error: the max value of rangeVerifyLen must be less than or equal to the min value of rangeLen")
 			return
 		}
 
@@ -316,7 +316,7 @@ func WithRangeThumbSize(val option.RangeVal) Option {
 func WithRangeThumbColors(val []string) Option {
 	return func(opts *Options) {
 		if len(val) > 255 {
-			logger.New().Errorf("withRangeThumbColors error: the max value of rangeThumbColors must be less than or equal to 255")
+			logger.Errorf("withRangeThumbColors error: the max value of rangeThumbColors must be less than or equal to 255")
 			return
 		}
 		opts.rangeThumbColors = val
@@ -327,7 +327,7 @@ func WithRangeThumbColors(val []string) Option {
 func WithRangeThumbBgColors(val []string) Option {
 	return func(opts *Options) {
 		if len(val) > 255 {
-			logger.New().Errorf("withRangeThumbBgColors error: the max value of rangeThumbBgColors must be less than or equal to 255")
+			logger.Errorf("withRangeThumbBgColors error: the max value of rangeThumbBgColors must be less than or equal to 255")
 			return
 		}
 

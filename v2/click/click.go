@@ -449,7 +449,7 @@ func (c *captcha) genRandShape(length int) []string {
 
 // genRandCharis is to generate random character array
 func (c *captcha) genRandChar(length int) []string {
-	var strA []string
+	strA := make([]string, 0, length)
 	for len(strA) < length {
 		char := randgen.RandString(c.resources.chars)
 		if !helper.InArrayWithStr(strA, char) {

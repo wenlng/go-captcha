@@ -307,10 +307,12 @@ func (d *drawImage) randomDrawSlimLine(m canvas.Palette, num int, colorB []color
 
 // DrawDotImage is to draw dot image
 func (d *drawImage) DrawDotImage(dot *DrawDot, params *DrawImageParams) (canvas.NRGBA, *canvas.AreaRect, error) {
-	cColor, _ := helper.ParseHexColor(dot.Color)
+	cColor, err := helper.ParseHexColor(dot.Color)
+	if err != nil {
+		return nil, nil, err
+	}
 	cColor.A = helper.FormatAlpha(params.Alpha)
 	var cImage image.Image
-	var err error
 	if dot.DrawType == DrawTypeImage {
 		cImage, err = d.DrawShapeImage(dot, cColor)
 	} else {
@@ -320,18 +322,14 @@ func (d *drawImage) DrawDotImage(dot *DrawDot, params *DrawImageParams) (canvas.
 		return nil, nil, err
 	}
 
-	var colorArr = []color.RGBA{
-		cColor,
-	}
-
 	shadowColorHex := shadowColor
 	if params.ShadowColor != "" {
 		shadowColorHex = params.ShadowColor
 	}
 
-	sColor, _ := helper.ParseHexColor(shadowColorHex)
-	if params.ShowShadow {
-		colorArr = append(colorArr, sColor)
+	sColor, err := helper.ParseHexColor(shadowColorHex)
+	if err != nil {
+		return nil, nil, err
 	}
 
 	cvs := canvas.CreateNRGBACanvas(dot.Width+10, dot.Height+10, true)

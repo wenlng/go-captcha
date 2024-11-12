@@ -11,7 +11,6 @@ import (
 	"image/color"
 	"math"
 	"os"
-	"regexp"
 	"strconv"
 	"unicode"
 	"unicode/utf8"
@@ -109,10 +108,30 @@ func InArrayWithStr(items []string, s string) bool {
 	return false
 }
 
+var cnOtherChars = map[string]struct{}{
+	"\u3002": {},
+	"\uff1b": {},
+	"\uff0c": {},
+	"\uff1a": {},
+	"\u201c": {},
+	"\u201d": {},
+	"\uff08": {},
+	"\uff09": {},
+	"\u3001": {},
+	"\uff1f": {},
+	"\u300a": {},
+	"\u300b": {},
+}
+
+func isChineseOtherChar(r rune) bool {
+	_, ok := cnOtherChars[string(r)]
+	return ok
+}
+
 // IsChineseChar is to detect whether it is Chinese
 func IsChineseChar(str string) bool {
 	for _, r := range str {
-		if unicode.Is(unicode.Scripts["Han"], r) || (regexp.MustCompile("[\u3002\uff1b\uff0c\uff1a\u201c\u201d\uff08\uff09\u3001\uff1f\u300a\u300b]").MatchString(string(r))) {
+		if unicode.Is(unicode.Scripts["Han"], r) || isChineseOtherChar(r) {
 			return true
 		}
 	}

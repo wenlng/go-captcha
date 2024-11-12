@@ -108,10 +108,10 @@ func WithRangeGraphSize(val option.RangeVal) Option {
 // WithRangeGraphAnglePos .
 func WithRangeGraphAnglePos(vals []option.RangeVal) Option {
 	return func(opts *Options) {
-		var newVals = make([]*option.RangeVal, 0)
+		newVals := make([]*option.RangeVal, len(vals))
 		for i := 0; i < len(vals); i++ {
 			val := vals[i]
-			newVals = append(newVals, &option.RangeVal{Min: val.Min, Max: val.Max})
+			newVals[i] = &option.RangeVal{Min: val.Min, Max: val.Max}
 		}
 		opts.rangeGraphAnglePos = newVals
 	}

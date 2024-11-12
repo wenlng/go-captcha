@@ -37,11 +37,11 @@ func WithChars(chars []string) Resource {
 			for _, char := range chars {
 				if helper.IsChineseChar(char) {
 					if helper.LenChineseChar(char) > 1 {
-						logger.New().Errorf("WithChars error: the chinese char [%s] must be equal to 1", char)
+						logger.Errorf("WithChars error: the chinese char [%s] must be equal to 1", char)
 						return
 					}
 				} else if helper.LenChineseChar(char) > 2 {
-					logger.New().Errorf("WithChars error: the char [%s] must be less than or equal to 2", char)
+					logger.Errorf("WithChars error: the char [%s] must be less than or equal to 2", char)
 					return
 				}
 			}
@@ -56,7 +56,7 @@ func WithShapes(shapeMaps map[string]image.Image) Resource {
 	return func(resources *Resources) {
 		resources.shapeMaps = shapeMaps
 		var shapes = make([]string, 0, len(shapeMaps))
-		for name, _ := range shapeMaps {
+		for name := range shapeMaps {
 			shapes = append(shapes, name)
 		}
 		resources.shapes = shapes

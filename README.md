@@ -438,17 +438,20 @@ builder.SetResources(rotate.WithXxx(), ...)
 ## Captcha Image Data
 ### JPEGImageData object method
 - Get() image.Image
-- ToBytes() []byte
-- ToBytesWithQuality(imageQuality int) []byte 
-- ToBase64() string
-- ToBase64WithQuality(imageQuality int) string
+- ToBytes() ([]byte, error)
+- ToBytesWithQuality(imageQuality int) ([]byte, error)
+- ToBase64() (string, error)
+- ToBase64Data() (string, error)
+- ToBase64WithQuality(imageQuality int) (string, error)
+- ToBase64DataWithQuality(imageQuality int) (string, error)
 - SaveToFile(filepath string, quality int) error
 
 
 ### PNGImageData object method
 - Get() image.Image 
-- ToBytes() []byte
-- ToBase64() string 
+- ToBytes() ([]byte, error)
+- ToBase64() (string, error)
+- ToBase64Data() (string, error)
 - SaveToFile(filepath string) error
 
 <br/>
@@ -462,9 +465,9 @@ builder.SetResources(rotate.WithXxx(), ...)
 - <p>Solid ✔</p>
 - <p>MinProgram</p>
 - <p>UniApp</p>
+- <p>Flutter App</p>
 - <p>Android App</p>
 - <p>IOS App</p>
-- <p>Flutter App</p>
 - <p>... </p>
 
 <br/>

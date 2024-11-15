@@ -7,7 +7,7 @@
 package rotate
 
 import (
-	"fmt"
+	"errors"
 	"image"
 
 	"github.com/wenlng/go-captcha/v2/base/helper"
@@ -18,7 +18,7 @@ import (
 )
 
 // Version # of captcha
-const Version = "2.0.0"
+const Version = "2.0.2"
 
 // Captcha .
 type Captcha interface {
@@ -29,6 +29,9 @@ type Captcha interface {
 }
 
 var _ Captcha = (*captcha)(nil)
+
+var EmptyImageErr = errors.New("no image")
+var ImageTypeErr = errors.New("image must be is image.Image type")
 
 // captcha .
 type captcha struct {
@@ -170,11 +173,11 @@ func (c *captcha) genBlock(imageSize int, thumbImageSquareSize int) *Block {
 // check is to check the captcha parameter
 func (c *captcha) check() error {
 	if len(c.resources.rangImages) == 0 {
-		return fmt.Errorf("rotate captcha err: no rang image")
+		return EmptyImageErr
 	}
 	for _, img := range c.resources.rangImages {
 		if img == nil {
-			return fmt.Errorf("rotate captcha err: image must be is image.Image type")
+			return ImageTypeErr
 		}
 	}
 	return nil

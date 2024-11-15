@@ -7,7 +7,6 @@
 package imagedata
 
 import (
-	"fmt"
 	"image"
 
 	"github.com/wenlng/go-captcha/v2/base/codec"
@@ -21,6 +20,8 @@ type JPEGImageData interface {
 	ToBytesWithQuality(imageQuality int) ([]byte, error)
 	ToBase64() (string, error)
 	ToBase64WithQuality(imageQuality int) (string, error)
+	ToBase64Data() (string, error)
+	ToBase64DataWithQuality(imageQuality int) (string, error)
 	SaveToFile(filepath string, quality int) error
 }
 
@@ -46,7 +47,7 @@ func (c *jpegImageDta) Get() image.Image {
 // SaveToFile is to save JPEG as a file
 func (c *jpegImageDta) SaveToFile(filepath string, quality int) error {
 	if c.image == nil {
-		return fmt.Errorf("missing image data")
+		return ImageMissingDataErr
 	}
 
 	return saveToFile(c.image, filepath, false, quality)
@@ -55,7 +56,7 @@ func (c *jpegImageDta) SaveToFile(filepath string, quality int) error {
 // ToBytes is to convert JPEG into byte array
 func (c *jpegImageDta) ToBytes() ([]byte, error) {
 	if c.image == nil {
-		return []byte{}, nil
+		return []byte{}, ImageEmptyErr
 	}
 
 	return codec.EncodeJPEGToByte(c.image, option.QualityNone)
@@ -64,7 +65,7 @@ func (c *jpegImageDta) ToBytes() ([]byte, error) {
 // ToBytesWithQuality is to convert JPEG into byte array with quality
 func (c *jpegImageDta) ToBytesWithQuality(imageQuality int) ([]byte, error) {
 	if c.image == nil {
-		return []byte{}, nil
+		return []byte{}, ImageEmptyErr
 	}
 
 	if imageQuality <= option.QualityNone && imageQuality >= option.QualityLevel5 {
@@ -73,10 +74,31 @@ func (c *jpegImageDta) ToBytesWithQuality(imageQuality int) ([]byte, error) {
 	return codec.EncodeJPEGToByte(c.image, option.QualityNone)
 }
 
+// ToBase64Data is to convert JPEG into base64
+func (c *jpegImageDta) ToBase64Data() (string, error) {
+	if c.image == nil {
+		return "", ImageEmptyErr
+	}
+
+	return codec.EncodeJPEGToBase64Data(c.image, option.QualityNone)
+}
+
+// ToBase64DataWithQuality is to convert JPEG into base64 with quality
+func (c *jpegImageDta) ToBase64DataWithQuality(imageQuality int) (string, error) {
+	if c.image == nil {
+		return "", ImageEmptyErr
+	}
+
+	if imageQuality <= option.QualityNone && imageQuality >= option.QualityLevel5 {
+		return codec.EncodeJPEGToBase64Data(c.image, imageQuality)
+	}
+	return codec.EncodeJPEGToBase64Data(c.image, option.QualityNone)
+}
+
 // ToBase64 is to convert JPEG into base64
 func (c *jpegImageDta) ToBase64() (string, error) {
 	if c.image == nil {
-		return "", nil
+		return "", ImageEmptyErr
 	}
 
 	return codec.EncodeJPEGToBase64(c.image, option.QualityNone)
@@ -85,7 +107,7 @@ func (c *jpegImageDta) ToBase64() (string, error) {
 // ToBase64WithQuality is to convert JPEG into base64 with quality
 func (c *jpegImageDta) ToBase64WithQuality(imageQuality int) (string, error) {
 	if c.image == nil {
-		return "", nil
+		return "", ImageEmptyErr
 	}
 
 	if imageQuality <= option.QualityNone && imageQuality >= option.QualityLevel5 {

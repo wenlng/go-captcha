@@ -7,7 +7,7 @@
 package click
 
 import (
-	"fmt"
+	"errors"
 	"image"
 	"image/color"
 	"math"
@@ -22,7 +22,7 @@ import (
 )
 
 // Version # of captcha
-const Version = "2.0.0"
+const Version = "2.0.2"
 
 // Captcha .
 type Captcha interface {
@@ -40,6 +40,14 @@ const (
 )
 
 var _ Captcha = (*captcha)(nil)
+
+var EmptyShapesErr = errors.New("empty shapes")
+var EmptyCharacterErr = errors.New("empty character")
+var CharRangeLenErr = errors.New("character length must be large than to 'rangeLen.Max'")
+var ShapesRangeLenErr = errors.New("total number of shapes must be large than to 'rangeLen.Max'")
+var ShapesTypeErr = errors.New("shape must be is image type")
+var EmptyBackgroundImageErr = errors.New("no background image")
+var ModeSupportErr = errors.New("mode not supported")
 
 // captcha .
 type captcha struct {
@@ -181,7 +189,7 @@ func (c *captcha) genShapes() ([]string, error) {
 	length := random.RandInt(c.opts.rangeLen.Min, c.opts.rangeLen.Max)
 	shapeNames := c.genRandShape(length)
 	if len(shapeNames) == 0 {
-		return []string{}, fmt.Errorf("click captcha err: %v", "no shapes generation")
+		return []string{}, EmptyShapesErr
 	}
 	return shapeNames, nil
 }
@@ -191,14 +199,14 @@ func (c *captcha) genChars() ([]string, error) {
 	length := random.RandInt(c.opts.rangeLen.Min, c.opts.rangeLen.Max)
 	chars := c.genRandChar(length)
 	if len(chars) == 0 {
-		return []string{}, fmt.Errorf("click captcha err: %v", "no character generation")
+		return []string{}, EmptyCharacterErr
 	}
 	return chars, nil
 }
 
 // genDots is to generate an orderly dot list
 func (c *captcha) genDots(imageSize *option.Size, size *option.RangeVal, values []string, padding int) map[int]*Dot {
-	var dots = make(map[int]*Dot)
+	var dots = make(map[int]*Dot, len(values))
 	width := imageSize.Width
 	height := imageSize.Height
 	if padding > 0 {
@@ -255,7 +263,7 @@ func (c *captcha) genDots(imageSize *option.Size, size *option.RangeVal, values 
 		if c.mode == ModeShape {
 			dots[i].Shape = value
 		} else {
-			dots[i].Text = fmt.Sprintf("%s", value)
+			dots[i].Text = value
 		}
 	}
 
@@ -266,17 +274,17 @@ func (c *captcha) genDots(imageSize *option.Size, size *option.RangeVal, values 
 func (c *captcha) check() error {
 	if c.mode == ModeText {
 		if len(c.resources.chars) < c.opts.rangeLen.Max {
-			return fmt.Errorf("click captcha err: chars must be large than to %d", c.opts.rangeLen.Max)
+			return CharRangeLenErr
 		}
 		return nil
 	} else if c.mode == ModeShape {
 		if len(c.resources.shapes) < c.opts.rangeLen.Max {
-			return fmt.Errorf("click captcha err: shapes must be large than to %d", c.opts.rangeLen.Max)
+			return ShapesRangeLenErr
 		}
 
-		for name, img := range c.resources.shapeMaps {
+		for _, img := range c.resources.shapeMaps {
 			if img == nil {
-				return fmt.Errorf("click captcha err: [%s] shape must be is image type", name)
+				return ShapesTypeErr
 			}
 		}
 
@@ -284,10 +292,10 @@ func (c *captcha) check() error {
 	}
 
 	if len(c.resources.rangBackgrounds) == 0 {
-		return fmt.Errorf("click captcha err: no rang backgroun image")
+		return EmptyBackgroundImageErr
 	}
 
-	return fmt.Errorf("click captcha err: %v", "mode not supported")
+	return ModeSupportErr
 }
 
 // rangeCheckDots is to generate random detection points

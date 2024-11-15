@@ -104,10 +104,6 @@ func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (image.Image, error) 
 // DrawWithPalette is to draw with a palette
 func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Color, bgColors []color.Color) (image.Image, error) {
 	dots := params.CaptchaDrawDot
-	p := []color.Color{
-		color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0x00},
-	}
-	p = append(p, tColors...)
 
 	nBgColors := make([]color.Color, 0, len(bgColors))
 	for _, bgColor := range bgColors {
@@ -115,6 +111,10 @@ func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Col
 		aa := helper.FormatAlpha(params.ThumbDisturbAlpha)
 		nBgColors = append(nBgColors, color.RGBA{R: uint8(r), G: uint8(g), B: uint8(b), A: aa})
 	}
+
+	var p = make([]color.Color, 0, len(tColors)+len(nBgColors)+1)
+	p = append(p, color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0x00})
+	p = append(p, tColors...)
 	p = append(p, nBgColors...)
 
 	cvs := canvas.NewPalette(image.Rect(0, 0, params.Width, params.Height), p)
@@ -183,17 +183,16 @@ func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Col
 func (d *drawImage) DrawWithNRGBA2(params *DrawImageParams, tColors []color.Color, bgColors []color.Color) (image.Image, error) {
 	dots := params.CaptchaDrawDot
 
-	p := []color.Color{
-		color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0x00},
-	}
-	p = append(p, tColors...)
-
 	nBgColors := make([]color.Color, 0, len(bgColors))
 	for _, bgColor := range bgColors {
 		r, g, b, _ := bgColor.RGBA()
 		aa := helper.FormatAlpha(params.ThumbDisturbAlpha)
 		nBgColors = append(nBgColors, color.RGBA{R: uint8(r), G: uint8(g), B: uint8(b), A: aa})
 	}
+
+	var p = make([]color.Color, 0, len(tColors)+len(nBgColors)+1)
+	p = append(p, color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0x00})
+	p = append(p, tColors...)
 	p = append(p, nBgColors...)
 
 	ccvs := canvas.NewNRGBA(image.Rect(0, 0, params.Width, params.Height), true)
@@ -312,6 +311,7 @@ func (d *drawImage) DrawDotImage(dot *DrawDot, params *DrawImageParams) (canvas.
 		return nil, nil, err
 	}
 	cColor.A = helper.FormatAlpha(params.Alpha)
+
 	var cImage image.Image
 	if dot.DrawType == DrawTypeImage {
 		cImage, err = d.DrawShapeImage(dot, cColor)
@@ -385,6 +385,7 @@ func (d *drawImage) DrawStringImage(dot *DrawDot, textColor color.Color) (canvas
 // DrawShapeImage is to draw shape image
 func (d *drawImage) DrawShapeImage(dot *DrawDot, cColor color.Color) (canvas.NRGBA, error) {
 	cr, cg, cb, ca := cColor.RGBA()
+
 	var colorArr = []color.RGBA{
 		{R: uint8(cr), G: uint8(cg), B: uint8(cb), A: uint8(ca)},
 	}

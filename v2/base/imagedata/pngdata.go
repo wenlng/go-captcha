@@ -7,7 +7,6 @@
 package imagedata
 
 import (
-	"fmt"
 	"image"
 
 	"github.com/wenlng/go-captcha/v2/base/codec"
@@ -19,6 +18,7 @@ type PNGImageData interface {
 	Get() image.Image
 	ToBytes() ([]byte, error)
 	ToBase64() (string, error)
+	ToBase64Data() (string, error)
 	SaveToFile(filepath string) error
 }
 
@@ -44,7 +44,7 @@ func (c *pngImageDta) Get() image.Image {
 // SaveToFile is to save PNG as a file
 func (c *pngImageDta) SaveToFile(filepath string) error {
 	if c.image == nil {
-		return fmt.Errorf("missing image data")
+		return ImageMissingDataErr
 	}
 
 	return saveToFile(c.image, filepath, true, option.QualityNone)
@@ -53,16 +53,23 @@ func (c *pngImageDta) SaveToFile(filepath string) error {
 // ToBytes is to convert PNG into byte array
 func (c *pngImageDta) ToBytes() ([]byte, error) {
 	if c.image == nil {
-		return []byte{}, nil
+		return []byte{}, ImageEmptyErr
 	}
-
 	return codec.EncodePNGToByte(c.image)
+}
+
+// ToBase64Data is to convert PNG into base64
+func (c *pngImageDta) ToBase64Data() (string, error) {
+	if c.image == nil {
+		return "", ImageEmptyErr
+	}
+	return codec.EncodePNGToBase64Data(c.image)
 }
 
 // ToBase64 is to convert PNG into base64
 func (c *pngImageDta) ToBase64() (string, error) {
 	if c.image == nil {
-		return "", nil
+		return "", ImageEmptyErr
 	}
 	return codec.EncodePNGToBase64(c.image)
 }

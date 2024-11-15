@@ -455,17 +455,20 @@ func loadPng(p string) (image.Image, error) {
 
 ### JPEGImageData
 - Get() image.Image  获取原图像
-- ToBytes() []byte  转为JPEG字节数组
-- ToBytesWithQuality(imageQuality int) []byte   指定清晰度转为JPEG字节数组
-- ToBase64() string  转为 JPEG Base64 字符串
-- ToBase64WithQuality(imageQuality int) string   指定清晰度转为 JPEG Base64 字符串
+- ToBytes() ([]byte, error)  转为JPEG字节数组
+- ToBytesWithQuality(imageQuality int) ([]byte, error)   指定清晰度转为JPEG字节数组
+- ToBase64() (string, error)  转为 JPEG Base64 字符串
+- ToBase64Data() (string, error)  转为 JPEG Base64 字符串，带 "data:image/jpeg;base64," 前缀
+- ToBase64WithQuality(imageQuality int) (string, error)   指定清晰度转为 JPEG Base64 字符串
+- ToBase64DataWithQuality(imageQuality int) (string, error)   指定清晰度转为 JPEG Base64 字符串，带 "data:image/jpeg;base64," 前缀
 - SaveToFile(filepath string, quality int) error 保存 JPEG 到文件
 
 
 ### PNGImageData
 - Get() image.Image  获取原图像
-- ToBytes() []byte  转为PNG字节数组
-- ToBase64() string   转为 PNG Base64 字符串
+- ToBytes() ([]byte, error)  转为PNG字节数组
+- ToBase64() (string, error)   转为 PNG Base64 字符串
+- ToBase64Data() (string, error)   转为 PNG Base64 字符串，带 "data:image/png;base64," 前缀
 - SaveToFile(filepath string) error  保存 PNG 到文件
 
 <br/>

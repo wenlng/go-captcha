@@ -27,7 +27,7 @@ func t2x(t int64) string {
 	return result
 }
 
-// FormatAlpha is to formatting transparent
+// FormatAlpha is formatting transparent
 func FormatAlpha(val float32) uint8 {
 	a := math.Min(float64(val), 1)
 	alpha := a * 255
@@ -50,11 +50,14 @@ func HexToRgb(hex string) (int64, int64, int64) {
 	return r, g, b
 }
 
+var ColorHexFormatErr = errors.New("hex color must start with '#'")
+var ColorInvalidErr = errors.New("hexToByte component invalid")
+
 // ParseHexColor is to turn the hex color to RGB color
 func ParseHexColor(s string) (c color.RGBA, err error) {
 	c.A = 0xff
 	if s[0] != '#' {
-		return c, errors.New("hex color must start with '#'")
+		return c, ColorHexFormatErr
 	}
 
 	hexToByte := func(b byte) byte {
@@ -66,7 +69,7 @@ func ParseHexColor(s string) (c color.RGBA, err error) {
 		case b >= 'A' && b <= 'F':
 			return b - 'A' + 10
 		}
-		err = errors.New("hexToByte component invalid")
+		err = ColorInvalidErr
 		return 0
 	}
 
@@ -81,7 +84,7 @@ func ParseHexColor(s string) (c color.RGBA, err error) {
 		c.G = hexToByte(s[2]) * 17
 		c.B = hexToByte(s[3]) * 17
 	default:
-		err = errors.New("hexToByte component invalid")
+		err = ColorInvalidErr
 	}
 	return
 }
@@ -108,30 +111,10 @@ func InArrayWithStr(items []string, s string) bool {
 	return false
 }
 
-var cnOtherChars = map[string]struct{}{
-	"\u3002": {},
-	"\uff1b": {},
-	"\uff0c": {},
-	"\uff1a": {},
-	"\u201c": {},
-	"\u201d": {},
-	"\uff08": {},
-	"\uff09": {},
-	"\u3001": {},
-	"\uff1f": {},
-	"\u300a": {},
-	"\u300b": {},
-}
-
-func isChineseOtherChar(r rune) bool {
-	_, ok := cnOtherChars[string(r)]
-	return ok
-}
-
 // IsChineseChar is to detect whether it is Chinese
 func IsChineseChar(str string) bool {
 	for _, r := range str {
-		if unicode.Is(unicode.Scripts["Han"], r) || isChineseOtherChar(r) {
+		if unicode.Is(unicode.Scripts["Han"], r) {
 			return true
 		}
 	}

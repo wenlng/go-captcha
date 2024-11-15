@@ -7,10 +7,15 @@
 package click
 
 import (
+	"errors"
+
 	"github.com/wenlng/go-captcha/v2/base/logger"
 	"github.com/wenlng/go-captcha/v2/base/option"
 	"golang.org/x/image/font"
 )
+
+var ColorLenErr = errors.New("the color length must be less than or equal to 255")
+var RangeVerifyLenErr = errors.New("the max value of 'rangeVerifyLen' must be less than or equal to the min value of 'rangeLen'")
 
 // Options .
 type Options struct {
@@ -236,7 +241,7 @@ func WithRangeSize(val option.RangeVal) Option {
 func WithRangeColors(colors []string) Option {
 	return func(opts *Options) {
 		if len(colors) > 255 {
-			logger.Errorf("withRangeColors error: the max value of rangColors must be less than or equal to 255")
+			logger.Warnf("withRangeColors(): %v", ColorLenErr)
 			return
 		}
 
@@ -290,7 +295,7 @@ func WithRangeThumbImageSize(val option.Size) Option {
 func WithRangeVerifyLen(val option.RangeVal) Option {
 	return func(opts *Options) {
 		if val.Max > opts.rangeLen.Min {
-			logger.Errorf("withRangeVerifyLen error: the max value of rangeVerifyLen must be less than or equal to the min value of rangeLen")
+			logger.Warnf("withRangeVerifyLen(): %v", RangeVerifyLenErr)
 			return
 		}
 
@@ -316,7 +321,7 @@ func WithRangeThumbSize(val option.RangeVal) Option {
 func WithRangeThumbColors(val []string) Option {
 	return func(opts *Options) {
 		if len(val) > 255 {
-			logger.Errorf("withRangeThumbColors error: the max value of rangeThumbColors must be less than or equal to 255")
+			logger.Warnf("WithRangeThumbColors(): %v", ColorLenErr)
 			return
 		}
 		opts.rangeThumbColors = val
@@ -327,7 +332,7 @@ func WithRangeThumbColors(val []string) Option {
 func WithRangeThumbBgColors(val []string) Option {
 	return func(opts *Options) {
 		if len(val) > 255 {
-			logger.Errorf("withRangeThumbBgColors error: the max value of rangeThumbBgColors must be less than or equal to 255")
+			logger.Warnf("withRangeThumbBgColors(): %v", ColorLenErr)
 			return
 		}
 

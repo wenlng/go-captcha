@@ -7,12 +7,16 @@
 package imagedata
 
 import (
+	"errors"
 	"image"
 	"image/jpeg"
 	"image/png"
 	"os"
 	"path"
 )
+
+var ImageEmptyErr = errors.New("image is empty")
+var ImageMissingDataErr = errors.New("missing image data")
 
 // saveToFile .
 func saveToFile(img image.Image, filepath string, isTransparent bool, quality int) error {

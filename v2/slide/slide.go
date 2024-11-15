@@ -7,7 +7,7 @@
 package slide
 
 import (
-	"fmt"
+	"errors"
 	"image"
 	"math"
 
@@ -20,7 +20,7 @@ import (
 )
 
 // Version # of captcha
-const Version = "2.0.0"
+const Version = "2.0.2"
 
 type Mode int
 
@@ -38,6 +38,13 @@ type Captcha interface {
 }
 
 var _ Captcha = (*captcha)(nil)
+
+var GraphImageErr = errors.New("graph image is incorrect")
+var GenerateDataErr = errors.New("generate data failed")
+var ImageTypeErr = errors.New("tile image must be is image.Image type")
+var ShadowImageTypeErr = errors.New("tile shadow image must be is image.Image type")
+var MaskImageTypeErr = errors.New("tile shadow image must be is image.Image type")
+var EmptyBackgroundImageErr = errors.New("no background image")
 
 // captcha .
 type captcha struct {
@@ -100,7 +107,7 @@ func (c *captcha) Generate() (CaptchaData, error) {
 
 	overlayImage, shadowImage, maskImage := c.genGraph()
 	if overlayImage == nil || shadowImage == nil || maskImage == nil {
-		return nil, fmt.Errorf("the graph image is incorrect")
+		return nil, GraphImageErr
 	}
 
 	blocks, tilePoint := c.genGraphBlocks(c.opts.imageSize, c.opts.rangeGraphSize, c.opts.genGraphNumber)
@@ -116,7 +123,7 @@ func (c *captcha) Generate() (CaptchaData, error) {
 	}
 
 	if block == nil {
-		return nil, fmt.Errorf("gen captcha data failed")
+		return nil, GenerateDataErr
 	}
 
 	var masterImage, masterBgImage, tileImage image.Image
@@ -309,16 +316,16 @@ func (c *captcha) genGraph() (maskImage, shadowImage, templateImage image.Image)
 func (c *captcha) check() error {
 	for _, tile := range c.resources.rangGraphImage {
 		if tile.OverlayImage == nil {
-			return fmt.Errorf("slide captcha err: tile image must be is image.Image type")
+			return ImageTypeErr
 		} else if tile.ShadowImage == nil {
-			return fmt.Errorf("slide captcha err: tile shadow image must be is image.Image type")
+			return ShadowImageTypeErr
 		} else if tile.MaskImage == nil {
-			return fmt.Errorf("slide captcha err: tile mask image must be is image.Image type")
+			return MaskImageTypeErr
 		}
 	}
 
 	if len(c.resources.rangBackgrounds) == 0 {
-		return fmt.Errorf("slide captcha err: no rang backgroun image")
+		return EmptyBackgroundImageErr
 	}
 
 	return nil

@@ -66,7 +66,7 @@ func WithImageSquareSize(val int) Option {
 // WithRangeAnglePos .
 func WithRangeAnglePos(vals []option.RangeVal) Option {
 	return func(opts *Options) {
-		var newVals = make([]*option.RangeVal, 0)
+		var newVals = make([]*option.RangeVal, 0, len(vals))
 		for i := 0; i < len(vals); i++ {
 			val := vals[i]
 			newVals = append(newVals, &option.RangeVal{Min: val.Min, Max: val.Max})

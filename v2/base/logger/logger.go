@@ -34,6 +34,8 @@ func New() Logger {
 
 var _ Logger = (*logx)(nil)
 
+var Logx = New()
+
 // logx .
 type logx struct {
 	l *log.Logger

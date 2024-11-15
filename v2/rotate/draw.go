@@ -51,6 +51,7 @@ type drawImage struct {
 // DrawWithCropCircle is to draw a crop circle
 func (d *drawImage) DrawWithCropCircle(params *DrawCropCircleImageParams) (image.Image, error) {
 	bgImage := params.Background
+
 	bgBounds := bgImage.Bounds()
 	cvs := canvas.CreateNRGBACanvas(bgImage.Bounds().Dx(), bgImage.Bounds().Dy(), true)
 	draw.Draw(cvs.Get(), bgImage.Bounds(), bgImage, image.Point{}, draw.Over)

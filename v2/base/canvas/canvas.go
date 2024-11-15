@@ -13,9 +13,8 @@ import (
 
 // CreatePaletteCanvas is to the canvas that creates the palette
 func CreatePaletteCanvas(width, height int, colour []color.RGBA) Palette {
-	p := []color.Color{
-		color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0x00},
-	}
+	p := make([]color.Color, 0, len(colour)+1)
+	p = append(p, color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0x00})
 
 	for _, co := range colour {
 		p = append(p, co)

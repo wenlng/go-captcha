@@ -2,6 +2,10 @@ package logger
 
 var defaultLog = New()
 
+func SetDefault(l Logger) {
+	defaultLog = l
+}
+
 // Infof .
 func Infof(format string, v ...interface{}) {
 	defaultLog.Infof(format, v...)

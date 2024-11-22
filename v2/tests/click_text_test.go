@@ -69,8 +69,8 @@ func TestClickTextCaptcha(t *testing.T) {
 
 	dots, _ := json.Marshal(dotData)
 	fmt.Println(string(dots))
-	fmt.Println(captData.GetMasterImage().ToBase64Data())
-	fmt.Println(captData.GetThumbImage().ToBase64Data())
+	fmt.Println(captData.GetMasterImage().ToBase64())
+	fmt.Println(captData.GetThumbImage().ToBase64())
 
 	err = captData.GetMasterImage().SaveToFile("../.cache/master.jpg", option.QualityNone)
 	if err != nil {

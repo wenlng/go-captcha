@@ -19,6 +19,8 @@
 </p>
 
 <p style="text-align: center"> ⭐️ 如果能帮助到你，请随手给点一个star</p>
+<p style="text-align: center">QQ交流群：178498936</p>
+
 
 <br/>
 
@@ -30,8 +32,9 @@
 
 - GoCaptcha：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
 - GoCaptcha 文档：[http://gocaptcha.wencodes.com](http://gocaptcha.wencodes.com)
-- 后端Go实例：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
 - Go内嵌素材资源：[https://github.com/wenlng/go-captcha-assets](https://github.com/wenlng/go-captcha-assets)
+- Golang/前端的实例：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
+- Javascript 原生库：[https://github.com/wenlng/go-captcha-jslib](https://github.com/wenlng/go-captcha-jslib)
 - Vue Package：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
 - React Package：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
 - Angular Package：[https://github.com/wenlng/go-captcha-angular](https://github.com/wenlng/go-captcha-angular)
@@ -454,22 +457,21 @@ func loadPng(p string) (image.Image, error) {
 ## 验证码图片
 
 ### JPEGImageData
-- Get() image.Image  获取原图像
-- ToBytes() ([]byte, error)  转为JPEG字节数组
-- ToBytesWithQuality(imageQuality int) ([]byte, error)   指定清晰度转为JPEG字节数组
-- ToBase64() (string, error)  转为 JPEG Base64 字符串
-- ToBase64Data() (string, error)  转为 JPEG Base64 字符串，带 "data:image/jpeg;base64," 前缀
-- ToBase64WithQuality(imageQuality int) (string, error)   指定清晰度转为 JPEG Base64 字符串
-- ToBase64DataWithQuality(imageQuality int) (string, error)   指定清晰度转为 JPEG Base64 字符串，带 "data:image/jpeg;base64," 前缀
-- SaveToFile(filepath string, quality int) error 保存 JPEG 到文件
-
+- Get() image.Image   <span style='padding: 0 10px'></span>获取原图像
+- ToBytes() ([]byte, error)   <span style='padding: 0 10px'></span>转为字节数组
+- ToBytesWithQuality(imageQuality int) ([]byte, error)    指定清晰度转为字节数组
+- ToBase64() (string, error)   <span style='padding: 0 10px'></span>转为 Base64 字符串，带 <span style='color:#ed4630;'>"data:image/jpeg;base64,"</span> 前缀
+- ToBase64Data() (string, error)   <span style='padding: 0 10px'></span>转为 Base64 字符串
+- ToBase64WithQuality(imageQuality int)  (string, error)   <span style='padding: 0 10px'></span>指定清晰度转为 Base64 字符串，带 <span style='color:#ed4630;'>"data:image/jpeg;base64,"</span> 前缀
+- ToBase64DataWithQuality(imageQuality int) (string, error)    <span style='padding: 0 10px'></span>指定清晰度转为 Base64 字符串
+- SaveToFile(filepath string, quality int) error  <span style='padding: 0 10px'></span>保存 JPEG 到文件
 
 ### PNGImageData
-- Get() image.Image  获取原图像
-- ToBytes() ([]byte, error)  转为PNG字节数组
-- ToBase64() (string, error)   转为 PNG Base64 字符串
-- ToBase64Data() (string, error)   转为 PNG Base64 字符串，带 "data:image/png;base64," 前缀
-- SaveToFile(filepath string) error  保存 PNG 到文件
+- Get() image.Image   <span style='padding: 0 10px'></span>获取原图像
+- ToBytes() ([]byte, error)   <span style='padding: 0 10px'></span>转为字节数组
+- ToBase64() (string, error)    <span style='padding: 0 10px'></span>转为 Base64 字符串，带 <span style='color:#ed4630;'>"data:image/png;base64,"</span> 前缀
+- ToBase64Data() (string, error)    <span style='padding: 0 10px'></span>转为 Base64 字符串
+- SaveToFile(filepath string) error   <span style='padding: 0 10px'></span>保存 到文件
 
 <br/>
 
@@ -483,7 +485,7 @@ func loadPng(p string) (image.Image, error) {
 <br />
 
 ## B端 / C端 依赖包
-- <p>Web Native ✔</p>
+- <p>JavaScript ✔</p>
 - <p>Vue ✔</p>
 - <p>React ✔</p>
 - <p>Angular ✔</p>

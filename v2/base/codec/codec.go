@@ -57,9 +57,9 @@ func DecodeByteToPng(b []byte) (img image.Image, err error) {
 	return
 }
 
-// EncodePNGToBase64Data is to encode the png into string
-func EncodePNGToBase64Data(img image.Image) (string, error) {
-	base64Str, err := EncodePNGToBase64(img)
+// EncodePNGToBase64 is to encode the png into string
+func EncodePNGToBase64(img image.Image) (string, error) {
+	base64Str, err := EncodePNGToBase64Data(img)
 	if err != nil {
 		return "", err
 	}
@@ -67,9 +67,9 @@ func EncodePNGToBase64Data(img image.Image) (string, error) {
 	return pngBasePrefix + base64Str, nil
 }
 
-// EncodeJPEGToBase64Data is to encode the image into string
-func EncodeJPEGToBase64Data(img image.Image, quality int) (string, error) {
-	base64Str, err := EncodeJPEGToBase64(img, quality)
+// EncodeJPEGToBase64 is to encode the image into string
+func EncodeJPEGToBase64(img image.Image, quality int) (string, error) {
+	base64Str, err := EncodeJPEGToBase64Data(img, quality)
 	if err != nil {
 		return "", err
 	}
@@ -77,8 +77,8 @@ func EncodeJPEGToBase64Data(img image.Image, quality int) (string, error) {
 	return jpegBasePrefix + base64Str, nil
 }
 
-// EncodePNGToBase64 is to encode the png into string
-func EncodePNGToBase64(img image.Image) (string, error) {
+// EncodePNGToBase64Data is to encode the png into string
+func EncodePNGToBase64Data(img image.Image) (string, error) {
 	byteCode, err := EncodePNGToByte(img)
 	if err != nil {
 		return "", err
@@ -86,8 +86,8 @@ func EncodePNGToBase64(img image.Image) (string, error) {
 	return base64.StdEncoding.EncodeToString(byteCode), nil
 }
 
-// EncodeJPEGToBase64 is to encode the image into string
-func EncodeJPEGToBase64(img image.Image, quality int) (string, error) {
+// EncodeJPEGToBase64Data is to encode the image into string
+func EncodeJPEGToBase64Data(img image.Image, quality int) (string, error) {
 	byteCode, err := EncodeJPEGToByte(img, quality)
 	if err != nil {
 		return "", err

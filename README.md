@@ -26,8 +26,9 @@
 
 - GoCaptcha：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
 - GoCaptcha Document：[http://gocaptcha.wencodes.com](http://gocaptcha.wencodes.com)
-- Go Example：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
 - Go Assets File：[https://github.com/wenlng/go-captcha-assets](https://github.com/wenlng/go-captcha-assets)
+- Example Project：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
+- Javascript Library：[https://github.com/wenlng/go-captcha-jslib](https://github.com/wenlng/go-captcha-jslib)
 - Vue Package：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
 - React Package：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
 - Angular Package：[https://github.com/wenlng/go-captcha-angular](https://github.com/wenlng/go-captcha-angular)
@@ -457,7 +458,7 @@ builder.SetResources(rotate.WithXxx(), ...)
 <br/>
 
 ## Install package
-- <p>Web Native ✔</p>
+- <p>JavaScript ✔</p>
 - <p>Vue ✔</p>
 - <p>React ✔</p>
 - <p>Angular ✔</p>

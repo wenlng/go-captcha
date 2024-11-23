@@ -166,14 +166,27 @@ func main() {
 	dots, _ := json.Marshal(dotData)
 	fmt.Println(">>>>> ", string(dots))
 
-	err = captData.GetMasterImage().SaveToFile("../resources/master.jpg", option.QualityNone)
+	var mBase64, tBase64 string
+	mBase64, err = captData.GetMasterImage().ToBase64()
 	if err != nil {
 		fmt.Println(err)
 	}
-	err = captData.GetThumbImage().SaveToFile("../resources/thumb.png")
+	tBase64, err = captData.GetThumbImage().ToBase64()
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	fmt.Println(">>>>> ", mBase64)
+	fmt.Println(">>>>> ", tBase64)
+	
+	//err = captData.GetMasterImage().SaveToFile("../resources/master.jpg", option.QualityNone)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//err = captData.GetThumbImage().SaveToFile("../resources/thumb.png")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
 }
 ```
 
@@ -305,14 +318,27 @@ func main() {
 	block, _ := json.Marshal(blockData)
 	fmt.Println(">>>>>", string(block))
 
-	err = captData.GetMasterImage().SaveToFile("../resources/master.jpg", option.QualityNone)
+	var mBase64, tBase64 string
+	mBase64, err = captData.GetMasterImage().ToBase64()
 	if err != nil {
 		fmt.Println(err)
 	}
-	err = captData.GetTileImage().SaveToFile("../resources/thumb.png")
+	tBase64, err = captData.GetTileImage().ToBase64()
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	fmt.Println(">>>>> ", mBase64)
+	fmt.Println(">>>>> ", tBase64)
+	
+	//err = captData.GetMasterImage().SaveToFile("../resources/master.jpg", option.QualityNone)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//err = captData.GetTileImage().SaveToFile("../resources/thumb.png")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
 }
 
 func loadPng(p string) (image.Image, error) {
@@ -410,14 +436,27 @@ func main() {
 	block, _ := json.Marshal(blockData)
 	fmt.Println(">>>>>", string(block))
 
-	err = captData.GetMasterImage().SaveToFile("../resources/master.png")
+	var mBase64, tBase64 string
+	mBase64, err = captData.GetMasterImage().ToBase64()
 	if err != nil {
 		fmt.Println(err)
 	}
-	err = captData.GetThumbImage().SaveToFile("../resources/thumb.png")
+	tBase64, err = captData.GetThumbImage().ToBase64()
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	fmt.Println(">>>>> ", mBase64)
+	fmt.Println(">>>>> ", tBase64)
+	
+	//err = captData.GetMasterImage().SaveToFile("../resources/master.png")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//err = captData.GetThumbImage().SaveToFile("../resources/thumb.png")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
 }
 
 func loadPng(p string) (image.Image, error) {

@@ -1,7 +1,7 @@
 <div align="center">
 <img width="120" style="padding-top: 50px; margin: 0;" src="http://47.104.180.148/go-captcha/gocaptcha_logo.svg?v=1"/>
 <h1 style="margin: 0; padding: 0">Go Captcha</h1>
-<p>Behavior Security Captcha</p>
+<p>Behavior Captcha</p>
 <a href="https://goreportcard.com/report/github.com/wenlng/go-captcha"><img src="https://goreportcard.com/badge/github.com/wenlng/go-captcha"/></a>
 <a href="https://godoc.org/github.com/wenlng/go-captcha"><img src="https://godoc.org/github.com/wenlng/go-captcha?status.svg"/></a>
 <a href="https://github.com/wenlng/go-captcha/releases"><img src="https://img.shields.io/github/v/release/wenlng/go-captcha.svg"/></a>
@@ -14,7 +14,7 @@
 
 > English | [中文](README_zh.md)
 
-<p style="text-align: center"><a href="https://github.com/wenlng/go-captcha">Go Captcha</a> is a behavior security CAPTCHA, which implements text click verification, slide verification and rotation verification.</p>
+<p style="text-align: center"><a href="https://github.com/wenlng/go-captcha">Go Captcha</a> is a behavior CAPTCHA, which implements click mode, slider mode, drag-drop mode and rotation mode.</p>
 
 <p style="text-align: center"> ⭐️ If it helps you, please give a star.</p>
 
@@ -28,23 +28,23 @@
 - GoCaptcha Document：[http://gocaptcha.wencodes.com](http://gocaptcha.wencodes.com)
 - Go Assets File：[https://github.com/wenlng/go-captcha-assets](https://github.com/wenlng/go-captcha-assets)
 - Example Project：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
+- Online Demo：[http://gocaptcha.wencodes.com/demo](http://gocaptcha.wencodes.com/demo)
 - Javascript Library：[https://github.com/wenlng/go-captcha-jslib](https://github.com/wenlng/go-captcha-jslib)
 - Vue Package：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
 - React Package：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
 - Angular Package：[https://github.com/wenlng/go-captcha-angular](https://github.com/wenlng/go-captcha-angular)
 - Svelte Package：[https://github.com/wenlng/go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)
 - Solid Package：[https://github.com/wenlng/go-captcha-solid](https://github.com/wenlng/go-captcha-solid)
-- Online Demo：[http://gocaptcha.wencodes.com/demo](http://gocaptcha.wencodes.com/demo)
 - ...
 
 <br/>
 
-## Install Captcha Module
+## Install Module
 ```shell
 $ go get -u github.com/wenlng/go-captcha/v2@latest
 ```
 
-## Import Captcha Module
+## Import Module
 ```go
 package main
 
@@ -57,8 +57,8 @@ func main(){
 
 <br />
 
-## 🖖 Click Mode Captcha
-### Quick use
+## 🖖 Click Mode
+### Quick Use
 ```go
 package main
 
@@ -173,11 +173,11 @@ func main() {
 }
 ```
 
-### Create instance method
+### Make Instance
 - builder.Make()
 - builder.MakeWithShape()
 
-### Configuration options
+### Configuration Options
 > click.NewBuilder(click.WithXxx(), ...) OR builder.SetOptions()(click.WithXxx(), ...)
 - click.WithImageSize(option.Size)
 - click.WithRangeLen(option.RangeVal) 
@@ -202,7 +202,7 @@ func main() {
 - click.WithThumbBgSlimLineNum(int) 
 
 
-### Set resources
+### Set Resources
 > builder.SetResources(click.WithXxx(), ...)
 - click.WithChars([]string) 
 - click.WithShapes(map[string]image.Image) 
@@ -217,8 +217,8 @@ func main() {
 
 <br />
 
-## 🖖 Slide Mode Captcha
-### Quick use
+## 🖖 Slider  Or Drag-Drop Mode
+### Quick Use
 ```go
 package main
 
@@ -334,12 +334,12 @@ func loadPng(p string) (image.Image, error) {
 ```
 
 
-### Create instance method
+### Make Instance
 - builder.Make()
 - builder.MakeWithRegion() 
 
 
-### Configuration options
+### Configuration Options
 > slide.NewBuilder(slide.WithXxx(), ...) OR builder.SetOptions(slide.WithXxx(), ...)
 - slide.WithImageSize(*option.Size)
 - slide.WithImageAlpha(float32) 
@@ -350,7 +350,7 @@ func loadPng(p string) (image.Image, error) {
 - slide.WithRangeDeadZoneDirections(val []DeadZoneDirectionType) 
 
 
-### Set resources
+### Set Resources
 builder.SetResources(slide.WithXxx(), ...)
 - slide.WithBackgrounds([]image.Image) 
 - slide.WithGraphImages(images []*GraphImage)
@@ -363,8 +363,8 @@ builder.SetResources(slide.WithXxx(), ...)
 
 <br />
 
-## 🖖 Rotate Mode Captcha
-### Quick use
+## 🖖 Rotation Mode
+### Quick Use
 ```go
 package main
 
@@ -452,11 +452,11 @@ func loadPng(p string) (image.Image, error) {
 ```
 
 
-### Create instance method
+### Make Instance
 - builder.Make()
 
 
-### Configuration options
+### Configuration Options
 > rotate.NewBuilder(rotate.WithXxx(), ...) OR builder.SetOptions(rotate.WithXxx(), ...)
 - rotate.WithImageSquareSize(val int) 
 - rotate.WithRangeAnglePos(vals []option.RangeVal)
@@ -464,7 +464,7 @@ func loadPng(p string) (image.Image, error) {
 - rotate.WithThumbImageAlpha(val float32)
 
 
-### Set resources
+### Set Resources
 builder.SetResources(rotate.WithXxx(), ...)
 - rotate.WithBackgrounds([]image.Image)
 
@@ -476,7 +476,7 @@ builder.SetResources(rotate.WithXxx(), ...)
 <br/>
 
 ## Captcha Image Data
-### JPEGImageData object method
+### Object Method Of JPEGImageData
 - Get() image.Image
 - ToBytes() ([]byte, error)
 - ToBytesWithQuality(imageQuality int) ([]byte, error)
@@ -487,7 +487,7 @@ builder.SetResources(rotate.WithXxx(), ...)
 - SaveToFile(filepath string, quality int) error
 
 
-### PNGImageData object method
+### Object Method Of PNGImageData
 - Get() image.Image 
 - ToBytes() ([]byte, error)
 - ToBase64() (string, error)
@@ -496,19 +496,19 @@ builder.SetResources(rotate.WithXxx(), ...)
 
 <br/>
 
-## Install package
-- <p>JavaScript ✔</p>
-- <p>Vue ✔</p>
-- <p>React ✔</p>
-- <p>Angular ✔</p>
-- <p>Svelte ✔</p>
-- <p>Solid ✔</p>
-- <p>MinProgram</p>
-- <p>UniApp</p>
-- <p>Flutter App</p>
-- <p>Android App</p>
-- <p>IOS App</p>
-- <p>... </p>
+## Install Package
+- [x] JavaScript
+- [x] Vue 
+- [x] React
+- [x] Angular
+- [x] Svelte
+- [x] Solid
+- [ ] MinProgram
+- [ ] UniApp
+- [ ] Flutter App
+- [ ] Android App
+- [ ] IOS App
+- [ ] ... 
 
 <br/>
 

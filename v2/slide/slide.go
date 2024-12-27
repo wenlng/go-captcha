@@ -56,7 +56,6 @@ type captcha struct {
 // newWithMode .
 func newWithMode(mode Mode, opts ...Option) Captcha {
 	capt := &captcha{
-		version:   Version,
 		logger:    logger.New(),
 		drawImage: NewDrawImage(),
 		opts:      NewOptions(),

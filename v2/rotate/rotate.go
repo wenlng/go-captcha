@@ -42,7 +42,6 @@ type captcha struct {
 // newRotate .
 func newRotate(opts ...Option) Captcha {
 	capt := &captcha{
-		version:   Version,
 		logger:    logger.New(),
 		drawImage: NewDrawImage(),
 		opts:      NewOptions(),

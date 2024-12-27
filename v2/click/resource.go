@@ -7,6 +7,7 @@
 package click
 
 import (
+	"errors"
 	"image"
 
 	"github.com/golang/freetype/truetype"
@@ -30,6 +31,9 @@ func NewResources() *Resources {
 
 type Resource func(*Resources)
 
+var ChineseCharLenErr = errors.New("the chinese char length must be equal to 1")
+var CharLenErr = errors.New("the char length must be less than or equal to 2")
+
 // WithChars is to set characters
 func WithChars(chars []string) Resource {
 	return func(resources *Resources) {
@@ -37,11 +41,11 @@ func WithChars(chars []string) Resource {
 			for _, char := range chars {
 				if helper.IsChineseChar(char) {
 					if helper.LenChineseChar(char) > 1 {
-						logger.New().Errorf("WithChars error: the chinese char [%s] must be equal to 1", char)
+						logger.Logx.Warnf("WithChars(): %v", ChineseCharLenErr)
 						return
 					}
 				} else if helper.LenChineseChar(char) > 2 {
-					logger.New().Errorf("WithChars error: the char [%s] must be less than or equal to 2", char)
+					logger.Logx.Warnf("WithChars(): %v", CharLenErr)
 					return
 				}
 			}

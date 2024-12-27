@@ -21,9 +21,6 @@ import (
 	"github.com/wenlng/go-captcha/v2/base/random"
 )
 
-// Version # of captcha
-const Version = "2.0.2"
-
 // Captcha .
 type Captcha interface {
 	setOptions(opts ...Option)

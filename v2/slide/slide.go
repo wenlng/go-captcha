@@ -19,9 +19,6 @@ import (
 	"github.com/wenlng/go-captcha/v2/base/random"
 )
 
-// Version # of captcha
-const Version = "2.0.2"
-
 type Mode int
 
 const (

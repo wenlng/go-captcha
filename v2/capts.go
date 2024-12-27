@@ -12,6 +12,9 @@ import (
 	"github.com/wenlng/go-captcha/v2/slide"
 )
 
+// Version # of captcha
+const Version = "2.0.2"
+
 // NewClickBuilder .
 func NewClickBuilder(opts ...click.Option) click.Builder {
 	return click.NewBuilder(opts...)

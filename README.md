@@ -178,7 +178,7 @@ func main() {
 - builder.MakeWithShape()
 
 ### Configuration Options
-> click.NewBuilder(click.WithXxx(), ...) OR builder.SetOptions()(click.WithXxx(), ...)
+> click.NewBuilder(click.WithXxx(), ...) OR builder.SetOptions(click.WithXxx(), ...)
 - click.WithImageSize(option.Size)
 - click.WithRangeLen(option.RangeVal) 
 - click.WithRangeAnglePos([]option.RangeVal) 

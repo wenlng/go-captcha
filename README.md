@@ -496,6 +496,11 @@ builder.SetResources(rotate.WithXxx(), ...)
 
 <br/>
 
+## Language Support
+- [x] Golang
+- [ ] NodeJs
+- [ ] Rust
+
 ## Install Package
 - [x] JavaScript
 - [x] Vue 

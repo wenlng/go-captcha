@@ -363,7 +363,7 @@ func loadPng(p string) (image.Image, error) {
 - slide.WithRangeGraphSize(val option.RangeVal)  设置图形随机尺寸范围
 - slide.WithRangeGraphAnglePos([]option.RangeVal)  设置图形随机角度范围
 - slide.WithGenGraphNumber(val int)  设置图形个数
-- slide.WithEnableGraphVerticalRandom(val bool)  设置图形横向排序，"滑动式"使用
+- slide.WithEnableGraphVerticalRandom(val bool)  设置图形水平方向是否随机排序
 - slide.WithRangeDeadZoneDirections(val []DeadZoneDirectionType)  设置贴图盲区
 
 
@@ -522,6 +522,11 @@ func loadPng(p string) (image.Image, error) {
 -  旋转式
 
 <br />
+
+## 语言支持
+- [x] Golang
+- [ ] NodeJs
+- [ ] Rust
 
 ## 前端安装包
 - [x] JavaScript

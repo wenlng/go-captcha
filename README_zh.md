@@ -41,6 +41,7 @@
 - Angular Package：[https://github.com/wenlng/go-captcha-angular](https://github.com/wenlng/go-captcha-angular)
 - Svelte Package：[https://github.com/wenlng/go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)
 - Solid Package：[https://github.com/wenlng/go-captcha-solid](https://github.com/wenlng/go-captcha-solid)
+- UniApp Module：[https://github.com/wenlng/go-captcha-uni](https://github.com/wenlng/go-captcha-uni)
 - ...
 
 <br/>
@@ -375,7 +376,7 @@ func loadPng(p string) (image.Image, error) {
 ### 验证码数据
 - GetData() *Block  获取当前校验的信息
 - GetMasterImage() imagedata.JPEGImageData  获取主图
-- GetTitleImage() imagedata.PNGImageData  获取缩略图
+- GetTileImage() imagedata.PNGImageData  获取缩略图
 
 
 <br />
@@ -490,7 +491,6 @@ func loadPng(p string) (image.Image, error) {
 - GetMasterImage() imagedata.PNGImageData  获取主图
 - GetThumbImage() imagedata.PNGImageData  获取缩略图
 
-
 <br/>
 
 ## 验证码图像
@@ -514,19 +514,28 @@ func loadPng(p string) (image.Image, error) {
 
 <br/>
 
-## 验证模块
--  文字点选式 
--  图形点选式
--  滑动式
--  拖拽式
--  旋转式
+## 验证模式
+- [x] 文字点选
+- [x] 图形点选
+- [x] 滑动
+- [x] 拖拽
+- [x] 旋转
+- [ ] 抛物线
+- [ ] 物品辨认
+- [ ] ...
 
-<br />
+## 扩展&增强
+- [x] 基本验证
+- [ ] 行为轨迹验证增强
+- [ ] 其他因素增强
+- [ ] 多任务生成模式
+- [ ] ...
 
 ## 语言支持
 - [x] Golang
 - [ ] NodeJs
 - [ ] Rust
+- [ ] ...
 
 ## 前端安装包
 - [x] JavaScript
@@ -535,8 +544,9 @@ func loadPng(p string) (image.Image, error) {
 - [x] Angular
 - [x] Svelte
 - [x] Solid
-- [ ] MinProgram
-- [ ] UniApp
+- [x] UniApp
+- [ ] WX-Applet
+- [ ] React Native App
 - [ ] Flutter App
 - [ ] Android App
 - [ ] IOS App

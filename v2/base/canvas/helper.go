@@ -7,6 +7,7 @@
 package canvas
 
 import (
+	"image"
 	"math"
 )
 
@@ -41,4 +42,28 @@ func RotatedSize(w, h int, angle float64) (int, int) {
 	}
 
 	return int(width), int(height)
+}
+
+func CalcResizedRect(src image.Rectangle, width int, height int, centerAlign bool) image.Rectangle {
+	var dst image.Rectangle
+	if width*src.Dy() < height*src.Dx() {
+		ratio := float64(width) / float64(src.Dx())
+
+		tH := int(float64(src.Dy()) * ratio)
+		pad := 0
+		if centerAlign {
+			pad = (height - tH) / 2
+		}
+		dst = image.Rect(0, pad, width, pad+tH)
+	} else {
+		ratio := float64(height) / float64(src.Dy())
+		tW := int(float64(src.Dx()) * ratio)
+		pad := 0
+		if centerAlign {
+			pad = (width - tW) / 2
+		}
+		dst = image.Rect(pad, 0, pad+tW, height)
+	}
+
+	return dst
 }

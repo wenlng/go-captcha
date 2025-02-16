@@ -55,8 +55,8 @@ func (d *drawImage) DrawWithCropCircle(params *DrawCropCircleImageParams) (image
 	bgBounds := bgImage.Bounds()
 	cvs := canvas.CreateNRGBACanvas(bgImage.Bounds().Dx(), bgImage.Bounds().Dy(), true)
 	draw.Draw(cvs.Get(), bgImage.Bounds(), bgImage, image.Point{}, draw.Over)
-	cvs.CropCircle(bgImage.Bounds().Dx()/2, bgImage.Bounds().Dy()/2, bgImage.Bounds().Dy()/2, params.ScaleRatioSize)
-	cvs.Rotate(params.Rotate)
+	cvs.CropScaleCircle(bgImage.Bounds().Dx()/2, bgImage.Bounds().Dy()/2, bgImage.Bounds().Dy()/2, params.ScaleRatioSize)
+	cvs.Rotate(params.Rotate, true)
 
 	cvBounds := cvs.Bounds()
 	if cvBounds.Dy() > bgBounds.Dy() || cvBounds.Dx() > bgBounds.Dx() {
@@ -65,7 +65,7 @@ func (d *drawImage) DrawWithCropCircle(params *DrawCropCircleImageParams) (image
 		cvs = newCvs
 	}
 
-	return cvs, nil
+	return cvs.Get(), nil
 }
 
 // DrawWithNRGBA is to draw with a NRGBA
@@ -81,6 +81,6 @@ func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (img image.Image, err
 		draw.Draw(rcm.Get(), rcm.Bounds(), rc.Get(), image.Point{}, draw.Over)
 	}
 
-	rcm.CropCircle(rcm.Bounds().Dx()/2, rcm.Bounds().Dy()/2, rcm.Bounds().Dy()/2, 0)
-	return rcm, nil
+	rcm.CropCircle(rcm.Bounds().Dx()/2, rcm.Bounds().Dy()/2, rcm.Bounds().Dy()/2)
+	return rcm.Get(), nil
 }

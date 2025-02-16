@@ -136,7 +136,7 @@ func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Col
 				return nil, err
 			}
 
-			dotImage.Rotate(dot.Angle)
+			dotImage.Rotate(dot.Angle, false)
 			bgBounds := cvs.Get().Bounds()
 			dotBounds := dotImage.Bounds()
 			drawAt := image.Point{X: bgBounds.Dx() - dotBounds.Dx(), Y: bgBounds.Dy() - dotBounds.Dy()}
@@ -230,7 +230,7 @@ func (d *drawImage) DrawWithNRGBA2(params *DrawImageParams, tColors []color.Colo
 				return nil, err
 			}
 
-			dotImage.Rotate(dot.Angle)
+			dotImage.Rotate(dot.Angle, false)
 
 			bgBounds := ccvs.Get().Bounds()
 			dotBounds := dotImage.Bounds()
@@ -242,7 +242,7 @@ func (d *drawImage) DrawWithNRGBA2(params *DrawImageParams, tColors []color.Colo
 			if err != nil {
 				return nil, err
 			}
-			cImage.Rotate(dot.Angle)
+			cImage.Rotate(dot.Angle, false)
 
 			areaPoint := cImage.CalcMarginBlankArea()
 			minX := areaPoint.MinX
@@ -343,7 +343,7 @@ func (d *drawImage) DrawDotImage(dot *DrawDot, params *DrawImageParams) (canvas.
 		draw.Draw(cvs.Get(), shadowImg.Bounds(), shadowImg, image.Point{X: pointX, Y: pointY}, draw.Over)
 	}
 	draw.Draw(cvs.Get(), cImage.Bounds(), cImage, image.Point{}, draw.Over)
-	cvs.Rotate(dot.Angle)
+	cvs.Rotate(dot.Angle, false)
 
 	ap := cvs.CalcMarginBlankArea()
 
@@ -383,7 +383,7 @@ func (d *drawImage) DrawShapeImage(dot *DrawDot, cColor color.Color) (canvas.NRG
 	var colorArr = []color.RGBA{
 		{R: uint8(cr), G: uint8(cg), B: uint8(cb), A: uint8(ca)},
 	}
-	
+
 	ncvs := canvas.CreateNRGBACanvas(dot.Width+10, dot.Height+10, true)
 	var bounds image.Rectangle
 	var img image.Image

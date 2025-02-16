@@ -35,6 +35,7 @@
 - Angular Package：[https://github.com/wenlng/go-captcha-angular](https://github.com/wenlng/go-captcha-angular)
 - Svelte Package：[https://github.com/wenlng/go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)
 - Solid Package：[https://github.com/wenlng/go-captcha-solid](https://github.com/wenlng/go-captcha-solid)
+- UniApp Module：[https://github.com/wenlng/go-captcha-uni](https://github.com/wenlng/go-captcha-uni)
 - ...
 
 <br/>
@@ -508,8 +509,9 @@ builder.SetResources(rotate.WithXxx(), ...)
 - [x] Angular
 - [x] Svelte
 - [x] Solid
-- [ ] MinProgram
-- [ ] UniApp
+- [x] UniApp
+- [ ] WX-Applet
+- [ ] React Native App
 - [ ] Flutter App
 - [ ] Android App
 - [ ] IOS App

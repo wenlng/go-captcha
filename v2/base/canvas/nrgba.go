@@ -25,8 +25,10 @@ type NRGBA interface {
 	DrawImage(img Palette, dotRect *PositionRect, posRect *AreaRect)
 	DrawString(params *DrawStringParams, pt fixed.Point26_6) error
 	CalcMarginBlankArea() *AreaRect
-	Rotate(angle int)
-	CropCircle(x, y, radius, zoom int)
+	Rotate(angle int, overCrop bool)
+	Scale(zoomSize int, keepRatio, centerAlign bool)
+	CropCircle(x, y, radius int)
+	CropScaleCircle(x, y, radius int, zoomSize int)
 	SubImage(r image.Rectangle)
 }
 
@@ -150,15 +152,17 @@ func (n *nRGBA) CalcMarginBlankArea() *AreaRect {
 }
 
 // Rotate is to rotation at any Angle
-func (n *nRGBA) Rotate(a int) {
+func (n *nRGBA) Rotate(a int, overCrop bool) {
 	if a == 0 {
 		return
 	}
 
 	angle := float64(a) * math.Pi / 180
 
-	w, h := RotatedSize(n.Bounds().Dx(), n.Bounds().Dy(), float64(a))
-	im := image.NewNRGBA(image.Rect(0, 0, w, h))
+	sW := n.Get().Bounds().Dx()
+	sH := n.Get().Bounds().Dy()
+	w, h := RotatedSize(sW, sH, float64(a))
+	img := image.NewNRGBA(image.Rect(0, 0, w, h))
 
 	centerX := float64(w) / 2
 	centerY := float64(h) / 2
@@ -172,20 +176,28 @@ func (n *nRGBA) Rotate(a int) {
 	matrix = matrix.Rotate(angle)
 	matrix = matrix.Translate(-centerX, -centerY)
 
-	x := (w - n.Bounds().Dx()) / 2
-	y := (h - n.Bounds().Dy()) / 2
+	x := (w - n.Get().Bounds().Dx()) / 2
+	y := (h - n.Get().Bounds().Dy()) / 2
 	fx, fy := float64(x), float64(y)
 
 	m := matrix.Translate(fx, fy)
 	s2d := f64.Aff3{m.XX, m.XY, m.X0, m.YX, m.YY, m.Y0}
 
-	draw.BiLinear.Transform(im, s2d, n, n.Bounds(), draw.Over, nil)
-	n.NRGBA = im
+	draw.BiLinear.Transform(img, s2d, n.Get(), n.Get().Bounds(), draw.Over, nil)
+	n.NRGBA = img
+
+	if overCrop {
+		xx := w - sW
+		yy := h - sH
+		dx := xx / 2
+		dy := yy / 2
+		n.SubImage(image.Rect(dx, dy, sW+dx, sH+dy))
+	}
 }
 
 // CropCircle is to cut the circle
-func (n *nRGBA) CropCircle(x, y, radius, zoom int) {
-	bounds := n.Bounds()
+func (n *nRGBA) CropCircle(x, y, radius int) {
+	bounds := n.Get().Bounds()
 	mask := image.NewNRGBA(bounds)
 	for py := bounds.Min.Y; py < bounds.Max.Y; py++ {
 		for px := bounds.Min.X; px < bounds.Max.X; px++ {
@@ -198,15 +210,57 @@ func (n *nRGBA) CropCircle(x, y, radius, zoom int) {
 		}
 	}
 
-	if zoom > 0 {
-		subtract := zoom * 2
+	draw.DrawMask(mask, mask.Bounds(), n.Get(), image.Point{X: 0, Y: 0}, mask, image.Point{}, draw.Over)
+	n.NRGBA = mask
+}
+
+// CropScaleCircle is to scale and crop the circle
+func (n *nRGBA) CropScaleCircle(x, y, radius int, zoomSize int) {
+	bounds := n.Get().Bounds()
+	mask := image.NewNRGBA(bounds)
+
+	for py := bounds.Min.Y; py < bounds.Max.Y; py++ {
+		for px := bounds.Min.X; px < bounds.Max.X; px++ {
+			dist := math.Hypot(float64(px-x), float64(py-y))
+			if dist <= float64(radius) {
+				mask.Set(px, py, color.White)
+			} else {
+				mask.Set(px, py, color.Transparent)
+			}
+		}
+	}
+
+	if zoomSize > 0 {
+		subtract := zoomSize * 2
 		scaleMask := image.NewNRGBA(image.Rect(0, 0, n.Bounds().Dx()-subtract, n.Bounds().Dy()-subtract))
 		draw.BiLinear.Scale(scaleMask, scaleMask.Bounds(), mask, mask.Bounds(), draw.Over, nil)
 		mask = scaleMask
 	}
 
-	draw.DrawMask(mask, mask.Bounds(), n.Get(), image.Point{X: zoom, Y: zoom}, mask, image.Point{}, draw.Over)
+	draw.DrawMask(mask, mask.Bounds(), n.Get(), image.Point{X: zoomSize, Y: zoomSize}, mask, image.Point{}, draw.Over)
 	n.NRGBA = mask
+}
+
+// Scale is to scale the image
+func (n *nRGBA) Scale(zoomSize int, keepRatio, centerAlign bool) {
+	img := n.NRGBA
+	if zoomSize > 0 {
+		subtract := zoomSize * 2
+		newW := n.Get().Bounds().Dx() - subtract
+		newH := n.Get().Bounds().Dy() - subtract
+		outImg := image.NewNRGBA(image.Rect(0, 0, newW, newH))
+
+		if !keepRatio {
+			draw.BiLinear.Scale(outImg, outImg.Bounds(), n.Get(), n.Get().Bounds(), draw.Over, nil)
+		} else {
+			dst := CalcResizedRect(n.Get().Bounds(), newW, newH, centerAlign)
+			draw.ApproxBiLinear.Scale(outImg, dst.Bounds(), n.Get(), n.Get().Bounds(), draw.Over, nil)
+		}
+
+		img = outImg
+	}
+
+	n.NRGBA = img
 }
 
 // SubImage is to capture the image

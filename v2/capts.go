@@ -13,7 +13,7 @@ import (
 )
 
 // Version # of captcha
-const Version = "2.0.2"
+const Version = "2.0.3"
 
 // NewClickBuilder .
 func NewClickBuilder(opts ...click.Option) click.Builder {

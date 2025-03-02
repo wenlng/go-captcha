@@ -1,7 +1,7 @@
 <div align="center">
-<img width="120" style="padding-top: 50px; margin: 0;" src="http://47.104.180.148/go-captcha/gocaptcha_logo.svg?v=1"/>
-<h1 style="margin: 0; padding: 0">Go Captcha</h1>
-<p>行为验证码</p>
+<img width="120" style="padding-top: 50px; margin: 0;" src="https://github.com/wenlng/git-assets/blob/master/go-captcha/gocaptcha_logo.svg?raw=true"/>
+<h1 style="margin: 0; padding: 0">GoCaptcha</h1>
+<p>Golang 行为验证码</p>
 <a href="https://goreportcard.com/report/github.com/wenlng/go-captcha"><img src="https://goreportcard.com/badge/github.com/wenlng/go-captcha"/></a>
 <a href="https://godoc.org/github.com/wenlng/go-captcha"><img src="https://godoc.org/github.com/wenlng/go-captcha?status.svg"/></a>
 <a href="https://github.com/wenlng/go-captcha/releases"><img src="https://img.shields.io/github/v/release/wenlng/go-captcha.svg"/></a>
@@ -24,29 +24,35 @@
 
 <br/>
 
-<div align="center"> 
-    <img src="http://47.104.180.148/go-captcha/go-captcha-v2.jpg" alt="Poster">
+<div align="center">
+<img src="https://github.com/wenlng/git-assets/blob/master/go-captcha/go-captcha-v2.jpg?raw=true" alt="Poster">
 </div>
 
 <br/>
+<hr/>
+<br/>
 
-- GoCaptcha：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
-- GoCaptcha 文档：[http://gocaptcha.wencodes.com](http://gocaptcha.wencodes.com)
-- Golang 内嵌素材资源：[https://github.com/wenlng/go-captcha-assets](https://github.com/wenlng/go-captcha-assets)
-- Golang/前端的实例：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
-- 在线演示 URL：[http://gocaptcha.wencodes.com/demo/](http://gocaptcha.wencodes.com/demo/)
-- Javascript 原生库：[https://github.com/wenlng/go-captcha-jslib](https://github.com/wenlng/go-captcha-jslib)
-- Vue Package：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
-- React Package：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
-- Angular Package：[https://github.com/wenlng/go-captcha-angular](https://github.com/wenlng/go-captcha-angular)
-- Svelte Package：[https://github.com/wenlng/go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)
-- Solid Package：[https://github.com/wenlng/go-captcha-solid](https://github.com/wenlng/go-captcha-solid)
-- UniApp Module：[https://github.com/wenlng/go-captcha-uni](https://github.com/wenlng/go-captcha-uni)
-- ...
+## 项目索引
+
+| 名称                                                                 | 说明                                  |
+|--------------------------------------------------------------------|-------------------------------------|
+| [document](http://gocaptcha.wencodes.com)                          | GoCaptcha 文档                        |
+| [online demo](http://gocaptcha.wencodes.com/demo/)                 | GoCaptcha 在线演示                      |
+| [go-captcha-example](https://github.com/wenlng/go-captcha-example) | Golang + 前端 + APP实例                 |
+| [go-captcha-assets](https://github.com/wenlng/go-captcha-assets)   | Golang 内嵌素材资源                       |
+| [go-captcha](https://github.com/wenlng/go-captcha)                 | Golang 验证码                          |
+| [go-captcha-jslib](https://github.com/wenlng/go-captcha-jslib)     | Javascript 验证码                      |
+| [go-captcha-vue](https://github.com/wenlng/go-captcha-vue)         | Vue 验证码                             |
+| [go-captcha-react](https://github.com/wenlng/go-captcha-react)     | React 验证码                           |
+| [go-captcha-angular](https://github.com/wenlng/go-captcha-angular) | Angular 验证码                         |
+| [go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)   | Svelte 验证码                          |
+| [go-captcha-solid](https://github.com/wenlng/go-captcha-solid)     | Solid 验证码                           |
+| [go-captcha-uni](https://github.com/wenlng/go-captcha-uni)         | UniApp 验证码，兼容 Android、IOS、小程序、快应用等  |
+| ...                                                                |                                     |
 
 <br/>
 
-### 设置Go代理
+## 设置Go代理
 - Window
 ```shell
 $ set GO111MODULE=on
@@ -197,41 +203,54 @@ func main() {
 
 ### 配置选项
 > click.NewBuilder(click.WithXxx(), ...) 或 builder.SetOptions(click.WithXxx(), ...)
-- click.WithImageSize(option.Size)  设置主图尺寸，默认 300x220
-- click.WithRangeLen(option.RangeVal)  设置随机内容长度范围
-- click.WithRangeAnglePos([]option.RangeVal)  设置随机角度范围
-- click.WithRangeSize(option.RangeVal)  设置随机内容大小范围
-- click.WithRangeColors([]string)  设置随机颜色
-- click.WithDisplayShadow(bool)  设置是否显示阴影
-- click.WithShadowColor(string)  设置阴影颜色
-- click.WithShadowPoint(option.Point)  设置阴影偏移位置
-- click.WithImageAlpha(float32)  设置主图透明度
-- click.WithUseShapeOriginalColor(bool)  设置是否使用图形原始颜色，"图形点选"有效
 
-- click.WithThumbImageSize(option.Size)  设置缩略尺寸，默认 150x40
-- click.WithRangeVerifyLen(option.RangeVal) 设置校验内容的随机长度范围
-- click.WithDisabledRangeVerifyLen(bool) 禁用校验内容的随机长度，与主图内容的长度保持一致
-- click.WithRangeThumbSize(option.RangeVal)  设置随机缩略内容随机大小范围
-- click.WithRangeThumbColors([]string)  设置缩略随机颜色范围
-- click.WithRangeThumbBgColors([]string)  设置缩略随机背景颜色范围
-- click.WithIsThumbNonDeformAbility(bool)  设置缩略图内容不变形，不受背景影响
-- click.WithThumbBgDistort(int)  设置缩略图背景扭曲 option.DistortLevel1 至 option.DistortLevel5
-- click.WithThumbBgCirclesNum(int)  设置缩略图绘制小圆点数量
-- click.WithThumbBgSlimLineNum(int)  设置缩略图绘制线条数量
+| Options                                    | Desc                                                  |
+|--------------------------------------------|-------------------------------------------------------|
+| 主图                                         |
+| click.WithImageSize(option.Size)           | 设置主图尺寸，默认 300x220                                     |
+| click.WithRangeLen(option.RangeVal)        | 设置随机内容长度范围                                            |
+| click.WithRangeAnglePos([]option.RangeVal) | 设置随机角度范围                                              |
+| click.WithRangeSize(option.RangeVal)       | 设置随机内容大小范围                                            |
+| click.WithRangeColors([]string)            | 设置随机颜色                                                |
+| click.WithDisplayShadow(bool)              | 设置是否显示阴影                                              |
+| click.WithShadowColor(string)              | 设置阴影颜色                                                |
+| click.WithShadowPoint(option.Point)        | 设置阴影偏移位置                                              |
+| click.WithImageAlpha(float32)              | 设置主图透明度                                               |
+| click.WithUseShapeOriginalColor(bool)      | 设置是否使用图形原始颜色，"图形点选"有效                                 |
+| 缩略图                                        |
+| click.WithThumbImageSize(option.Size)      | 设置缩略尺寸，默认 150x40                                      |
+| click.WithRangeVerifyLen(option.RangeVal)  | 设置校验内容的随机长度范围                                         |
+| click.WithDisabledRangeVerifyLen(bool)     | 禁用校验内容的随机长度，与主图内容的长度保持一致                              |
+| click.WithRangeThumbSize(option.RangeVal)  | 设置随机缩略内容随机大小范围                                        |
+| click.WithRangeThumbColors([]string)       | 设置缩略随机颜色范围                                            |
+| click.WithRangeThumbBgColors([]string)     | 设置缩略随机背景颜色范围                                          |
+| click.WithIsThumbNonDeformAbility(bool)    | 设置缩略图内容不变形，不受背景影响                                     |
+| click.WithThumbBgDistort(int)              | 设置缩略图背景扭曲 option.DistortLevel1 至 option.DistortLevel5 |
+| click.WithThumbBgCirclesNum(int)           | 设置缩略图绘制小圆点数量                                          |
+| click.WithThumbBgSlimLineNum(int)          | 设置缩略图绘制线条数量                                           |
 
 
 ### 设置资源
 > builder.SetResources(click.WithXxx(), ...)
-- click.WithChars([]string)  设置文本种子
-- click.WithShapes(map[string]image.Image)  设置图形种子
-- click.WithFonts([]*truetype.Font)  设置字体
-- click.WithBackgrounds([]image.Image)  设置主图背景
-- click.WithThumbBackgrounds([]image.Image)  设置缩略图背景
+
+| Options                                   | Desc      |
+|-------------------------------------------|-----------|
+| click.WithChars([]string)                 | 设置文本种子    |
+| click.WithShapes(map[string]image.Image)  | 设置图形种子    |
+| click.WithFonts([]*truetype.Font)         | 设置字体      |
+| click.WithBackgrounds([]image.Image)      | 设置主图背景    |
+| click.WithThumbBackgrounds([]image.Image) | 设置缩略图背景   |
+
 
 ### 验证码数据
-- GetData() map[int]*Dot 获取当前校验的信息
-- GetMasterImage() imagedata.JPEGImageData  获取主图
-- GetThumbImage() imagedata.PNGImageData  获取缩略图
+> captData, err := capt.Generate()
+
+| Method                                   | Desc      |
+|------------------------------------------|-----------|
+| GetData() map[int]*Dot                   | 获取当前校验的信息 |
+| GetMasterImage() imagedata.JPEGImageData | 获取主图      |
+| GetThumbImage() imagedata.PNGImageData   | 获取缩略图     |
+
 
 <br />
 
@@ -359,25 +378,35 @@ func loadPng(p string) (image.Image, error) {
 
 ### 配置选项
 > slide.NewBuilder(slide.WithXxx(), ...) 或 builder.SetOptions(slide.WithXxx(), ...)
-- slide.WithImageSize(*option.Size)  设置主图尺寸，默认 300x220
-- slide.WithImageAlpha(float32)  设置主图透明度
-- slide.WithRangeGraphSize(val option.RangeVal)  设置图形随机尺寸范围
-- slide.WithRangeGraphAnglePos([]option.RangeVal)  设置图形随机角度范围
-- slide.WithGenGraphNumber(val int)  设置图形个数
-- slide.WithEnableGraphVerticalRandom(val bool)  设置图形水平方向是否随机排序
-- slide.WithRangeDeadZoneDirections(val []DeadZoneDirectionType)  设置贴图盲区
+
+| Options                                                        | Desc              |
+|----------------------------------------------------------------|-------------------|
+| slide.WithImageSize(*option.Size)                              | 设置主图尺寸，默认 300x220 |
+| slide.WithImageAlpha(float32)                                  | 设置主图透明度           |
+| slide.WithRangeGraphSize(val option.RangeVal)                  | 设置图形随机尺寸范围        |
+| slide.WithRangeGraphAnglePos([]option.RangeVal)                | 设置图形随机角度范围        |
+| slide.WithGenGraphNumber(val int)                              | 设置图形个数            |
+| slide.WithEnableGraphVerticalRandom(val bool)                  | 设置图形水平方向是否随机排序    |
+| slide.WithRangeDeadZoneDirections(val []DeadZoneDirectionType) | 设置贴图盲区            |
 
 
 ### 设置资源
 > builder.SetResources(slide.WithXxx(), ...)
-- slide.WithBackgrounds([]image.Image)  设置主图背景
-- slide.WithGraphImages(images []*GraphImage)  设置贴图的图形
+
+| Options                                       | Desc     |
+|-----------------------------------------------|----------|
+| slide.WithBackgrounds([]image.Image)          | 设置主图背景   |
+| slide.WithGraphImages(images []*GraphImage)   | 设置贴图的图形  |
+
 
 ### 验证码数据
-- GetData() *Block  获取当前校验的信息
-- GetMasterImage() imagedata.JPEGImageData  获取主图
-- GetTileImage() imagedata.PNGImageData  获取缩略图
+> captData, err := capt.Generate()
 
+| Method                                   | Desc        |
+|------------------------------------------|-------------|
+| GetData() *Block                         | 获取当前校验的信息   |
+| GetMasterImage() imagedata.JPEGImageData | 获取主图        |
+| GetTileImage() imagedata.PNGImageData    | 获取缩略图       |
 
 <br />
 
@@ -476,51 +505,71 @@ func loadPng(p string) (image.Image, error) {
 
 ### 配置选项
 > rotate.NewBuilder(rotate.WithXxx(), ...) 或 builder.SetOptions(rotate.WithXxx(), ...)
-- rotate.WithImageSquareSize(val int)  设置主图大小
-- rotate.WithRangeAnglePos(vals []option.RangeVal)  设置校验随机角度范围
-- rotate.WithRangeThumbImageSquareSize(val []int)  设置缩略图大小
-- rotate.WithThumbImageAlpha(val float32)  设置缩略图透明度
+
+| Options                                          | Desc              |
+|--------------------------------------------------|-------------------|
+| rotate.WithImageSquareSize(val int)              | 设置主图大小，默认 220x220 |
+| rotate.WithRangeAnglePos(vals []option.RangeVal) | 设置校验随机角度范围        |
+| rotate.WithRangeThumbImageSquareSize(val []int)  | 设置缩略图大小           |
+| rotate.WithThumbImageAlpha(val float32)          | 设置缩略图透明度          |
 
 
 ### 设置资源
 > builder.SetResources(rotate.WithXxx(), ...)
-- rotate.WithBackgrounds([]image.Image)  设置主图图片
+
+| Options                                    | Desc       |
+|--------------------------------------------|------------|
+| rotate.WithBackgrounds([]image.Image)      | 设置主图图片     |
+
 
 ### 验证码数据
-- GetData() *Block  获取当前校验的信息
-- GetMasterImage() imagedata.PNGImageData  获取主图
-- GetThumbImage() imagedata.PNGImageData  获取缩略图
+> captData, err := capt.Generate()
+
+| Method                                   | Desc        |
+|------------------------------------------|-------------|
+| GetData() *Block                         | 获取当前校验的信息   |
+| GetMasterImage() imagedata.JPEGImageData | 获取主图        |
+| GetTileImage() imagedata.PNGImageData    | 获取缩略图       |
 
 <br/>
 
 ## 验证码图像
 
 ### JPEGImageData
-- Get() image.Image   <span style='padding: 0 10px'></span>获取原图像
-- ToBytes() ([]byte, error)   <span style='padding: 0 10px'></span>转为字节数组
-- ToBytesWithQuality(imageQuality int) ([]byte, error)    指定清晰度转为字节数组
-- ToBase64() (string, error)   <span style='padding: 0 10px'></span>转为 Base64 字符串，带 <span style='color:#ed4630;'>"data:image/jpeg;base64,"</span> 前缀
-- ToBase64Data() (string, error)   <span style='padding: 0 10px'></span>转为 Base64 字符串
-- ToBase64WithQuality(imageQuality int)  (string, error)   <span style='padding: 0 10px'></span>指定清晰度转为 Base64 字符串，带 <span style='color:#ed4630;'>"data:image/jpeg;base64,"</span> 前缀
-- ToBase64DataWithQuality(imageQuality int) (string, error)    <span style='padding: 0 10px'></span>指定清晰度转为 Base64 字符串
-- SaveToFile(filepath string, quality int) error  <span style='padding: 0 10px'></span>保存 JPEG 到文件
+
+| Method                                                    | Desc                                                                                                                       |
+|-----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| Get() image.Image                                         | <span style='padding: 0 10px'></span>获取原图像                                                                                 |
+| ToBytes() ([]byte, error)                                 | <span style='padding: 0 10px'></span>转为字节数组                                                                                |
+| ToBytesWithQuality(imageQuality int) ([]byte, error)      | 指定清晰度转为字节数组                                                                                                                |
+| ToBase64() (string, error)                                | <span style='padding: 0 10px'></span>转为 Base64 字符串，带 <span style='color:#ed4630;'>"data:image/jpeg;base64,"</span> 前缀      |
+| ToBase64Data() (string, error)                            | <span style='padding: 0 10px'></span>转为 Base64 字符串                                                                         |
+| ToBase64WithQuality(imageQuality int)  (string, error)    | <span style='padding: 0 10px'></span>指定清晰度转为 Base64 字符串，带 <span style='color:#ed4630;'>"data:image/jpeg;base64,"</span> 前缀 |
+| ToBase64DataWithQuality(imageQuality int) (string, error) | <span style='padding: 0 10px'></span>指定清晰度转为 Base64 字符串                                                                    |
+| SaveToFile(filepath string, quality int) error            | <span style='padding: 0 10px'></span>保存 JPEG 到文件                                                                           |
+
 
 ### PNGImageData
-- Get() image.Image   <span style='padding: 0 10px'></span>获取原图像
-- ToBytes() ([]byte, error)   <span style='padding: 0 10px'></span>转为字节数组
-- ToBase64() (string, error)    <span style='padding: 0 10px'></span>转为 Base64 字符串，带 <span style='color:#ed4630;'>"data:image/png;base64,"</span> 前缀
-- ToBase64Data() (string, error)    <span style='padding: 0 10px'></span>转为 Base64 字符串
-- SaveToFile(filepath string) error   <span style='padding: 0 10px'></span>保存 到文件
+
+| Method                                    | Desc                                                                                                                 |
+|-------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
+| Get() image.Image                         | <span style='padding: 0 10px'></span>获取原图像                                                                           |
+| ToBytes() ([]byte, error)                 | <span style='padding: 0 10px'></span>转为字节数组                                                                          |
+| ToBase64() (string, error)                | <span style='padding: 0 10px'></span>转为 Base64 字符串，带 <span style='color:#ed4630;'>"data:image/png;base64,"</span> 前缀 |
+| ToBase64Data() (string, error)            | <span style='padding: 0 10px'></span>转为 Base64 字符串                                                                   |
+| SaveToFile(filepath string) error         | <span style='padding: 0 10px'></span>保存 到文件                                                                          |
+
 
 <br/>
 
-## 验证模式
+## 验证模块
 - [x] 文字点选
 - [x] 图形点选
 - [x] 滑动
 - [x] 拖拽
 - [x] 旋转
 - [ ] 抛物线
+- [ ] 看图选择
 - [ ] 物品辨认
 - [ ] ...
 
@@ -535,6 +584,9 @@ func loadPng(p string) (image.Image, error) {
 - [x] Golang
 - [ ] NodeJs
 - [ ] Rust
+- [ ] Python
+- [ ] Java
+- [ ] PHP
 - [ ] ...
 
 ## 前端安装包
@@ -566,3 +618,4 @@ func loadPng(p string) (image.Image, error) {
 
 ## LICENSE
 Go Captcha source code is licensed under the Apache Licence, Version 2.0 [http://www.apache.org/licenses/LICENSE-2.0.html](http://www.apache.org/licenses/LICENSE-2.0.html)
+

@@ -1,7 +1,7 @@
 <div align="center">
-<img width="120" style="padding-top: 50px; margin: 0;" src="http://47.104.180.148/go-captcha/gocaptcha_logo.svg?v=1"/>
-<h1 style="margin: 0; padding: 0">Go Captcha</h1>
-<p>Behavior Captcha</p>
+<img width="120" style="padding-top: 50px; margin: 0;" src="https://github.com/wenlng/git-assets/blob/master/go-captcha/gocaptcha_logo.svg?raw=true"/>
+<h1 style="margin: 0; padding: 0">GoCaptcha</h1>
+<p>Behavior Captcha Of Golang</p>
 <a href="https://goreportcard.com/report/github.com/wenlng/go-captcha"><img src="https://goreportcard.com/badge/github.com/wenlng/go-captcha"/></a>
 <a href="https://godoc.org/github.com/wenlng/go-captcha"><img src="https://godoc.org/github.com/wenlng/go-captcha?status.svg"/></a>
 <a href="https://github.com/wenlng/go-captcha/releases"><img src="https://img.shields.io/github/v/release/wenlng/go-captcha.svg"/></a>
@@ -19,24 +19,31 @@
 <p style="text-align: center"> ⭐️ If it helps you, please give a star.</p>
 
 <div align="center"> 
-    <img src="http://47.104.180.148/go-captcha/go-captcha-v2.jpg" alt="Poster">
+<img src="https://github.com/wenlng/git-assets/blob/master/go-captcha/go-captcha-v2.jpg?raw=true" alt="Poster">
 </div>
 
 <br/>
+<hr/>
+<br/>
 
-- GoCaptcha：[https://github.com/wenlng/go-captcha](https://github.com/wenlng/go-captcha)
-- GoCaptcha Document：[http://gocaptcha.wencodes.com](http://gocaptcha.wencodes.com)
-- Go Assets File：[https://github.com/wenlng/go-captcha-assets](https://github.com/wenlng/go-captcha-assets)
-- Example Project：[https://github.com/wenlng/go-captcha-example](https://github.com/wenlng/go-captcha-example)
-- Online Demo：[http://gocaptcha.wencodes.com/demo](http://gocaptcha.wencodes.com/demo)
-- Javascript Library：[https://github.com/wenlng/go-captcha-jslib](https://github.com/wenlng/go-captcha-jslib)
-- Vue Package：[https://github.com/wenlng/go-captcha-vue](https://github.com/wenlng/go-captcha-vue)
-- React Package：[https://github.com/wenlng/go-captcha-react](https://github.com/wenlng/go-captcha-react)
-- Angular Package：[https://github.com/wenlng/go-captcha-angular](https://github.com/wenlng/go-captcha-angular)
-- Svelte Package：[https://github.com/wenlng/go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)
-- Solid Package：[https://github.com/wenlng/go-captcha-solid](https://github.com/wenlng/go-captcha-solid)
-- UniApp Module：[https://github.com/wenlng/go-captcha-uni](https://github.com/wenlng/go-captcha-uni)
-- ...
+## Projects Index
+
+| Name                                                               | Desc                       |
+|--------------------------------------------------------------------|----------------------------|
+| [document](http://gocaptcha.wencodes.com)                          | GoCaptcha Document         |
+| [online demo](http://gocaptcha.wencodes.com/demo/)                 | GoCaptcha Online Demo      |
+| [go-captcha-example](https://github.com/wenlng/go-captcha-example) | Golang + Web + APP Example |
+| [go-captcha-assets](https://github.com/wenlng/go-captcha-assets)   | Golang Asset File          |
+| [go-captcha](https://github.com/wenlng/go-captcha)                 | Golang Captcha             |
+| [go-captcha-jslib](https://github.com/wenlng/go-captcha-jslib)     | Javascript Captcha         |
+| [go-captcha-vue](https://github.com/wenlng/go-captcha-vue)         | Vue Captcha                |
+| [go-captcha-react](https://github.com/wenlng/go-captcha-react)     | React Captcha              |
+| [go-captcha-angular](https://github.com/wenlng/go-captcha-angular) | Angular Captcha            |
+| [go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)   | Svelte Captcha             |
+| [go-captcha-solid](https://github.com/wenlng/go-captcha-solid)     | Solid Captcha              |
+| [go-captcha-uni](https://github.com/wenlng/go-captcha-uni)         | UniApp Captcha             |
+| ...                                                                |                            |
+
 
 <br/>
 
@@ -180,41 +187,52 @@ func main() {
 
 ### Configuration Options
 > click.NewBuilder(click.WithXxx(), ...) OR builder.SetOptions(click.WithXxx(), ...)
-- click.WithImageSize(option.Size)
-- click.WithRangeLen(option.RangeVal) 
-- click.WithRangeAnglePos([]option.RangeVal) 
-- click.WithRangeSize(option.RangeVal)
-- click.WithRangeColors([]string) 
-- click.WithDisplayShadow(bool) 
-- click.WithShadowColor(string) 
-- click.WithShadowPoint(option.Point)
-- click.WithImageAlpha(float32) 
-- click.WithUseShapeOriginalColor(bool)
 
-- click.WithThumbImageSize(option.Size)
-- click.WithRangeVerifyLen(option.RangeVal)
-- click.WithDisabledRangeVerifyLen(bool)
-- click.WithRangeThumbSize(option.RangeVal)
-- click.WithRangeThumbColors([]string)
-- click.WithRangeThumbBgColors([]string)
-- click.WithIsThumbNonDeformAbility(bool)
-- click.WithThumbBgDistort(int) 
-- click.WithThumbBgCirclesNum(int) 
-- click.WithThumbBgSlimLineNum(int) 
+| Options                                      | Desc                                        |
+|----------------------------------------------|---------------------------------------------|
+| 主图                                           |                                             |
+| click.WithImageSize(option.Size)             | default 300x220                             |
+| click.WithRangeLen(option.RangeVal)          |                                             |
+| click.WithRangeAnglePos([]option.RangeVal)   |                                             |
+| click.WithRangeSize(option.RangeVal)         |                                             |
+| click.WithRangeColors([]string)              |                                             |
+| click.WithDisplayShadow(bool)                |                                             |
+| click.WithShadowColor(string)                |                                             |
+| click.WithShadowPoint(option.Point)          |                                             |
+| click.WithImageAlpha(float32)                |                                             |
+| click.WithUseShapeOriginalColor(bool)        |                                             |
+| 缩略图                                          |
+| click.WithThumbImageSize(option.Size)        | default 150x40                              |
+| click.WithRangeVerifyLen(option.RangeVal)    |                                             |
+| click.WithDisabledRangeVerifyLen(bool)       |                                             |
+| click.WithRangeThumbSize(option.RangeVal)    |                                             |
+| click.WithRangeThumbColors([]string)         |                                             |
+| click.WithRangeThumbBgColors([]string)       |                                             |
+| click.WithIsThumbNonDeformAbility(bool)      |                                             |
+| click.WithThumbBgDistort(int)                | option.DistortLevel1 ~ option.DistortLevel5 |
+| click.WithThumbBgCirclesNum(int)             |                                             |
+| click.WithThumbBgSlimLineNum(int)            |                                             |
 
 
 ### Set Resources
 > builder.SetResources(click.WithXxx(), ...)
-- click.WithChars([]string) 
-- click.WithShapes(map[string]image.Image) 
-- click.WithFonts([]*truetype.Font) 
-- click.WithBackgrounds([]image.Image) 
-- click.WithThumbBackgrounds([]image.Image) 
+
+| Options                                   | Desc |
+|-------------------------------------------|------|
+| click.WithChars([]string)                 |      |
+| click.WithShapes(map[string]image.Image)  |      |
+| click.WithFonts([]*truetype.Font)         |      |
+| click.WithBackgrounds([]image.Image)      |      |
+| click.WithThumbBackgrounds([]image.Image) |      |
 
 ### Captcha Data
-- GetData() map[int]*Dot
-- GetMasterImage() imagedata.JPEGImageData
-- GetThumbImage() imagedata.PNGImageData
+> captData, err := capt.Generate()
+
+| Method                                   | Desc |
+|------------------------------------------|------|
+| GetData() map[int]*Dot                   |      |
+| GetMasterImage() imagedata.JPEGImageData |      |
+| GetThumbImage() imagedata.PNGImageData   |      |
 
 <br />
 
@@ -342,24 +360,35 @@ func loadPng(p string) (image.Image, error) {
 
 ### Configuration Options
 > slide.NewBuilder(slide.WithXxx(), ...) OR builder.SetOptions(slide.WithXxx(), ...)
-- slide.WithImageSize(*option.Size)
-- slide.WithImageAlpha(float32) 
-- slide.WithRangeGraphSize(val option.RangeVal) 
-- slide.WithRangeGraphAnglePos([]option.RangeVal) 
-- slide.WithGenGraphNumber(val int)
-- slide.WithEnableGraphVerticalRandom(val bool) 
-- slide.WithRangeDeadZoneDirections(val []DeadZoneDirectionType) 
+
+| Options                                                        | Desc            |
+|----------------------------------------------------------------|-----------------|
+| slide.WithImageSize(*option.Size)                              | default 300x220 |
+| slide.WithImageAlpha(float32)                                  |                 |
+| slide.WithRangeGraphSize(val option.RangeVal)                  |                 |
+| slide.WithRangeGraphAnglePos([]option.RangeVal)                |                 |
+| slide.WithGenGraphNumber(val int)                              |                 |
+| slide.WithEnableGraphVerticalRandom(val bool)                  |                 |
+| slide.WithRangeDeadZoneDirections(val []DeadZoneDirectionType) |                 |
 
 
 ### Set Resources
-builder.SetResources(slide.WithXxx(), ...)
-- slide.WithBackgrounds([]image.Image) 
-- slide.WithGraphImages(images []*GraphImage)
+> builder.SetResources(slide.WithXxx(), ...)
+
+| Options                                       | Desc |
+|-----------------------------------------------|------|
+| slide.WithBackgrounds([]image.Image)          |      |
+| slide.WithGraphImages(images []*GraphImage)   |      |
 
 ### Captcha Data
-- GetData() *Block
-- GetMasterImage() imagedata.JPEGImageData
-- GetTileImage() imagedata.PNGImageData
+
+> captData, err := capt.Generate()
+
+| Method                                   | Desc |
+|------------------------------------------|------|
+| GetData() *Block                         |      |
+| GetMasterImage() imagedata.JPEGImageData |      |
+| GetTileImage() imagedata.PNGImageData    |      |
 
 
 <br />
@@ -459,41 +488,59 @@ func loadPng(p string) (image.Image, error) {
 
 ### Configuration Options
 > rotate.NewBuilder(rotate.WithXxx(), ...) OR builder.SetOptions(rotate.WithXxx(), ...)
-- rotate.WithImageSquareSize(val int) 
-- rotate.WithRangeAnglePos(vals []option.RangeVal)
-- rotate.WithRangeThumbImageSquareSize(val []int) 
-- rotate.WithThumbImageAlpha(val float32)
+
+| Options                                          | Desc            |
+|--------------------------------------------------|-----------------|
+| rotate.WithImageSquareSize(val int)              | default 220x220 |
+| rotate.WithRangeAnglePos(vals []option.RangeVal) |                 |
+| rotate.WithRangeThumbImageSquareSize(val []int)  |                 |
+| rotate.WithThumbImageAlpha(val float32)          |                 |
 
 
 ### Set Resources
-builder.SetResources(rotate.WithXxx(), ...)
-- rotate.WithBackgrounds([]image.Image)
+> builder.SetResources(rotate.WithXxx(), ...)
+
+| Options                                    | Desc |
+|--------------------------------------------|------|
+| rotate.WithBackgrounds([]image.Image)      |      |
 
 ### Captcha Data
-- GetData() *Block
-- GetMasterImage() imagedata.PNGImageData
-- GetThumbImage() imagedata.PNGImageData
+> captData, err := capt.Generate()
+
+| Method                                   | Desc |
+|------------------------------------------|------|
+| GetData() *Block                         |      |
+| GetMasterImage() imagedata.JPEGImageData |      |
+| GetTileImage() imagedata.PNGImageData    |      |
 
 <br/>
 
 ## Captcha Image Data
 ### Object Method Of JPEGImageData
-- Get() image.Image
-- ToBytes() ([]byte, error)
-- ToBytesWithQuality(imageQuality int) ([]byte, error)
-- ToBase64() (string, error)
-- ToBase64Data() (string, error)
-- ToBase64WithQuality(imageQuality int) (string, error)
-- ToBase64DataWithQuality(imageQuality int) (string, error)
-- SaveToFile(filepath string, quality int) error
+
+| Method                                                     | Desc |
+|------------------------------------------------------------|------|
+| Get() image.Image                                          |      |
+| ToBytes() ([]byte, error)                                  |      |
+| ToBytesWithQuality(imageQuality int) ([]byte, error)       |      |
+| ToBase64() (string, error)                                 |      |
+| ToBase64Data() (string, error)                             |      |
+| ToBase64WithQuality(imageQuality int)  (string, error)     |      |
+| ToBase64DataWithQuality(imageQuality int) (string, error)  |      |
+| SaveToFile(filepath string, quality int) error             |      |
+
 
 
 ### Object Method Of PNGImageData
-- Get() image.Image 
-- ToBytes() ([]byte, error)
-- ToBase64() (string, error)
-- ToBase64Data() (string, error)
-- SaveToFile(filepath string) error
+
+| Method                                    | Desc |
+|-------------------------------------------|------|
+| Get() image.Image                         |      |
+| ToBytes() ([]byte, error)                 |      |
+| ToBase64() (string, error)                |      |
+| ToBase64Data() (string, error)            |      |
+| SaveToFile(filepath string) error         |      |
+
 
 <br/>
 
@@ -501,6 +548,10 @@ builder.SetResources(rotate.WithXxx(), ...)
 - [x] Golang
 - [ ] NodeJs
 - [ ] Rust
+- [ ] Python
+- [ ] Java
+- [ ] PHP
+- [ ] ...
 
 ## Install Package
 - [x] JavaScript

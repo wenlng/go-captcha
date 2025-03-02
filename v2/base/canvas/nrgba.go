@@ -189,8 +189,8 @@ func (n *nRGBA) Rotate(a int, overCrop bool) {
 	if overCrop {
 		xx := w - sW
 		yy := h - sH
-		dx := xx / 2
-		dy := yy / 2
+		dx := (xx / 2) + 1
+		dy := (yy / 2) + 1
 		n.SubImage(image.Rect(dx, dy, sW+dx, sH+dy))
 	}
 }

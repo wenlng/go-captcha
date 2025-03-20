@@ -23,7 +23,7 @@ type Mode int
 
 const (
 	ModeBasic Mode = iota
-	ModeRegion
+	ModeDrag
 )
 
 // Captcha .

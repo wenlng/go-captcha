@@ -12,6 +12,8 @@ type Builder interface {
 	SetResources(resources ...Resource)
 	Clear()
 	Make() Captcha
+	MakeShape() Captcha
+	// Deprecated: As of 2.1.0, it will be removed, please use [MakeShape].
 	MakeWithShape() Captcha
 }
 
@@ -66,6 +68,14 @@ func (b *builder) Make() Captcha {
 
 // MakeWithShape .
 func (b *builder) MakeWithShape() Captcha {
+	capt := newWithMode(ModeShape)
+	capt.setOptions(b.opts...)
+	capt.setResources(b.resources...)
+	return capt
+}
+
+// MakeShape .
+func (b *builder) MakeShape() Captcha {
 	capt := newWithMode(ModeShape)
 	capt.setOptions(b.opts...)
 	capt.setResources(b.resources...)

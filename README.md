@@ -14,7 +14,7 @@
 
 > English | [中文](README_zh.md)
 
-<p style="text-align: center"><a href="https://github.com/wenlng/go-captcha">Go Captcha</a> is a behavior CAPTCHA, which implements click mode, slider mode, drag-drop mode and rotation mode.</p>
+<p style="text-align: center"><a href="https://github.com/wenlng/go-captcha">GoCaptcha</a> is a behavior CAPTCHA, which implements click mode, slider mode, drag-drop mode and rotation mode.</p>
 
 <p style="text-align: center"> ⭐️ If it helps you, please give a star.</p>
 
@@ -188,30 +188,30 @@ func main() {
 ### Configuration Options
 > click.NewBuilder(click.WithXxx(), ...) OR builder.SetOptions(click.WithXxx(), ...)
 
-| Options                                      | Desc                                        |
-|----------------------------------------------|---------------------------------------------|
-| 主图                                           |                                             |
-| click.WithImageSize(option.Size)             | default 300x220                             |
-| click.WithRangeLen(option.RangeVal)          |                                             |
-| click.WithRangeAnglePos([]option.RangeVal)   |                                             |
-| click.WithRangeSize(option.RangeVal)         |                                             |
-| click.WithRangeColors([]string)              |                                             |
-| click.WithDisplayShadow(bool)                |                                             |
-| click.WithShadowColor(string)                |                                             |
-| click.WithShadowPoint(option.Point)          |                                             |
-| click.WithImageAlpha(float32)                |                                             |
-| click.WithUseShapeOriginalColor(bool)        |                                             |
-| 缩略图                                          |
-| click.WithThumbImageSize(option.Size)        | default 150x40                              |
-| click.WithRangeVerifyLen(option.RangeVal)    |                                             |
-| click.WithDisabledRangeVerifyLen(bool)       |                                             |
-| click.WithRangeThumbSize(option.RangeVal)    |                                             |
-| click.WithRangeThumbColors([]string)         |                                             |
-| click.WithRangeThumbBgColors([]string)       |                                             |
-| click.WithIsThumbNonDeformAbility(bool)      |                                             |
-| click.WithThumbBgDistort(int)                | option.DistortLevel1 ~ option.DistortLevel5 |
-| click.WithThumbBgCirclesNum(int)             |                                             |
-| click.WithThumbBgSlimLineNum(int)            |                                             |
+| Options                                    | Desc                                        |
+|--------------------------------------------|---------------------------------------------|
+| Master Image                               |                                             |
+| click.WithImageSize(option.Size)           | default 300x220                             |
+| click.WithRangeLen(option.RangeVal)        |                                             |
+| click.WithRangeAnglePos([]option.RangeVal) |                                             |
+| click.WithRangeSize(option.RangeVal)       |                                             |
+| click.WithRangeColors([]string)            |                                             |
+| click.WithDisplayShadow(bool)              |                                             |
+| click.WithShadowColor(string)              |                                             |
+| click.WithShadowPoint(option.Point)        |                                             |
+| click.WithImageAlpha(float32)              |                                             |
+| click.WithUseShapeOriginalColor(bool)      |                                             |
+| Thumbnail Image                            |
+| click.WithThumbImageSize(option.Size)      | default 150x40                              |
+| click.WithRangeVerifyLen(option.RangeVal)  |                                             |
+| click.WithDisabledRangeVerifyLen(bool)     |                                             |
+| click.WithRangeThumbSize(option.RangeVal)  |                                             |
+| click.WithRangeThumbColors([]string)       |                                             |
+| click.WithRangeThumbBgColors([]string)     |                                             |
+| click.WithIsThumbNonDeformAbility(bool)    |                                             |
+| click.WithThumbBgDistort(int)              | option.DistortLevel1 ~ option.DistortLevel5 |
+| click.WithThumbBgCirclesNum(int)           |                                             |
+| click.WithThumbBgSlimLineNum(int)          |                                             |
 
 
 ### Set Resources
@@ -560,13 +560,28 @@ func loadPng(p string) (image.Image, error) {
 - [x] Angular
 - [x] Svelte
 - [x] Solid
+
+## Web
+- [x] JavaScript
+- [x] Vue
+- [x] React
+- [x] Angular
+- [x] Svelte
+- [x] Solid
+- [ ] ...
+
+## App
 - [x] UniApp
 - [ ] WX-Applet
 - [ ] React Native App
 - [ ] Flutter App
 - [ ] Android App
 - [ ] IOS App
-- [ ] ... 
+- ...
+
+## Deployment
+- [ ] Docker Image
+- ...
 
 <br/>
 

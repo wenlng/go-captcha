@@ -12,6 +12,8 @@ type Builder interface {
 	SetResources(resources ...Resource)
 	Clear()
 	Make() Captcha
+	MakeDrag() Captcha
+	// Deprecated: As of 2.1.0, it will be removed, please use [MakeDrag].
 	MakeWithRegion() Captcha
 }
 
@@ -66,7 +68,15 @@ func (b *builder) Make() Captcha {
 
 // MakeWithRegion .
 func (b *builder) MakeWithRegion() Captcha {
-	capt := newWithMode(ModeRegion)
+	capt := newWithMode(ModeDrag)
+	capt.setOptions(b.opts...)
+	capt.setResources(b.resources...)
+	return capt
+}
+
+// MakeDrag .
+func (b *builder) MakeDrag() Captcha {
+	capt := newWithMode(ModeDrag)
 	capt.setOptions(b.opts...)
 	capt.setResources(b.resources...)
 	return capt

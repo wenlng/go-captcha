@@ -575,7 +575,8 @@ func loadPng(p string) (image.Image, error) {
 
 ## 扩展&增强
 - [x] 基本验证
-- [ ] 行为轨迹验证增强
+- [ ] Docker部署镜像
+- [ ] 行为检测增强
 - [ ] 其他因素增强
 - [ ] 多任务生成模式
 - [ ] ...
@@ -589,20 +590,27 @@ func loadPng(p string) (image.Image, error) {
 - [ ] PHP
 - [ ] ...
 
-## 前端安装包
+## Web
 - [x] JavaScript
 - [x] Vue
 - [x] React
 - [x] Angular
 - [x] Svelte
 - [x] Solid
+- [ ] ...
+
+## App
 - [x] UniApp
 - [ ] WX-Applet
 - [ ] React Native App
 - [ ] Flutter App
 - [ ] Android App
 - [ ] IOS App
-- [ ] ...
+- ...
+
+## Deployment
+- [ ] Docker Image
+- ...
 
 <br/>
 

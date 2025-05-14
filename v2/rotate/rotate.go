@@ -17,7 +17,7 @@ import (
 	"github.com/wenlng/go-captcha/v2/base/random"
 )
 
-// Captcha .
+// Captcha defines the interface for rotate CAPTCHA
 type Captcha interface {
 	setOptions(opts ...Option)
 	setResources(resources ...Resource)
@@ -27,10 +27,12 @@ type Captcha interface {
 
 var _ Captcha = (*captcha)(nil)
 
-var EmptyImageErr = errors.New("no image")
-var ImageTypeErr = errors.New("image must be is image.Image type")
+var (
+	EmptyImageErr = errors.New("no image")
+	ImageTypeErr  = errors.New("image must be is image.Image type")
+)
 
-// captcha .
+// captcha is the concrete implementation of the Captcha interface
 type captcha struct {
 	version   string
 	logger    logger.Logger
@@ -39,7 +41,11 @@ type captcha struct {
 	resources *Resources
 }
 
-// newRotate .
+// newRotate creates a new rotate CAPTCHA instance
+// params:
+//   - opts: Optional initial options
+//
+// return: Captcha interface instance
 func newRotate(opts ...Option) Captcha {
 	capt := &captcha{
 		logger:    logger.New(),
@@ -56,26 +62,34 @@ func newRotate(opts ...Option) Captcha {
 	return capt
 }
 
-// setOptions is to set option
+// setOptions sets the CAPTCHA options
+// params:
+//   - opts: Options to set
 func (c *captcha) setOptions(opts ...Option) {
 	for _, opt := range opts {
 		opt(c.opts)
 	}
 }
 
-// setResources is to set resource
+// setResources sets the CAPTCHA resources
+// params:
+//   - resources: Resources to set
 func (c *captcha) setResources(resources ...Resource) {
 	for _, resource := range resources {
 		resource(c.resources)
 	}
 }
 
-// GetOptions is to get options
+// GetOptions gets the CAPTCHA options
+// return: Pointer to options
 func (c *captcha) GetOptions() *Options {
 	return c.opts
 }
 
-// Generate is to generate the captcha data
+// Generate generates rotate CAPTCHA data
+// returns:
+//   - CaptchaData: Generated CAPTCHA data
+//   - error: Error information
 func (c *captcha) Generate() (CaptchaData, error) {
 	if err := c.check(); err != nil {
 		return nil, err
@@ -103,7 +117,14 @@ func (c *captcha) Generate() (CaptchaData, error) {
 	}, nil
 }
 
-// generateWithShape is to generate the master image
+// genMasterImage generates the master CAPTCHA image
+// params:
+//   - size: Image size
+//   - block: Block data
+//
+// returns:
+//   - image.Image: Generated master image
+//   - error: Error information
 func (c *captcha) genMasterImage(size int, block *Block) (image.Image, error) {
 	return c.drawImage.DrawWithNRGBA(&DrawImageParams{
 		Rotate:     block.Angle,
@@ -112,7 +133,15 @@ func (c *captcha) genMasterImage(size int, block *Block) (image.Image, error) {
 	})
 }
 
-// genThumbImage is to generate a thumbnail image
+// genThumbImage generates a thumbnail image
+// params:
+//   - bgImage: Background image
+//   - block: Block data
+//   - thumbImageSquareSize: Thumbnail size
+//
+// returns:
+//   - image.Image: Generated thumbnail image
+//   - error: Error information
 func (c *captcha) genThumbImage(bgImage image.Image, block *Block, thumbImageSquareSize int) (image.Image, error) {
 	return c.drawImage.DrawWithCropCircle(&DrawCropCircleImageParams{
 		Background:     bgImage,
@@ -123,7 +152,8 @@ func (c *captcha) genThumbImage(bgImage image.Image, block *Block, thumbImageSqu
 	})
 }
 
-// randAngle is to generate random angle
+// randAngle generates a random angle
+// returns: Random angle value
 func (c *captcha) randAngle() int {
 	angles := c.opts.rangeAnglePos
 
@@ -138,7 +168,8 @@ func (c *captcha) randAngle() int {
 	return res
 }
 
-// randAngle is to generate random size
+// randThumbImageSquareSize generates a random thumbnail size
+// return: Random thumbnail size
 func (c *captcha) randThumbImageSquareSize() int {
 	size := c.opts.rangeThumbImageSquareSize
 
@@ -150,7 +181,12 @@ func (c *captcha) randThumbImageSquareSize() int {
 	return size[index]
 }
 
-// genBlock is to generate block
+// genBlock generates CAPTCHA block data
+// params:
+//   - imageSize: Main image size
+//   - thumbImageSquareSize: Thumbnail size
+//
+// return: Pointer to block data
 func (c *captcha) genBlock(imageSize int, thumbImageSquareSize int) *Block {
 	var block = &Block{}
 	thumbWidth := thumbImageSquareSize
@@ -166,7 +202,8 @@ func (c *captcha) genBlock(imageSize int, thumbImageSquareSize int) *Block {
 	return block
 }
 
-// check is to check the captcha parameter
+// check checks the CAPTCHA parameters
+// return: Error information
 func (c *captcha) check() error {
 	if len(c.resources.rangImages) == 0 {
 		return EmptyImageErr

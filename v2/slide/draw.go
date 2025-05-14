@@ -14,7 +14,7 @@ import (
 	"golang.org/x/image/draw"
 )
 
-// DrawImageParams .
+// DrawImageParams defines the parameters for drawing the main image
 type DrawImageParams struct {
 	Width             int
 	Height            int
@@ -23,7 +23,7 @@ type DrawImageParams struct {
 	CaptchaDrawBlocks []*DrawBlock
 }
 
-// DrawTplImageParams .
+// DrawTplImageParams defines the parameters for drawing the template image (tile)
 type DrawTplImageParams struct {
 	X                int
 	Y                int
@@ -35,7 +35,7 @@ type DrawTplImageParams struct {
 	CaptchaDrawBlock *DrawBlock
 }
 
-// DrawImage .
+// DrawImage defines the interface for drawing images
 type DrawImage interface {
 	DrawWithNRGBA(params *DrawImageParams) (img image.Image, bgImg image.Image, err error)
 	DrawWithTemplate(params *DrawTplImageParams) (image.Image, error)
@@ -43,16 +43,24 @@ type DrawImage interface {
 
 var _ DrawImage = (*drawImage)(nil)
 
-// NewDrawImage .
+// NewDrawImage creates a new DrawImage instance
+// return: DrawImage interface instance
 func NewDrawImage() DrawImage {
 	return &drawImage{}
 }
 
-// drawImage .
+// NewDrawImage creates a new DrawImage instance
+// return: DrawImage interface instance
 type drawImage struct {
 }
 
-// DrawWithTemplate is to draw with a template
+// DrawWithTemplate draws the tile image using a template
+// params:
+//   - params: Drawing parameters
+//
+// returns:
+//   - image.Image: Drawn tile image
+//   - error: Error information
 func (d *drawImage) DrawWithTemplate(params *DrawTplImageParams) (image.Image, error) {
 	block := params.CaptchaDrawBlock
 	bgImage := params.Background
@@ -76,7 +84,14 @@ func (d *drawImage) DrawWithTemplate(params *DrawTplImageParams) (image.Image, e
 	return cvs, nil
 }
 
-// DrawWithNRGBA is to draw with a NRGBA
+// DrawWithNRGBA draws the main CAPTCHA image and background image using NRGBA format
+// params:
+//   - params: Drawing parameters
+//
+// returns:
+//   - image.Image: Drawn CAPTCHA image
+//   - image.Image: Drawn background image
+//   - error: Error information
 func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (img image.Image, bgImg image.Image, err error) {
 	blocks := params.CaptchaDrawBlocks
 	cvs := canvas.CreateNRGBACanvas(params.Width, params.Height, true)
@@ -110,7 +125,15 @@ func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (img image.Image, bgI
 	return cvs, rcm, nil
 }
 
-// drawGraphImage is to draw graphics
+// drawGraphImage draws a graph image
+// params:
+//   - width: Image width
+//   - height: Image height
+//   - img: Input image
+//
+// returns:
+//   - canvas.NRGBA: Drawn graph canvas
+//   - error: Error information
 func (d *drawImage) drawGraphImage(width, height int, img image.Image) (canvas.NRGBA, error) {
 	cvs := canvas.CreateNRGBACanvas(width, height, true)
 	draw.BiLinear.Scale(cvs.Get(), cvs.Bounds(), img, img.Bounds(), draw.Over, nil)

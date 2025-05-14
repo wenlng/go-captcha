@@ -10,7 +10,7 @@ import (
 	"image"
 )
 
-// Resources .
+// Resources defines the resources for the rotate CAPTCHA
 type Resources struct {
 	rangImages []image.Image
 }

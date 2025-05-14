@@ -13,7 +13,7 @@ import (
 	"github.com/wenlng/go-captcha/v2/base/option"
 )
 
-// PNGImageData .
+// PNGImageData interface for PNG image data
 type PNGImageData interface {
 	Get() image.Image
 	ToBytes() ([]byte, error)
@@ -24,19 +24,19 @@ type PNGImageData interface {
 
 var _ PNGImageData = (*pngImageDta)(nil)
 
-// pngImageDta .
+// pngImageDta struct for PNG image data
 type pngImageDta struct {
 	image image.Image
 }
 
-// NewPNGImageData .
+// NewPNGImageData creates a new PNG image data instance
 func NewPNGImageData(img image.Image) PNGImageData {
 	return &pngImageDta{
 		image: img,
 	}
 }
 
-// Get is to get the original picture
+// Get retrieves the original image
 func (c *pngImageDta) Get() image.Image {
 	return c.image
 }
@@ -50,7 +50,7 @@ func (c *pngImageDta) SaveToFile(filepath string) error {
 	return saveToFile(c.image, filepath, true, option.QualityNone)
 }
 
-// ToBytes is to convert PNG into byte array
+// ToBytes converts the PNG image to a byte array
 func (c *pngImageDta) ToBytes() ([]byte, error) {
 	if c.image == nil {
 		return []byte{}, ImageEmptyErr
@@ -58,7 +58,7 @@ func (c *pngImageDta) ToBytes() ([]byte, error) {
 	return codec.EncodePNGToByte(c.image)
 }
 
-// ToBase64Data is to convert PNG into base64
+// ToBase64Data converts the PNG image to Base64 data (without prefix)
 func (c *pngImageDta) ToBase64Data() (string, error) {
 	if c.image == nil {
 		return "", ImageEmptyErr
@@ -66,7 +66,7 @@ func (c *pngImageDta) ToBase64Data() (string, error) {
 	return codec.EncodePNGToBase64Data(c.image)
 }
 
-// ToBase64 is to convert PNG into base64
+// ToBase64 converts the PNG image to a Base64 string
 func (c *pngImageDta) ToBase64() (string, error) {
 	if c.image == nil {
 		return "", ImageEmptyErr

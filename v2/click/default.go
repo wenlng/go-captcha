@@ -11,6 +11,7 @@ import (
 	"golang.org/x/image/font"
 )
 
+// Default color list
 var colors = []string{
 	"#fde98e",
 	"#60c1ff",
@@ -21,6 +22,7 @@ var colors = []string{
 	"#78d6f8",
 }
 
+// Default thumbnail color list
 var thumbColors = []string{
 	"#1f55c4",
 	"#780592",
@@ -31,31 +33,38 @@ var thumbColors = []string{
 	"#016e5c",
 }
 
+// Default shadow color
 var shadowColor = "#101010"
 
+// Default character set
 var defaultChars = []string{"我", "是", "行", "为", "式", "验", "证", "码", "的", "随", "机", "文", "本", "种", "子"}
 
-// getDefaultColors is to get the default color
+// getDefaultColors gets the default color list
+// return: List of colors
 func getDefaultColors() []string {
 	return colors
 }
 
-// getDefaultShadowColor is to get the default shadow color
+// getDefaultShadowColor gets the default shadow color
+// return: Shadow color
 func getDefaultShadowColor() string {
 	return shadowColor
 }
 
-// getDefaultThumbColors is to get the default color of thumbnail
+// getDefaultThumbColors gets the default thumbnail color list
+// return: List of thumbnail colors
 func getDefaultThumbColors() []string {
 	return thumbColors
 }
 
-// getDefaultChars is to get the default character
+// getDefaultChars gets the default character set
+// return: Character set
 func getDefaultChars() []string {
 	return defaultChars
 }
 
-// defaultOptions is to the default configuration
+// defaultOptions sets the default captcha options
+// return: Option function
 func defaultOptions() Option {
 	return func(opts *Options) {
 		opts.fontDPI = 72
@@ -92,7 +101,8 @@ func defaultOptions() Option {
 	}
 }
 
-// defaultResource is to the default resource
+// defaultResource sets the default captcha resources
+// return: Resource function
 func defaultResource() Resource {
 	return func(resources *Resources) {
 		resources.chars = getDefaultChars()

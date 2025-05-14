@@ -14,10 +14,12 @@ import (
 	"golang.org/x/image/font"
 )
 
-var ColorLenErr = errors.New("the color length must be less than or equal to 255")
-var RangeVerifyLenErr = errors.New("the max value of 'rangeVerifyLen' must be less than or equal to the min value of 'rangeLen'")
+var (
+	ColorLenErr       = errors.New("the color length must be less than or equal to 255")
+	RangeVerifyLenErr = errors.New("the max value of 'rangeVerifyLen' must be less than or equal to the min value of 'rangeLen'")
+)
 
-// Options .
+// Options defines the configuration options for the captcha
 type Options struct {
 	fontDPI     int
 	fontHinting font.Hinting

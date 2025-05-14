@@ -11,12 +11,12 @@ import (
 	"math"
 )
 
-// RotatePoint is to the point of rotation
+// RotatePoint rotates a point's coordinates
 func RotatePoint(x, y, sin, cos float64) (float64, float64) {
 	return x*cos - y*sin, x*sin + y*cos
 }
 
-// RotatedSize is to the size of rotation
+// RotatedSize calculates the size after rotation
 func RotatedSize(w, h int, angle float64) (int, int) {
 	if w <= 0 || h <= 0 {
 		return 0, 0
@@ -44,6 +44,7 @@ func RotatedSize(w, h int, angle float64) (int, int) {
 	return int(width), int(height)
 }
 
+// CalcResizedRect calculates the resized rectangle
 func CalcResizedRect(src image.Rectangle, width int, height int, centerAlign bool) image.Rectangle {
 	var dst image.Rectangle
 	if width*src.Dy() < height*src.Dx() {

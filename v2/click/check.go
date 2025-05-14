@@ -10,7 +10,14 @@ import (
 	"math"
 )
 
-// CheckPoint is to the position of the detection point
+// CheckPoint checks if a click point is within the specified area
+// params:
+//   - sx, sy: Coordinates of the click point
+//   - dx, dy: Top-left coordinates of the target area
+//   - width, height: Width and height of the target area
+//   - padding: Padding of the area
+//
+// return: Whether the point is within the area
 func CheckPoint(sx, sy, dx, dy, width, height, padding int64) bool {
 	newWidth := width + (padding * 2)
 	newHeight := height + (padding * 2)

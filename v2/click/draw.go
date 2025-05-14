@@ -29,7 +29,7 @@ const (
 	DrawTypeImage
 )
 
-// DrawImageParams .
+// DrawImageParams defines the parameters for drawing images
 type DrawImageParams struct {
 	Width                 int
 	Height                int
@@ -46,6 +46,7 @@ type DrawImageParams struct {
 	ThumbDisturbAlpha     float32
 }
 
+// DrawImage defines the interface for drawing images
 type DrawImage interface {
 	DrawWithNRGBA(params *DrawImageParams) (image.Image, error)
 	DrawWithPalette(params *DrawImageParams, textColors []color.Color, bgColors []color.Color) (image.Image, error)
@@ -54,16 +55,23 @@ type DrawImage interface {
 
 var _ DrawImage = (*drawImage)(nil)
 
-// drawImage .
+// drawImage is the concrete implementation of the DrawImage interface
 type drawImage struct {
 }
 
-// NewDrawImage .
+// NewDrawImage creates a new DrawImage instance
+// return: DrawImage interface instance
 func NewDrawImage() DrawImage {
 	return &drawImage{}
 }
 
-// DrawWithNRGBA is to draw with a NRGBA
+// DrawWithNRGBA draws the main CAPTCHA image using NRGBA format
+// params:
+//   - params: Drawing parameters
+//
+// return:
+//   - image.Image: Drawn image
+//   - error: Error information
 func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (image.Image, error) {
 	dots := params.CaptchaDrawDot
 	cvs := canvas.CreateNRGBACanvas(params.Width, params.Height, true)
@@ -101,7 +109,15 @@ func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (image.Image, error) 
 	return m, nil
 }
 
-// DrawWithPalette is to draw with a palette
+// DrawWithPalette draws the thumbnail using a palette
+// params:
+//   - params: Drawing parameters
+//   - tColors: Text color list
+//   - bgColors: Background color list
+//
+// return:
+//   - image.Image: Drawn thumbnail
+//   - error: Error information
 func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Color, bgColors []color.Color) (image.Image, error) {
 	dots := params.CaptchaDrawDot
 
@@ -179,7 +195,15 @@ func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Col
 
 }
 
-// DrawWithNRGBA2 is to draw with a NRGBA
+// DrawWithNRGBA2 draws the thumbnail using NRGBA format (enhanced)
+// params:
+//   - params: Drawing parameters
+//   - tColors: Text color list
+//   - bgColors: Background color list
+//
+// return:
+//   - image.Image: Drawn thumbnail
+//   - error: Error information
 func (d *drawImage) DrawWithNRGBA2(params *DrawImageParams, tColors []color.Color, bgColors []color.Color) (image.Image, error) {
 	dots := params.CaptchaDrawDot
 
@@ -269,7 +293,12 @@ func (d *drawImage) DrawWithNRGBA2(params *DrawImageParams, tColors []color.Colo
 	return ccvs, nil
 }
 
-// randomFillWithCircles is to draw circle randomly
+// randomFillWithCircles draws circles randomly
+// params:
+//   - m: Palette canvas
+//   - n: Number of circles
+//   - maxRadius: Maximum radius
+//   - colorB: Color list
 func (d *drawImage) randomFillWithCircles(m canvas.Palette, n, maxRadius int, colorB []color.Color) {
 	maxx := m.Bounds().Max.X
 	maxy := m.Bounds().Max.Y
@@ -281,7 +310,11 @@ func (d *drawImage) randomFillWithCircles(m canvas.Palette, n, maxRadius int, co
 	}
 }
 
-// randomDrawSlimLine is to draw slim line randomly
+// randomDrawSlimLine draws slim lines randomly
+// params:
+//   - m: Palette canvas
+//   - num: Number of slim lines
+//   - colorB: Color list
 func (d *drawImage) randomDrawSlimLine(m canvas.Palette, num int, colorB []color.Color) {
 	first := m.Bounds().Max.X / 10
 	end := first * 9
@@ -304,7 +337,15 @@ func (d *drawImage) randomDrawSlimLine(m canvas.Palette, num int, colorB []color
 	}
 }
 
-// DrawDotImage is to draw dot image
+// DrawDotImage draws a single dot image
+// params:
+//   - dot: Draw dot
+//   - params: Drawing parameters
+//
+// returns:
+//   - canvas.NRGBA: Drawn dot image
+//   - *canvas.AreaRect: Drawing area
+//   - error: Error information
 func (d *drawImage) DrawDotImage(dot *DrawDot, params *DrawImageParams) (canvas.NRGBA, *canvas.AreaRect, error) {
 	cColor, _ := helper.ParseHexColor(dot.Color)
 	cColor.A = helper.FormatAlpha(params.Alpha)
@@ -350,7 +391,14 @@ func (d *drawImage) DrawDotImage(dot *DrawDot, params *DrawImageParams) (canvas.
 	return cvs, ap, nil
 }
 
-// DrawStringImage is to draw string image
+// DrawStringImage draws a text image
+// params:
+//   - dot: Draw dot
+//   - textColor: Text color
+//
+// returns:
+//   - canvas.NRGBA: Drawn text image
+//   - error: Error information
 func (d *drawImage) DrawStringImage(dot *DrawDot, textColor color.Color) (canvas.NRGBA, error) {
 	cvs := canvas.CreateNRGBACanvas(dot.Width+10, dot.Height+10, true)
 
@@ -376,7 +424,14 @@ func (d *drawImage) DrawStringImage(dot *DrawDot, textColor color.Color) (canvas
 	return cvs, nil
 }
 
-// DrawShapeImage is to draw shape image
+// DrawShapeImage draws a shape image
+// params:
+//   - dot: Draw dot
+//   - cColor: Shape color
+//
+// returns:
+//   - canvas.NRGBA: Drawn shape image
+//   - error: Error information
 func (d *drawImage) DrawShapeImage(dot *DrawDot, cColor color.Color) (canvas.NRGBA, error) {
 	cr, cg, cb, ca := cColor.RGBA()
 

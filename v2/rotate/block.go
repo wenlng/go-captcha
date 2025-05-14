@@ -6,6 +6,7 @@
 
 package rotate
 
+// Block ..
 type Block struct {
 	// Deprecated: As of 2.1.0, it will be removed, please use [[CaptchaInstance].GetOptions().GetImageSize()].
 	ParentWidth int `json:"parent_width"`

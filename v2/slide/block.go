@@ -10,7 +10,7 @@ import (
 	"image"
 )
 
-// Block .
+// Block defines the block data for the slide CAPTCHA
 type Block struct {
 	X      int `json:"x"`
 	Y      int `json:"y"`
@@ -26,7 +26,7 @@ type Block struct {
 	DY int `json:"dy"`
 }
 
-// DrawBlock .
+// DrawBlock defines the parameters for drawing slide CAPTCHA blocks
 type DrawBlock struct {
 	Block  *Block
 	X      int

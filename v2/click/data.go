@@ -8,14 +8,14 @@ package click
 
 import "github.com/wenlng/go-captcha/v2/base/imagedata"
 
-// CaptchaData .
+// CaptchaData defines the interface for captcha data
 type CaptchaData interface {
 	GetData() map[int]*Dot
 	GetMasterImage() imagedata.JPEGImageData
 	GetThumbImage() imagedata.PNGImageData
 }
 
-// CaptData .
+// CaptData is the concrete implementation of the CaptchaData interface
 type CaptData struct {
 	dots        map[int]*Dot
 	masterImage imagedata.JPEGImageData
@@ -24,17 +24,20 @@ type CaptData struct {
 
 var _ CaptchaData = (*CaptData)(nil)
 
-// GetData is to get dot
+// GetData gets the dot data of the captcha
+// return: Map of dot data
 func (c CaptData) GetData() map[int]*Dot {
 	return c.dots
 }
 
-// GetMasterImage is to get master image
+// GetMasterImage gets the main captcha image
+// return: Main image in JPEG format
 func (c CaptData) GetMasterImage() imagedata.JPEGImageData {
 	return c.masterImage
 }
 
-// GetThumbImage is to get thumbnail image
+// GetThumbImage gets the thumbnail image
+// return: Thumbnail image in PNG format
 func (c CaptData) GetThumbImage() imagedata.PNGImageData {
 	return c.thumbImage
 }

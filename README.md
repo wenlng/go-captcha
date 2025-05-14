@@ -26,28 +26,29 @@
 <hr/>
 <br/>
 
-## Projects Index
+## Ecosystem
 
-| Name                                                               | Desc                       |
-|--------------------------------------------------------------------|----------------------------|
-| [document](http://gocaptcha.wencodes.com)                          | GoCaptcha Document         |
-| [online demo](http://gocaptcha.wencodes.com/demo/)                 | GoCaptcha Online Demo      |
-| [go-captcha-example](https://github.com/wenlng/go-captcha-example) | Golang + Web + APP Example |
-| [go-captcha-assets](https://github.com/wenlng/go-captcha-assets)   | Golang Asset File          |
-| [go-captcha](https://github.com/wenlng/go-captcha)                 | Golang Captcha             |
-| [go-captcha-jslib](https://github.com/wenlng/go-captcha-jslib)     | Javascript Captcha         |
-| [go-captcha-vue](https://github.com/wenlng/go-captcha-vue)         | Vue Captcha                |
-| [go-captcha-react](https://github.com/wenlng/go-captcha-react)     | React Captcha              |
-| [go-captcha-angular](https://github.com/wenlng/go-captcha-angular) | Angular Captcha            |
-| [go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)   | Svelte Captcha             |
-| [go-captcha-solid](https://github.com/wenlng/go-captcha-solid)     | Solid Captcha              |
-| [go-captcha-uni](https://github.com/wenlng/go-captcha-uni)         | UniApp Captcha             |
-| ...                                                                |                            |
-
+| Project                                                                    | Desc                                                                                                                                                                                                                             |
+|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [document](http://gocaptcha.wencodes.com)                                  | GoCaptcha Document                                                                                                                                                                                                               |
+| [online demo](http://gocaptcha.wencodes.com/demo/)                         | GoCaptcha Online Demo                                                                                                                                                                                                            |
+| [go-captcha-example](https://github.com/wenlng/go-captcha-example)         | Golang + Web + APP Example                                                                                                                                                                                                       |
+| [go-captcha-assets](https://github.com/wenlng/go-captcha-assets)           | Golang Asset File                                                                                                                                                                                                                |
+| [go-captcha](https://github.com/wenlng/go-captcha)                         | Golang Captcha                                                                                                                                                                                                                   |
+| [go-captcha-jslib](https://github.com/wenlng/go-captcha-jslib)             | Javascript Captcha                                                                                                                                                                                                               |
+| [go-captcha-vue](https://github.com/wenlng/go-captcha-vue)                 | Vue Captcha                                                                                                                                                                                                                      |
+| [go-captcha-react](https://github.com/wenlng/go-captcha-react)             | React Captcha                                                                                                                                                                                                                    |
+| [go-captcha-angular](https://github.com/wenlng/go-captcha-angular)         | Angular Captcha                                                                                                                                                                                                                  |
+| [go-captcha-svelte](https://github.com/wenlng/go-captcha-svelte)           | Svelte Captcha                                                                                                                                                                                                                   |
+| [go-captcha-solid](https://github.com/wenlng/go-captcha-solid)             | Solid Captcha                                                                                                                                                                                                                    |
+| [go-captcha-uni](https://github.com/wenlng/go-captcha-uni)                 | UniApp Captcha                                                                                                                                                                                                                   |
+| [go-captcha-service](https://github.com/wenlng/go-captcha-service)         | GoCaptcha service supports deployment via binary and Docker images, <br/>provides HTTP/GRPC interface access, and supports standalone mode <br/>and distributed mode (service discovery, load balancing, dynamic configuration). |
+| [go-captcha-service-sdk](https://github.com/wenlng/go-captcha-service-sdk) | GoCaptcha service SDK toolkit includes HTTP/GRPC request service interfaces, <br/>supporting static mode, service discovery, and load balancing.                                                                                 |
+| ...                                                                        |                                                                                                                                                                                                                                  |
 
 <br/>
 
-## Install Module
+## Install
 ```shell
 $ go get -u github.com/wenlng/go-captcha/v2@latest
 ```
@@ -56,7 +57,8 @@ $ go get -u github.com/wenlng/go-captcha/v2@latest
 ```go
 package main
 
-import "github.com/wenlng/go-captcha/v2"
+// Import modules on demand
+import "github.com/wenlng/go-captcha/v2/${click|slide|rotate}"
 
 func main(){
    // ...
@@ -553,14 +555,6 @@ func loadPng(p string) (image.Image, error) {
 - [ ] PHP
 - [ ] ...
 
-## Install Package
-- [x] JavaScript
-- [x] Vue 
-- [x] React
-- [x] Angular
-- [x] Svelte
-- [x] Solid
-
 ## Web
 - [x] JavaScript
 - [x] Vue
@@ -572,14 +566,14 @@ func loadPng(p string) (image.Image, error) {
 
 ## App
 - [x] UniApp
-- [ ] WX-Applet
+- [ ] Wx-Applet
 - [ ] React Native App
 - [ ] Flutter App
 - [ ] Android App
 - [ ] IOS App
 - ...
 
-## Deployment
+## Deployment Service
 - [ ] Docker Image
 - ...
 

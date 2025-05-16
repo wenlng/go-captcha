@@ -13,9 +13,8 @@
 <br/>
 
 > [English](README.md) | 中文 
-
 <p style="text-align: center">
-<a style="font-weight: bold" href="https://github.com/wenlng/go-captcha">Go Captcha</a> 是行为式验证码，支持文本/图形点选、滑动/拖拽、旋转等验证模式。
+<a style="font-weight: bold" href="https://github.com/wenlng/go-captcha">Go Captcha</a> 是功能强大、模块化且高度可定制的行为式验证码库，支持多种交互式验证码类型：点选（Click）、滑动（Slide）、拖拽（Drag） 和 旋转（Rotate）。
 </p>
 
 <p style="text-align: center"> ⭐️ 如果能帮助到你，请随手给点一个star</p>
@@ -50,6 +49,27 @@
 | [go-captcha-service](https://github.com/wenlng/go-captcha-service)         | GoCaptcha 服务，支持二进制、Docker镜像等方式部署，<br/> 提供 HTTP/GRPC 方式访问接口，<br/>可用单机模式和分布式（服务发现、负载均衡、动态配置等） |
 | [go-captcha-service-sdk](https://github.com/wenlng/go-captcha-service-sdk) | GoCaptcha 服务SDK工具包，包含 HTTP/GRPC 请求服务接口，<br/>支持静态模式、服务发现、负载均衡                                |
 | ...                                                                        |                                                                                             |
+
+<br/>
+
+## 核心特性
+
+- **多样化验证码类型**：支持点选、滑动、旋转和拖拽四种行为式验证码，适应不同交互场景。
+- **高度可定制化**：通过选项（`Options`）和资源（`Resources`）支持图像、字体、颜色、角度、大小等灵活配置。
+- **高级图像处理**：内置动态图像生成和处理功能，支持主图像、缩略图、拼图块和阴影效果的生成。
+- **模块化架构**：代码结构清晰，遵循 Go 语言最佳实践，易于扩展和维护。
+- **高性能设计**：优化资源管理和图像生成，适合高并发场景。
+- **跨平台兼容**：生成的验证码图像可无缝集成到 Web 应用、移动应用或其他需要验证码的系统。
+
+<br/>
+
+## 验证码类型
+
+`go-captcha` 支持以下四种验证码类型，每种类型具有独特的交互方式、生成逻辑和应用场景：
+1. **点选验证码（Click）**：用户在主图像中点击指定的点或字符，支持文本模式和图形模式。
+2. **滑动验证码（Slide）**：用户将拼图块滑动到主图像中的正确位置，支持基本模式和拖拽模式。
+3. **旋转验证码（Rotate）**：用户旋转缩略图使其与主图像的角度对齐。
+4. **拖拽验证码（DragDrop）**：滑动验证码的变体，允许用户在更大范围内拖动拼图块到目标位置。
 
 <br/>
 
@@ -93,8 +113,21 @@ func main(){
 
 <br />
 
-## 🖖点选式
-### 快速使用
+## 🖖 点选验证码（Click）
+
+点选验证码要求用户在主图像中点击指定的点或字符，适合需要快速验证的场景。支持两种模式：
+
+- **文本模式**：显示字符（如字母、数字或中文），用户点击对应字符。
+- **图形模式**：显示图形（如图标或形状），用户点击对应图形。
+
+### 工作原理
+
+1. **生成主图像**（`masterImage`）：包含随机分布的点或字符，通常为 JPEG 格式。
+2. **生成缩略图**（`thumbImage`）：显示需要点击的目标点或字符，通常为 PNG 格式。
+3. **用户交互**：用户点击主图像中的坐标，前端捕获坐标并发送到后端。
+4. **验证逻辑**：后端比较用户点击的坐标与目标点（`dots`）的坐标是否匹配。
+
+### 代码示例
 ```go
 package main
 
@@ -118,6 +151,7 @@ func init() {
 	builder := click.NewBuilder(
 		click.WithRangeLen(option.RangeVal{Min: 4, Max: 6}),
 		click.WithRangeVerifyLen(option.RangeVal{Min: 2, Max: 4}),
+        // ...
 	)
 
 	// 可以使用预置的素材资源：https://github.com/wenlng/go-captcha-assets
@@ -254,10 +288,29 @@ func main() {
 | GetThumbImage() imagedata.PNGImageData   | 获取缩略图     |
 
 
+### 注意事项
+
+- 字符集（`chars`）或图形集（`shapes`）的长度必须大于 `rangeLen.Max`，否则会触发 `CharRangeLenErr` 或 `ShapesRangeLenErr`。
+- 图形模式需要提供有效的图像资源（`shapeMaps`），否则会触发 `ShapesTypeErr`。
+- 背景图像不能为空，否则会触发 `EmptyBackgroundImageErr`。
+
 <br />
 
-## 🖖 滑动/拖拽式
-### 快速使用
+## 🖖 滑动验证码（Slide）
+
+滑动验证码要求用户将拼图块滑动到主图像中的正确位置，支持两种模式：
+
+- **基本模式**：拼图块沿固定 Y 轴滑动，适合简单验证场景。
+- **拖拽模式**：拼图块可以在更大范围内自由拖动，适合需要更高交互自由度的场景。
+
+### 工作原理
+
+1. **生成主图像**（`masterImage`）：包含拼图块的缺口和阴影效果，通常为 JPEG 格式。
+2. **生成拼图图像**（`tileImage`）：用户需要滑动的拼图块，通常为 PNG 格式。
+3. **用户交互**：用户滑动拼图块到目标位置（`TileX`, `TileY`），前端捕获滑动终点坐标。
+4. **验证逻辑**：后端比较用户滑动的位置与目标位置是否匹配。
+
+### 代码示例
 ```go
 package main
 
@@ -410,10 +463,28 @@ func loadPng(p string) (image.Image, error) {
 | GetMasterImage() imagedata.JPEGImageData | 获取主图        |
 | GetTileImage() imagedata.PNGImageData    | 获取缩略图       |
 
+
+### 注意事项
+
+- 拼图块的图像资源（`OverlayImage`, `ShadowImage`, `MaskImage`）必须有效，否则会触发 `ImageTypeErr`, `ShadowImageTypeErr` 或 `MaskImageTypeErr`。
+- 背景图像不能为空，否则会触发 `EmptyBackgroundImageErr`。
+- 基本模式下，拼图块的 Y 坐标固定；拖拽模式下，Y 坐标可根据 `rangeDeadZoneDirections` 随机分布。
+- 拖拽模式适合需要更高交互自由度的场景，但可能增加用户操作时间。
+
 <br />
 
-## 🖖  旋转式
-### 快速使用
+## 🖖  旋转验证码（Rotate）
+
+旋转验证码要求用户旋转缩略图使其与主图像的角度对齐，适合需要直观交互的场景。
+
+### 工作原理
+
+1. **生成主图像**（`masterImage`）：包含旋转后的背景图像，通常为 PNG 格式。
+2. **生成缩略图**（`thumbImage`）：从主图像裁剪并应用圆形裁剪和透明度效果，通常为 PNG 格式。
+3. **用户交互**：用户旋转缩略图到目标角度（`block.Angle`），前端捕获旋转角度。
+4. **验证逻辑**：后端比较用户旋转的角度与目标角度是否匹配。
+
+### 代码示例
 ```go
 package main
 
@@ -532,6 +603,12 @@ func loadPng(p string) (image.Image, error) {
 | GetData() *Block                         | 获取当前校验的信息   |
 | GetMasterImage() imagedata.JPEGImageData | 获取主图        |
 | GetTileImage() imagedata.PNGImageData    | 获取缩略图       |
+
+### 注意事项
+
+- 背景图像不能为空，否则会触发 `EmptyImageErr`。
+- 确保背景图像是有效的 `image.Image` 类型，否则会触发 `ImageTypeErr`。
+- 缩略图会自动应用圆形裁剪效果，确保背景图像分辨率足够以避免模糊。
 
 <br/>
 

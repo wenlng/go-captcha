@@ -65,7 +65,7 @@ func NewDrawImage() DrawImage {
 	return &drawImage{}
 }
 
-// DrawWithNRGBA draws the main CAPTCHA image using NRGBA format
+// DrawWithNRGBA draws the image using NRGBA format
 // params:
 //   - params: Drawing parameters
 //
@@ -109,7 +109,7 @@ func (d *drawImage) DrawWithNRGBA(params *DrawImageParams) (image.Image, error) 
 	return m, nil
 }
 
-// DrawWithPalette draws the thumbnail using a palette
+// DrawWithPalette draws the image using a palette
 // params:
 //   - params: Drawing parameters
 //   - tColors: Text color list
@@ -195,7 +195,7 @@ func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Col
 
 }
 
-// DrawWithNRGBA2 draws the thumbnail using NRGBA format (enhanced)
+// DrawWithNRGBA2 draws the image using NRGBA format (enhanced)
 // params:
 //   - params: Drawing parameters
 //   - tColors: Text color list

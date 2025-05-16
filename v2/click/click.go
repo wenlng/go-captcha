@@ -65,7 +65,7 @@ type captcha struct {
 //   - opts: Optional options
 //
 // return: captcha instance
-func newWithMode(mode Mode, opts ...Option) *captcha {
+func newWithMode(mode Mode, opts ...Option) Captcha {
 	capt := &captcha{
 		logger:    logger.New(),
 		drawImage: NewDrawImage(),

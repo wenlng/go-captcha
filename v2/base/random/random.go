@@ -23,22 +23,22 @@ func newRnd() *rand.Rand {
 	return rand.New(src)
 }
 
-// Rand63n .
+// Rand63n generates a 64-bit random number
 func Rand63n(ri int64) {
 	rnd.Int63n(ri)
 }
 
-// Rand31n .
+// Rand31n generates a 32-bit random number
 func Rand31n(ri int32) {
 	rnd.Int31n(ri)
 }
 
-// Perm .
+// Perm generates a random permutation
 func Perm(n int) []int {
 	return rand.Perm(n)
 }
 
-// RandInt is to the safe random number of the interval [n, m]
+// RandInt generates a safe random number in the interval [n, m]
 func RandInt(min, max int) int {
 	if min > max {
 		return max

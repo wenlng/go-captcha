@@ -18,7 +18,7 @@ import (
 	"golang.org/x/image/math/fixed"
 )
 
-// NRGBA .
+// NRGBA interface for NRGBA canvas
 type NRGBA interface {
 	image.Image
 	Get() *image.NRGBA
@@ -34,7 +34,7 @@ type NRGBA interface {
 
 var _ NRGBA = (*nRGBA)(nil)
 
-// NewNRGBA .
+// NewNRGBA creates an NRGBA canvas
 func NewNRGBA(r image.Rectangle, isAlpha bool) NRGBA {
 	nrgba := image.NewNRGBA(r)
 	for y := 0; y < r.Max.Y; y++ {
@@ -52,17 +52,17 @@ func NewNRGBA(r image.Rectangle, isAlpha bool) NRGBA {
 	}
 }
 
-// nRGBA .
+// nRGBA struct for NRGBA canvas
 type nRGBA struct {
 	*image.NRGBA
 }
 
-// Get is to get the NRGBA
+// Get retrieves the NRGBA canvas
 func (n *nRGBA) Get() *image.NRGBA {
 	return n.NRGBA
 }
 
-// DrawString is to draws a string
+// DrawString draws a string on the canvas
 func (n *nRGBA) DrawString(params *DrawStringParams, pt fixed.Point26_6) error {
 	dc := freetype.NewContext()
 	dc.SetDPI(float64(params.FontDPI))
@@ -83,7 +83,7 @@ func (n *nRGBA) DrawString(params *DrawStringParams, pt fixed.Point26_6) error {
 	return nil
 }
 
-// DrawImage is to draws a picture
+// DrawImage draws an image on the canvas
 func (n *nRGBA) DrawImage(img Palette, dotRect *PositionRect, posRect *AreaRect) {
 	nW := img.Bounds().Max.X
 	nH := img.Bounds().Max.Y
@@ -109,7 +109,7 @@ func (n *nRGBA) DrawImage(img Palette, dotRect *PositionRect, posRect *AreaRect)
 	}
 }
 
-// CalcMarginBlankArea is to the calculation of margin space
+// CalcMarginBlankArea calculates the blank area of the canvas
 func (n *nRGBA) CalcMarginBlankArea() *AreaRect {
 	nW := n.Bounds().Max.X
 	nH := n.Bounds().Max.Y
@@ -151,7 +151,7 @@ func (n *nRGBA) CalcMarginBlankArea() *AreaRect {
 	}
 }
 
-// Rotate is to rotation at any Angle
+// Rotate rotates the canvas by any angle
 func (n *nRGBA) Rotate(a int, overCrop bool) {
 	if a == 0 {
 		return
@@ -189,13 +189,13 @@ func (n *nRGBA) Rotate(a int, overCrop bool) {
 	if overCrop {
 		xx := w - sW
 		yy := h - sH
-		dx := xx / 2
-		dy := yy / 2
+		dx := (xx / 2) + 1
+		dy := (yy / 2) + 1
 		n.SubImage(image.Rect(dx, dy, sW+dx, sH+dy))
 	}
 }
 
-// CropCircle is to cut the circle
+// CropCircle crops a circular area
 func (n *nRGBA) CropCircle(x, y, radius int) {
 	bounds := n.Get().Bounds()
 	mask := image.NewNRGBA(bounds)
@@ -214,7 +214,7 @@ func (n *nRGBA) CropCircle(x, y, radius int) {
 	n.NRGBA = mask
 }
 
-// CropScaleCircle is to scale and crop the circle
+// CropScaleCircle scales and crops a circular area
 func (n *nRGBA) CropScaleCircle(x, y, radius int, zoomSize int) {
 	bounds := n.Get().Bounds()
 	mask := image.NewNRGBA(bounds)
@@ -241,7 +241,7 @@ func (n *nRGBA) CropScaleCircle(x, y, radius int, zoomSize int) {
 	n.NRGBA = mask
 }
 
-// Scale is to scale the image
+// Scale scales the canvas
 func (n *nRGBA) Scale(zoomSize int, keepRatio, centerAlign bool) {
 	img := n.NRGBA
 	if zoomSize > 0 {
@@ -263,7 +263,7 @@ func (n *nRGBA) Scale(zoomSize int, keepRatio, centerAlign bool) {
 	n.NRGBA = img
 }
 
-// SubImage is to capture the image
+// SubImage captures a sub-image
 func (n *nRGBA) SubImage(r image.Rectangle) {
 	n.NRGBA = n.Get().SubImage(r).(*image.NRGBA)
 }

@@ -15,6 +15,7 @@ import (
 	"github.com/wenlng/go-captcha/v2/base/logger"
 )
 
+// Resources defines the resources for the CAPTCHA
 type Resources struct {
 	chars                []string
 	shapeMaps            map[string]image.Image
@@ -31,8 +32,10 @@ func NewResources() *Resources {
 
 type Resource func(*Resources)
 
-var ChineseCharLenErr = errors.New("the chinese char length must be equal to 1")
-var CharLenErr = errors.New("the char length must be less than or equal to 2")
+var (
+	ChineseCharLenErr = errors.New("the chinese char length must be equal to 1")
+	CharLenErr        = errors.New("the char length must be less than or equal to 2")
+)
 
 // WithChars is to set characters
 func WithChars(chars []string) Resource {

@@ -8,12 +8,12 @@ package canvas
 
 import "math"
 
-// Matrix .
+// Matrix struct for transformation calculations
 type Matrix struct {
 	XX, YX, XY, YY, X0, Y0 float64
 }
 
-// Translate is to the matrix calculation of translate
+// Translate performs matrix translation calculation
 func (a Matrix) Translate(x, y float64) Matrix {
 	return Matrix{
 		1, 0,
@@ -22,7 +22,7 @@ func (a Matrix) Translate(x, y float64) Matrix {
 	}.Multiply(a)
 }
 
-// Multiply is to the matrix calculation of multiply
+// Multiply performs matrix multiplication
 func (a Matrix) Multiply(b Matrix) Matrix {
 	return Matrix{
 		a.XX*b.XX + a.YX*b.XY,
@@ -34,7 +34,7 @@ func (a Matrix) Multiply(b Matrix) Matrix {
 	}
 }
 
-// Rotate is to the matrix calculation of rotation
+// Rotate performs matrix rotation calculation
 func (a Matrix) Rotate(angle float64) Matrix {
 	c := math.Cos(angle)
 	s := math.Sin(angle)

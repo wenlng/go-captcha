@@ -12,7 +12,7 @@ import (
 	"github.com/golang/freetype/truetype"
 )
 
-// Dot .
+// Dot represents a single point (character or shape) in the captcha
 type Dot struct {
 	Index  int    `json:"index"`
 	X      int    `json:"x"`
@@ -27,7 +27,7 @@ type Dot struct {
 	Color2 string `json:"color2"`
 }
 
-// DrawDot .
+// DrawDot represents the dot data used for drawing
 type DrawDot struct {
 	Dot              *Dot
 	X                int

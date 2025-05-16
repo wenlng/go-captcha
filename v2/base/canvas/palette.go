@@ -16,7 +16,7 @@ import (
 	"golang.org/x/image/math/fixed"
 )
 
-// Palette .
+// Palette interface for palette canvas
 type Palette interface {
 	image.Image
 	Get() *image.Paletted
@@ -32,24 +32,24 @@ type Palette interface {
 
 var _ Palette = (*palette)(nil)
 
-// NewPalette .
+// NewPalette creates a palette canvas
 func NewPalette(r image.Rectangle, p color.Palette) Palette {
 	return &palette{
 		image.NewPaletted(r, p),
 	}
 }
 
-// Palette .
+// palette struct for palette canvas
 type palette struct {
 	*image.Paletted
 }
 
-// Get is to get the Palette
+// Get retrieves the palette canvas
 func (p *palette) Get() *image.Paletted {
 	return p.Paletted
 }
 
-// Rotate is to rotation at any Angle
+// Rotate rotates the canvas by any angle
 func (p *palette) Rotate(angle int) {
 	if angle == 0 {
 		return
@@ -76,7 +76,7 @@ func (p *palette) Rotate(angle int) {
 	}
 }
 
-// DrawCircle is drawing circle
+// DrawCircle draws a circle
 func (p *palette) DrawCircle(x, y, radius int, c color.RGBA) {
 	f := 1 - radius
 	dfx := 1
@@ -104,14 +104,14 @@ func (p *palette) DrawCircle(x, y, radius int, c color.RGBA) {
 	}
 }
 
-// DrawHorizLine is to draw horiz line
+// DrawHorizLine draws a horizontal line
 func (p *palette) DrawHorizLine(fromX, toX, y int, c color.RGBA) {
 	for x := fromX; x <= toX; x++ {
 		p.Set(x, y, c)
 	}
 }
 
-// Distort is to distort the image
+// Distort distorts the canvas
 func (p *palette) Distort(amplude float64, period float64) {
 	w := p.Bounds().Max.X
 	h := p.Bounds().Max.Y
@@ -136,7 +136,7 @@ func (p *palette) Distort(amplude float64, period float64) {
 	newP.Get().Palette = nil
 }
 
-// DrawBeeline is to draw beelines
+// DrawBeeline draws a straight line
 func (p *palette) DrawBeeline(point1 image.Point, point2 image.Point, lineColor color.RGBA) {
 	dx := math.Abs(float64(point1.X - point2.X))
 	dy := math.Abs(float64(point2.Y - point1.Y))
@@ -169,7 +169,7 @@ func (p *palette) DrawBeeline(point1 image.Point, point2 image.Point, lineColor 
 	}
 }
 
-// AngleSwapPoint is to the angular conversion point coordinate
+// AngleSwapPoint converts point coordinates based on angle
 func (p *palette) AngleSwapPoint(x, y, r, angle float64) (tarX, tarY float64) {
 	x -= r
 	y = r - y
@@ -182,7 +182,7 @@ func (p *palette) AngleSwapPoint(x, y, r, angle float64) (tarX, tarY float64) {
 	return
 }
 
-// CalcMarginBlankArea is to the calculation of margin space
+// CalcMarginBlankArea calculates the blank area of the canvas
 func (p *palette) CalcMarginBlankArea() *AreaRect {
 	nW := p.Bounds().Max.X
 	nH := p.Bounds().Max.Y
@@ -224,7 +224,7 @@ func (p *palette) CalcMarginBlankArea() *AreaRect {
 	}
 }
 
-// DrawString is to draw a string
+// DrawString draws a string on the canvas
 func (p *palette) DrawString(params *DrawStringParams, pt fixed.Point26_6) error {
 	dc := freetype.NewContext()
 	dc.SetDPI(float64(params.FontDPI))

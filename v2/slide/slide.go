@@ -23,10 +23,10 @@ type Mode int
 
 const (
 	ModeBasic Mode = iota
-	ModeRegion
+	ModeDrag
 )
 
-// Captcha .
+// Captcha defines the interface for slide CAPTCHA
 type Captcha interface {
 	setOptions(opts ...Option)
 	setResources(resources ...Resource)
@@ -36,14 +36,16 @@ type Captcha interface {
 
 var _ Captcha = (*captcha)(nil)
 
-var GraphImageErr = errors.New("graph image is incorrect")
-var GenerateDataErr = errors.New("generate data failed")
-var ImageTypeErr = errors.New("tile image must be is image.Image type")
-var ShadowImageTypeErr = errors.New("tile shadow image must be is image.Image type")
-var MaskImageTypeErr = errors.New("tile shadow image must be is image.Image type")
-var EmptyBackgroundImageErr = errors.New("no background image")
+var (
+	GraphImageErr           = errors.New("graph image is incorrect")
+	GenerateDataErr         = errors.New("generate data failed")
+	ImageTypeErr            = errors.New("tile image must be is image.Image type")
+	ShadowImageTypeErr      = errors.New("tile shadow image must be is image.Image type")
+	MaskImageTypeErr        = errors.New("tile shadow image must be is image.Image type")
+	EmptyBackgroundImageErr = errors.New("no background image")
+)
 
-// captcha .
+// captcha is the concrete implementation of the Captcha interface
 type captcha struct {
 	version   string
 	logger    logger.Logger
@@ -53,7 +55,12 @@ type captcha struct {
 	mode      Mode
 }
 
-// newWithMode .
+// newWithMode creates a new slide CAPTCHA instance
+// params:
+//   - mode: CAPTCHA mode
+//   - opts: Optional initial options
+//
+// return: Captcha interface instance
 func newWithMode(mode Mode, opts ...Option) Captcha {
 	capt := &captcha{
 		logger:    logger.New(),
@@ -76,26 +83,34 @@ func newWithMode(mode Mode, opts ...Option) Captcha {
 	return capt
 }
 
-// setOptions is to set option
+// setOptions sets the CAPTCHA options
+// params:
+//   - opts: Options to set
 func (c *captcha) setOptions(opts ...Option) {
 	for _, opt := range opts {
 		opt(c.opts)
 	}
 }
 
-// setResources is to set resource
+// setResources sets the CAPTCHA resources
+// params:
+//   - resources: Resources to set
 func (c *captcha) setResources(resources ...Resource) {
 	for _, resource := range resources {
 		resource(c.resources)
 	}
 }
 
-// GetOptions is to get options
+// GetOptions gets the CAPTCHA options
+// return: Pointer to options
 func (c *captcha) GetOptions() *Options {
 	return c.opts
 }
 
-// Generate is to generate the captcha data
+// Generate generates slide CAPTCHA data
+// returns:
+//   - CaptchaData: Generated CAPTCHA data
+//   - error: Error information
 func (c *captcha) Generate() (CaptchaData, error) {
 	if err := c.check(); err != nil {
 		return nil, err
@@ -137,10 +152,13 @@ func (c *captcha) Generate() (CaptchaData, error) {
 
 	if c.mode == ModeBasic {
 		block.TileY = block.Y
+		block.DY = block.Y
 	} else {
 		block.TileY = tilePoint.Y
+		block.DY = tilePoint.Y
 	}
 	block.TileX = tilePoint.X
+	block.DX = tilePoint.X
 
 	return &CaptData{
 		block:       block,
@@ -149,7 +167,16 @@ func (c *captcha) Generate() (CaptchaData, error) {
 	}, nil
 }
 
-// generateWithShape is to generate the master image
+// genMasterImage generates the master CAPTCHA image and background image
+// params:
+//   - size: Image size
+//   - shadowImage: Shadow image
+//   - blocks: List of blocks
+//
+// returns:
+//   - image.Image: Master image
+//   - image.Image: Background image
+//   - error: Error information
 func (c *captcha) genMasterImage(size *option.Size, shadowImage image.Image, blocks []*Block) (image.Image, image.Image, error) {
 	var drawBlocks = make([]*DrawBlock, 0, len(blocks))
 	for i := 0; i < len(blocks); i++ {
@@ -174,7 +201,16 @@ func (c *captcha) genMasterImage(size *option.Size, shadowImage image.Image, blo
 	})
 }
 
-// genThumbImage is to generate a tile image
+// genTileImage generates a tile image
+// params:
+//   - maskImage: Mask image
+//   - bgImage: Background image
+//   - overlayImage: Overlay image
+//   - block: Block data
+//
+// returns:
+//   - image.Image: Tile image
+//   - error: Error information
 func (c *captcha) genTileImage(maskImage image.Image, bgImage image.Image, overlayImage image.Image, block *Block) (image.Image, error) {
 	return c.drawImage.DrawWithTemplate(&DrawTplImageParams{
 		Background: bgImage,
@@ -194,7 +230,8 @@ func (c *captcha) genTileImage(maskImage image.Image, bgImage image.Image, overl
 	})
 }
 
-// randDeadZoneDirection is to generate random zone direction
+// randDeadZoneDirection generates a random dead zone direction
+// return: Dead zone direction
 func (c *captcha) randDeadZoneDirection() DeadZoneDirectionType {
 	dirs := c.opts.rangeDeadZoneDirections
 
@@ -207,7 +244,8 @@ func (c *captcha) randDeadZoneDirection() DeadZoneDirectionType {
 	return res
 }
 
-// randGraphAngle is to generate random angle
+// randGraphAngle generates a random graph angle
+// return: Random angle value
 func (c *captcha) randGraphAngle() int {
 	angles := c.opts.rangeGraphAnglePos
 
@@ -222,7 +260,15 @@ func (c *captcha) randGraphAngle() int {
 	return res
 }
 
-// genGraphBlocks is to generate blocks
+// genGraphBlocks generates graph block data
+// params:
+//   - imageSize: Main image size
+//   - size: Graph size range
+//   - length: Number of graphs
+//
+// returns:
+//   - []*Block: List of blocks
+//   - *option.Point: Tile position
 func (c *captcha) genGraphBlocks(imageSize *option.Size, size *option.RangeVal, length int) ([]*Block, *option.Point) {
 	var blocks = make([]*Block, 0, length)
 	width := imageSize.Width
@@ -281,7 +327,16 @@ func (c *captcha) genGraphBlocks(imageSize *option.Size, size *option.RangeVal, 
 	return blocks, point
 }
 
-// calcXWithDeadZone .
+// calcXWithDeadZone calculates the X coordinate range (considering dead zone)
+// params:
+//   - start: Start X coordinate
+//   - end: End X coordinate
+//   - value: Block width
+//   - dzdType: Dead zone direction
+//
+// returns:
+//   - int: Adjusted start X coordinate
+//   - int: Adjusted end X coordinate
 func (c *captcha) calcXWithDeadZone(start, end, value int, dzdType DeadZoneDirectionType) (int, int) {
 	if dzdType == DeadZoneDirectionTypeLeft {
 		start += value
@@ -290,7 +345,14 @@ func (c *captcha) calcXWithDeadZone(start, end, value int, dzdType DeadZoneDirec
 	return start, end
 }
 
-// calcYWithDeadZone .
+// calcYWithDeadZone calculates the Y coordinate (considering dead zone)
+// params:
+//   - start: Start Y coordinate
+//   - end: End Y coordinate
+//   - value: Block height
+//   - dzdType: Dead zone direction
+//
+// return: Random Y coordinate
 func (c *captcha) calcYWithDeadZone(start, end, value int, dzdType DeadZoneDirectionType) int {
 	if dzdType == DeadZoneDirectionTypeTop {
 		start += value
@@ -300,7 +362,11 @@ func (c *captcha) calcYWithDeadZone(start, end, value int, dzdType DeadZoneDirec
 	return random.RandInt(start, end)
 }
 
-// genGraph is to generate random graph
+// genGraph generates random graph resources
+// returns:
+//   - maskImage: Mask image
+//   - shadowImage: Shadow image
+//   - templateImage: Template image
 func (c *captcha) genGraph() (maskImage, shadowImage, templateImage image.Image) {
 	index := helper.RandIndex(len(c.resources.rangGraphImage))
 	if index < 0 {
@@ -312,7 +378,8 @@ func (c *captcha) genGraph() (maskImage, shadowImage, templateImage image.Image)
 	return graphImage.OverlayImage, graphImage.ShadowImage, graphImage.MaskImage
 }
 
-// check is to check the captcha parameter
+// check checks the CAPTCHA parameters
+// return: Error information
 func (c *captcha) check() error {
 	for _, tile := range c.resources.rangGraphImage {
 		if tile.OverlayImage == nil {

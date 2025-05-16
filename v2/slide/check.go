@@ -6,7 +6,15 @@
 
 package slide
 
-// CheckPoint is to the position of the detection point
+// CheckPoint checks if the point position is within the specified range
+// params:
+//   - sx: Source X coordinate
+//   - sy: Source Y coordinate
+//   - dx: Target X coordinate
+//   - dy: Target Y coordinate
+//   - padding: Padding
+//
+// return: Whether within range
 func CheckPoint(sx, sy, dx, dy, padding int64) bool {
 	newX := padding * 2
 	newY := padding * 2

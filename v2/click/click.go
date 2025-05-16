@@ -21,7 +21,7 @@ import (
 	"github.com/wenlng/go-captcha/v2/base/random"
 )
 
-// Captcha .
+// Captcha defines the interface for captcha
 type Captcha interface {
 	setOptions(opts ...Option)
 	setResources(resources ...Resource)
@@ -29,24 +29,27 @@ type Captcha interface {
 	Generate() (CaptchaData, error)
 }
 
+// Mode defines the mode of the captcha
 type Mode int
 
 const (
-	ModeText Mode = iota
-	ModeShape
+	ModeText  Mode = iota // Text mode
+	ModeShape             // Shape mode
 )
 
 var _ Captcha = (*captcha)(nil)
 
-var EmptyShapesErr = errors.New("empty shapes")
-var EmptyCharacterErr = errors.New("empty character")
-var CharRangeLenErr = errors.New("character length must be large than to 'rangeLen.Max'")
-var ShapesRangeLenErr = errors.New("total number of shapes must be large than to 'rangeLen.Max'")
-var ShapesTypeErr = errors.New("shape must be is image type")
-var EmptyBackgroundImageErr = errors.New("no background image")
-var ModeSupportErr = errors.New("mode not supported")
+var (
+	EmptyShapesErr          = errors.New("empty shapes")
+	EmptyCharacterErr       = errors.New("empty character")
+	CharRangeLenErr         = errors.New("character length must be large than to 'rangeLen.Max'")
+	ShapesRangeLenErr       = errors.New("total number of shapes must be large than to 'rangeLen.Max'")
+	ShapesTypeErr           = errors.New("shape must be is image type")
+	EmptyBackgroundImageErr = errors.New("no background image")
+	ModeSupportErr          = errors.New("mode not supported")
+)
 
-// captcha .
+// captcha is the concrete implementation of the Captcha interface
 type captcha struct {
 	version   string
 	logger    logger.Logger
@@ -56,8 +59,13 @@ type captcha struct {
 	mode      Mode
 }
 
-// newWithMode is to create a captcha
-func newWithMode(mode Mode, opts ...Option) *captcha {
+// newWithMode creates a captcha with the specified mode
+// params:
+//   - mode: Captcha mode
+//   - opts: Optional options
+//
+// return: captcha instance
+func newWithMode(mode Mode, opts ...Option) Captcha {
 	capt := &captcha{
 		logger:    logger.New(),
 		drawImage: NewDrawImage(),
@@ -70,6 +78,7 @@ func newWithMode(mode Mode, opts ...Option) *captcha {
 	defaultResource()(capt.resources)
 
 	if mode == ModeShape {
+		// Specific settings for shape mode
 		capt.opts.thumbBgDistort = option.DistortLevel1
 		capt.opts.rangeSize = &option.RangeVal{Min: 24, Max: 30}
 		capt.opts.rangeThumbSize = &option.RangeVal{Min: 14, Max: 20}
@@ -80,26 +89,32 @@ func newWithMode(mode Mode, opts ...Option) *captcha {
 	return capt
 }
 
-// setOptions is to set option
+// setOptions sets the captcha options
+// opts: Options to set
 func (c *captcha) setOptions(opts ...Option) {
 	for _, opt := range opts {
 		opt(c.opts)
 	}
 }
 
-// setResources is to set resource
-func (c *captcha) setResources(resources ...Resource) {
-	for _, resource := range resources {
+// setResources sets the captcha resources
+// res: Resources to set
+func (c *captcha) setResources(res ...Resource) {
+	for _, resource := range res {
 		resource(c.resources)
 	}
 }
 
-// GetOptions is to get options
+// GetOptions gets the captcha options
+// return: Captcha options
 func (c *captcha) GetOptions() *Options {
 	return c.opts
 }
 
-// Generate is to generate the captcha data
+// Generate generates captcha data
+// returns:
+//   - CaptchaData: Generated captcha data
+//   - error: Error information
 func (c *captcha) Generate() (CaptchaData, error) {
 	if c.mode == ModeShape {
 		return c.generateWithShape()
@@ -108,7 +123,10 @@ func (c *captcha) Generate() (CaptchaData, error) {
 	return c.generateWithText()
 }
 
-// generateWithShape is to generate the graphical captcha data
+// generateWithShape generates captcha data for shape mode
+// returns:
+//   - CaptchaData: Generated captcha data
+//   - error: Error information
 func (c *captcha) generateWithShape() (CaptchaData, error) {
 	if err := c.check(); err != nil {
 		return nil, err
@@ -144,7 +162,10 @@ func (c *captcha) generateWithShape() (CaptchaData, error) {
 	}, nil
 }
 
-// generateWithText is to generate the text captcha data
+// generateWithText generates captcha data for text mode
+// returns:
+//   - CaptchaData: Generated captcha data
+//   - error: Error information
 func (c *captcha) generateWithText() (CaptchaData, error) {
 	if err := c.check(); err != nil {
 		return nil, err
@@ -180,7 +201,10 @@ func (c *captcha) generateWithText() (CaptchaData, error) {
 	}, nil
 }
 
-// genShapes is to generate an orderly shapes list
+// genShapes generates an ordered list of shapes
+// returns:
+//   - []string: List of shape names
+//   - error: Error information
 func (c *captcha) genShapes() ([]string, error) {
 	length := random.RandInt(c.opts.rangeLen.Min, c.opts.rangeLen.Max)
 	shapeNames := c.genRandShape(length)
@@ -190,7 +214,10 @@ func (c *captcha) genShapes() ([]string, error) {
 	return shapeNames, nil
 }
 
-// genChars is to generate an orderly character list
+// genChars generates an ordered list of characters
+// returns:
+//   - []string: List of characters
+//   - error: Error information
 func (c *captcha) genChars() ([]string, error) {
 	length := random.RandInt(c.opts.rangeLen.Min, c.opts.rangeLen.Max)
 	chars := c.genRandChar(length)
@@ -200,7 +227,14 @@ func (c *captcha) genChars() ([]string, error) {
 	return chars, nil
 }
 
-// genDots is to generate an orderly dot list
+// genDots generates an ordered list of dots
+// params:
+//   - imageSize: Image size
+//   - size: Dot size range
+//   - values: List of values (characters or shapes)
+//   - padding: Padding
+//
+// return: Map of dot data
 func (c *captcha) genDots(imageSize *option.Size, size *option.RangeVal, values []string, padding int) map[int]*Dot {
 	var dots = make(map[int]*Dot, len(values))
 	width := imageSize.Width
@@ -266,7 +300,8 @@ func (c *captcha) genDots(imageSize *option.Size, size *option.RangeVal, values 
 	return dots
 }
 
-// check is to check the captcha parameter
+// check checks the captcha parameters
+// returns: Error information
 func (c *captcha) check() error {
 	if c.mode == ModeText {
 		if len(c.resources.chars) < c.opts.rangeLen.Max {
@@ -294,7 +329,13 @@ func (c *captcha) check() error {
 	return ModeSupportErr
 }
 
-// rangeCheckDots is to generate random detection points
+// rangeCheckDots generates random verification dots
+// params:
+//   - dots: Map of dot data
+//
+// return:
+//   - map[int]*Dot: Verification dot data
+//   - []string: List of verification values
 func (c *captcha) rangeCheckDots(dots map[int]*Dot) (map[int]*Dot, []string) {
 	rs := random.Perm(len(dots))
 	chkDots := make(map[int]*Dot)
@@ -317,7 +358,14 @@ func (c *captcha) rangeCheckDots(dots map[int]*Dot) (map[int]*Dot, []string) {
 	return chkDots, values
 }
 
-// genMasterImage is to the master image of drawing captcha
+// genMasterImage generates the main captcha image
+// params:
+//   - size: Image size
+//   - dots: Map of dot data
+//
+// returns:
+//   - image.Image: Generated image
+//   - error: Error information
 func (c *captcha) genMasterImage(size *option.Size, dots map[int]*Dot) (image.Image, error) {
 	var drawDots = make([]*DrawDot, 0, len(dots))
 
@@ -364,7 +412,14 @@ func (c *captcha) genMasterImage(size *option.Size, dots map[int]*Dot) (image.Im
 	})
 }
 
-// genThumbImage is to the thumbnail image of drawing captcha
+// genThumbImage generates the thumbnail image
+// params:
+//   - size: Image size
+//   - dots: Map of dot data
+//
+// returns:
+//   - image.Image: Generated thumbnail
+//   - error: Error information
 func (c *captcha) genThumbImage(size *option.Size, dots map[int]*Dot) (image.Image, error) {
 	var drawDots = make([]*DrawDot, 0, len(dots))
 
@@ -438,7 +493,11 @@ func (c *captcha) genThumbImage(size *option.Size, dots map[int]*Dot) (image.Ima
 	return c.drawImage.DrawWithPalette(params, mTextColors, bgColors)
 }
 
-// genRandShape is to generate random shape array
+// genRandShape generates a random shape array
+// params:
+//   - length: Number of shapes
+//
+// returns: List of shape names
 func (c *captcha) genRandShape(length int) []string {
 	var nameA []string
 	for len(nameA) < length {
@@ -451,7 +510,11 @@ func (c *captcha) genRandShape(length int) []string {
 	return nameA
 }
 
-// genRandCharis is to generate random character array
+// genRandChar generates a random character array
+// params:
+//   - length: Number of characters
+//
+// return: List of characters
 func (c *captcha) genRandChar(length int) []string {
 	var strA []string
 	for len(strA) < length {
@@ -464,7 +527,11 @@ func (c *captcha) genRandChar(length int) []string {
 	return strA
 }
 
-// randDistortWithLevel is to generate random distort
+// randDistortWithLevel generates a random distortion level
+// params:
+//   - level: Distortion level
+//
+// return: Distortion value
 func (c *captcha) randDistortWithLevel(level int) int {
 	if level == 1 {
 		return random.RandInt(240, 320)
@@ -480,7 +547,8 @@ func (c *captcha) randDistortWithLevel(level int) int {
 	return 0
 }
 
-// randAngle is to generate random angle
+// randAngle generates a random angle
+// return: Angle value
 func (c *captcha) randAngle() int {
 	angles := c.opts.rangeAnglePos
 

@@ -13,7 +13,7 @@ import (
 	"github.com/wenlng/go-captcha/v2/base/option"
 )
 
-// JPEGImageData .
+// JPEGImageData interface for JPEG image data
 type JPEGImageData interface {
 	Get() image.Image
 	ToBytes() ([]byte, error)
@@ -27,24 +27,24 @@ type JPEGImageData interface {
 
 var _ JPEGImageData = (*jpegImageDta)(nil)
 
-// jpegImageDta .
+// jpegImageDta struct for JPEG image data
 type jpegImageDta struct {
 	image image.Image
 }
 
-// NewJPEGImageData .
+// NewJPEGImageData creates a new JPEG image data instance
 func NewJPEGImageData(img image.Image) JPEGImageData {
 	return &jpegImageDta{
 		image: img,
 	}
 }
 
-// Get is to get the original picture
+// Get retrieves the original image
 func (c *jpegImageDta) Get() image.Image {
 	return c.image
 }
 
-// SaveToFile is to save JPEG as a file
+// SaveToFile saves the JPEG image to a file
 func (c *jpegImageDta) SaveToFile(filepath string, quality int) error {
 	if c.image == nil {
 		return ImageMissingDataErr
@@ -53,7 +53,7 @@ func (c *jpegImageDta) SaveToFile(filepath string, quality int) error {
 	return saveToFile(c.image, filepath, false, quality)
 }
 
-// ToBytes is to convert JPEG into byte array
+// ToBytes converts the JPEG image to a byte array
 func (c *jpegImageDta) ToBytes() ([]byte, error) {
 	if c.image == nil {
 		return []byte{}, ImageEmptyErr
@@ -62,7 +62,7 @@ func (c *jpegImageDta) ToBytes() ([]byte, error) {
 	return codec.EncodeJPEGToByte(c.image, option.QualityNone)
 }
 
-// ToBytesWithQuality is to convert JPEG into byte array with quality
+// ToBytesWithQuality converts the JPEG image to a byte array with specified quality
 func (c *jpegImageDta) ToBytesWithQuality(imageQuality int) ([]byte, error) {
 	if c.image == nil {
 		return []byte{}, ImageEmptyErr
@@ -74,7 +74,7 @@ func (c *jpegImageDta) ToBytesWithQuality(imageQuality int) ([]byte, error) {
 	return codec.EncodeJPEGToByte(c.image, option.QualityNone)
 }
 
-// ToBase64Data is to convert JPEG into base64
+// ToBase64Data converts the JPEG image to Base64 data (without prefix)
 func (c *jpegImageDta) ToBase64Data() (string, error) {
 	if c.image == nil {
 		return "", ImageEmptyErr
@@ -83,7 +83,7 @@ func (c *jpegImageDta) ToBase64Data() (string, error) {
 	return codec.EncodeJPEGToBase64Data(c.image, option.QualityNone)
 }
 
-// ToBase64DataWithQuality is to convert JPEG into base64 with quality
+// ToBase64DataWithQuality converts the JPEG image to Base64 data with specified quality (without prefix)
 func (c *jpegImageDta) ToBase64DataWithQuality(imageQuality int) (string, error) {
 	if c.image == nil {
 		return "", ImageEmptyErr
@@ -95,7 +95,7 @@ func (c *jpegImageDta) ToBase64DataWithQuality(imageQuality int) (string, error)
 	return codec.EncodeJPEGToBase64Data(c.image, option.QualityNone)
 }
 
-// ToBase64 is to convert JPEG into base64
+// ToBase64 converts the JPEG image to a Base64 string
 func (c *jpegImageDta) ToBase64() (string, error) {
 	if c.image == nil {
 		return "", ImageEmptyErr
@@ -104,7 +104,7 @@ func (c *jpegImageDta) ToBase64() (string, error) {
 	return codec.EncodeJPEGToBase64(c.image, option.QualityNone)
 }
 
-// ToBase64WithQuality is to convert JPEG into base64 with quality
+// ToBase64WithQuality converts the JPEG image to a Base64 string with specified quality
 func (c *jpegImageDta) ToBase64WithQuality(imageQuality int) (string, error) {
 	if c.image == nil {
 		return "", ImageEmptyErr

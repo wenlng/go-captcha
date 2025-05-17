@@ -14,7 +14,7 @@
 
 > English | [中文](README_zh.md)
 
-<p style="text-align: center"><a href="https://github.com/wenlng/go-captcha">GoCaptcha</a> is a powerful, modular, and highly customizable behavioral CAPTCHA library that supports multiple interactive CAPTCHA types: Click, Slide, Drag, and Rotate.</p>
+<p style="text-align: center"><a href="https://github.com/wenlng/go-captcha">GoCaptcha</a> is a powerful, modular, and highly customizable behavioral CAPTCHA library that supports multiple interactive CAPTCHA types: Click, Slide, Drag-Drop, and Rotate.</p>
 
 <p style="text-align: center"> ⭐️ If it helps you, please give a star.</p>
 
@@ -64,9 +64,9 @@
 `go-captcha` supports the following four CAPTCHA types, each with unique interaction methods, generation logic, and application scenarios:
 
 1. **Click CAPTCHA**: Users click specified points or characters on the main image, supporting text and graphic modes.
-2. **Slide CAPTCHA**: Users slide a puzzle piece to the correct position on the main image, supporting basic and drag modes.
-3. **Rotate CAPTCHA**: Users rotate a thumbnail to align with the main image’s angle.
-4. **Drag-Drop CAPTCHA**: A variant of the Slide CAPTCHA, allowing users to drag a puzzle piece to a target position within a larger range.
+2. **Slide CAPTCHA**: Users slide a puzzle piece to the correct position on the main image, supporting basic and drag-drop modes.
+3. **Drag-Drop CAPTCHA**: A variant of the Slide CAPTCHA, allowing users to drag-drop a puzzle piece to a target position within a larger range.
+4. **Rotate CAPTCHA**: Users rotate a thumbnail to align with the main image’s angle.
 
 <br/>
 
@@ -220,7 +220,7 @@ func main() {
 
 ### Make Instance
 - builder.Make()
-- builder.MakeWithShape()
+- builder.MakeShape()
 
 ### Configuration Options
 > click.NewBuilder(click.WithXxx(), ...) OR builder.SetOptions(click.WithXxx(), ...)
@@ -270,6 +270,22 @@ func main() {
 | GetData() map[int]*Dot                   |      |
 | GetMasterImage() imagedata.JPEGImageData |      |
 | GetThumbImage() imagedata.PNGImageData   |      |
+
+
+### Verify the captcha
+> ok := click.CheckData(srcX, srcY, X, Y, width, height, paddingValue)
+
+| Params       | Desc                  |
+|--------------|-----------------------|
+| srcX         | User X-axis           |
+| srcY         | User Y-axis           |
+| X            | X-axis                |
+| Y            | Y-axis                |
+| width        | Width                 |
+| height       | Height                |
+| paddingValue | Set the padding value |
+
+<br/>
 
 ### Notes
 
@@ -415,7 +431,7 @@ func loadPng(p string) (image.Image, error) {
 
 ### Make Instance
 - builder.Make()
-- builder.MakeWithRegion() 
+- builder.MakeDragDrop() 
 
 
 ### Configuration Options
@@ -449,6 +465,20 @@ func loadPng(p string) (image.Image, error) {
 | GetData() *Block                         |      |
 | GetMasterImage() imagedata.JPEGImageData |      |
 | GetTileImage() imagedata.PNGImageData    |      |
+
+
+### Verify the captcha
+> ok := slide.CheckData(srcX, srcY, X, Y, paddingValue)
+
+| Params       | Desc                  |
+|--------------|-----------------------|
+| srcX         | User X-axis           |
+| srcY         | User Y-axis           |
+| X            | X-axis                |
+| Y            | Y-axis                |
+| paddingValue | Set the padding value |
+
+<br/>
 
 ### Notes
 
@@ -590,6 +620,17 @@ func loadPng(p string) (image.Image, error) {
 | GetMasterImage() imagedata.JPEGImageData |      |
 | GetTileImage() imagedata.PNGImageData    |      |
 
+### Verify the captcha
+> ok := rotate.CheckData(srcAngle, angle, paddingValue)
+
+| Params       | Desc                  |
+|--------------|-----------------------|
+| srcAngle     | User Angle            |
+| angle        | Angle                 |
+| paddingValue | Set the padding value |
+
+<br/>
+
 ### Notes
 
 - Background images must not be empty, otherwise `EmptyImageErr` will be triggered.
@@ -653,10 +694,11 @@ func loadPng(p string) (image.Image, error) {
 - [ ] Flutter App
 - [ ] Android App
 - [ ] IOS App
-- ...
+- [ ] ...
 
 ## Deployment Service
-- [ ] Docker Image
+- [x] Binary Program
+- [x] Docker Image
 - ...
 
 <br/>

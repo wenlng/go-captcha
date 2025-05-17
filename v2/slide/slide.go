@@ -37,11 +37,11 @@ type Captcha interface {
 var _ Captcha = (*captcha)(nil)
 
 var (
-	GraphImageErr           = errors.New("graph image is incorrect")
-	GenerateDataErr         = errors.New("generate data failed")
-	ImageTypeErr            = errors.New("tile image must be is image.Image type")
-	ShadowImageTypeErr      = errors.New("tile shadow image must be is image.Image type")
-	MaskImageTypeErr        = errors.New("tile shadow image must be is image.Image type")
+	GraphImageErr           = errors.New("graph image is invalid")
+	GenerateDataErr         = errors.New("data generation failed")
+	ImageTypeErr            = errors.New("tile image must be of type image.Image")
+	ShadowImageTypeErr      = errors.New("tile shadow image must be of type image.Image")
+	MaskImageTypeErr        = errors.New("tile mask image must be of type image.Image")
 	EmptyBackgroundImageErr = errors.New("no background image")
 )
 

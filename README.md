@@ -14,7 +14,7 @@
 
 > English | [中文](README_zh.md)
 
-<p style="text-align: center"><a href="https://github.com/wenlng/go-captcha">GoCaptcha</a> is a powerful, modular, and highly customizable behavioral CAPTCHA library that supports multiple interactive CAPTCHA types: Click, Slide, Drag, and Rotate.</p>
+<p style="text-align: center"><a href="https://github.com/wenlng/go-captcha">GoCaptcha</a> is a powerful, modular, and highly customizable behavioral CAPTCHA library that supports multiple interactive CAPTCHA types: Click, Slide, Drag-Drop, and Rotate.</p>
 
 <p style="text-align: center"> ⭐️ If it helps you, please give a star.</p>
 
@@ -64,9 +64,9 @@
 `go-captcha` supports the following four CAPTCHA types, each with unique interaction methods, generation logic, and application scenarios:
 
 1. **Click CAPTCHA**: Users click specified points or characters on the main image, supporting text and graphic modes.
-2. **Slide CAPTCHA**: Users slide a puzzle piece to the correct position on the main image, supporting basic and drag modes.
-3. **Rotate CAPTCHA**: Users rotate a thumbnail to align with the main image’s angle.
-4. **Drag-Drop CAPTCHA**: A variant of the Slide CAPTCHA, allowing users to drag a puzzle piece to a target position within a larger range.
+2. **Slide CAPTCHA**: Users slide a puzzle piece to the correct position on the main image, supporting basic and drag-drop modes.
+3. **Drag-Drop CAPTCHA**: A variant of the Slide CAPTCHA, allowing users to drag-drop a puzzle piece to a target position within a larger range.
+4. **Rotate CAPTCHA**: Users rotate a thumbnail to align with the main image’s angle.
 
 <br/>
 
@@ -220,56 +220,72 @@ func main() {
 
 ### Make Instance
 - builder.Make()
-- builder.MakeWithShape()
+- builder.MakeShape()
 
 ### Configuration Options
 > click.NewBuilder(click.WithXxx(), ...) OR builder.SetOptions(click.WithXxx(), ...)
 
-| Options                                    | Desc                                        |
-|--------------------------------------------|---------------------------------------------|
-| Master Image                               |                                             |
-| click.WithImageSize(option.Size)           | default 300x220                             |
-| click.WithRangeLen(option.RangeVal)        |                                             |
-| click.WithRangeAnglePos([]option.RangeVal) |                                             |
-| click.WithRangeSize(option.RangeVal)       |                                             |
-| click.WithRangeColors([]string)            |                                             |
-| click.WithDisplayShadow(bool)              |                                             |
-| click.WithShadowColor(string)              |                                             |
-| click.WithShadowPoint(option.Point)        |                                             |
-| click.WithImageAlpha(float32)              |                                             |
-| click.WithUseShapeOriginalColor(bool)      |                                             |
-| Thumbnail Image                            |
-| click.WithThumbImageSize(option.Size)      | default 150x40                              |
-| click.WithRangeVerifyLen(option.RangeVal)  |                                             |
-| click.WithDisabledRangeVerifyLen(bool)     |                                             |
-| click.WithRangeThumbSize(option.RangeVal)  |                                             |
-| click.WithRangeThumbColors([]string)       |                                             |
-| click.WithRangeThumbBgColors([]string)     |                                             |
-| click.WithIsThumbNonDeformAbility(bool)    |                                             |
-| click.WithThumbBgDistort(int)              | option.DistortLevel1 ~ option.DistortLevel5 |
-| click.WithThumbBgCirclesNum(int)           |                                             |
-| click.WithThumbBgSlimLineNum(int)          |                                             |
+| Options                                    | Desc                                                                               |
+|--------------------------------------------|------------------------------------------------------------------------------------|
+| **Main Image**                             |                                                                                    |
+| click.WithImageSize(option.Size)           | Set main image size, default 300x220                                               |
+| click.WithRangeLen(option.RangeVal)        | Set range for random content length                                                |
+| click.WithRangeAnglePos([]option.RangeVal) | Set range for random angles                                                        |
+| click.WithRangeSize(option.RangeVal)       | Set range for random content size                                                  |
+| click.WithRangeColors([]string)            | Set random colors                                                                  |
+| click.WithDisplayShadow(bool)              | Enable/disable shadow display                                                      |
+| click.WithShadowColor(string)              | Set shadow color                                                                   |
+| click.WithShadowPoint(option.Point)        | Set shadow offset position                                                         |
+| click.WithImageAlpha(float32)              | Set main image transparency                                                        |
+| click.WithUseShapeOriginalColor(bool)      | Use original graphic color (valid for graphic mode)                                |
+| **Thumbnail**                              |                                                                                    |
+| click.WithThumbImageSize(option.Size)      | Set thumbnail size, default 150x40                                                 |
+| click.WithRangeVerifyLen(option.RangeVal)  | Set range for random verification content length                                   |
+| click.WithDisabledRangeVerifyLen(bool)     | Disable random verification length, matches main content                           |
+| click.WithRangeThumbSize(option.RangeVal)  | Set range for random thumbnail content size                                        |
+| click.WithRangeThumbColors([]string)       | Set range for random thumbnail colors                                              |
+| click.WithRangeThumbBgColors([]string)     | Set range for random thumbnail background colors                                   |
+| click.WithIsThumbNonDeformAbility(bool)    | Prevent thumbnail content deformation                                              |
+| click.WithThumbBgDistort(int)              | Set thumbnail background distortion (option.DistortLevel1 to option.DistortLevel5) |
+| click.WithThumbBgCirclesNum(int)           | Set number of small circles in thumbnail background                                |
+| click.WithThumbBgSlimLineNum(int)          | Set number of lines in thumbnail background                                        |
 
 
 ### Set Resources
 > builder.SetResources(click.WithXxx(), ...)
 
-| Options                                   | Desc |
-|-------------------------------------------|------|
-| click.WithChars([]string)                 |      |
-| click.WithShapes(map[string]image.Image)  |      |
-| click.WithFonts([]*truetype.Font)         |      |
-| click.WithBackgrounds([]image.Image)      |      |
-| click.WithThumbBackgrounds([]image.Image) |      |
+| Options                                   | Desc                       |
+|-------------------------------------------|----------------------------|
+| click.WithChars([]string)                 | Set text seed              |
+| click.WithShapes(map[string]image.Image)  | Set graphic seed           |
+| click.WithFonts([]*truetype.Font)         | Set fonts                  |
+| click.WithBackgrounds([]image.Image)      | Set main image backgrounds |
+| click.WithThumbBackgrounds([]image.Image) | Set thumbnail backgrounds  |
 
 ### Captcha Data
 > captData, err := capt.Generate()
 
-| Method                                   | Desc |
-|------------------------------------------|------|
-| GetData() map[int]*Dot                   |      |
-| GetMasterImage() imagedata.JPEGImageData |      |
-| GetThumbImage() imagedata.PNGImageData   |      |
+| Method                                   | Desc                  |
+|------------------------------------------|-----------------------|
+| GetData() map[int]*Dot                   | Get verification data |
+| GetMasterImage() imagedata.JPEGImageData | Get main image        |
+| GetThumbImage() imagedata.PNGImageData   | Get thumbnail         |
+
+
+### Validate the captcha
+> ok := click.Validate(srcX, srcY, X, Y, width, height, paddingValue)
+
+| Params       | Desc                  |
+|--------------|-----------------------|
+| srcX         | User X-axis           |
+| srcY         | User Y-axis           |
+| X            | X-axis                |
+| Y            | Y-axis                |
+| width        | Width                 |
+| height       | Height                |
+| paddingValue | Set the padding value |
+
+<br/>
 
 ### Notes
 
@@ -280,7 +296,7 @@ func main() {
 <br />
 
 
-## 🖖 Slide CAPTCHA
+## 🖖 Slide Or Drag-Drop CAPTCHA
 
 The Slide CAPTCHA requires users to slide a puzzle piece to the correct position on the main image. It supports two modes:
 
@@ -415,40 +431,54 @@ func loadPng(p string) (image.Image, error) {
 
 ### Make Instance
 - builder.Make()
-- builder.MakeWithRegion() 
+- builder.MakeDragDrop() 
 
 
 ### Configuration Options
 > slide.NewBuilder(slide.WithXxx(), ...) OR builder.SetOptions(slide.WithXxx(), ...)
 
-| Options                                                        | Desc            |
-|----------------------------------------------------------------|-----------------|
-| slide.WithImageSize(*option.Size)                              | default 300x220 |
-| slide.WithImageAlpha(float32)                                  |                 |
-| slide.WithRangeGraphSize(val option.RangeVal)                  |                 |
-| slide.WithRangeGraphAnglePos([]option.RangeVal)                |                 |
-| slide.WithGenGraphNumber(val int)                              |                 |
-| slide.WithEnableGraphVerticalRandom(val bool)                  |                 |
-| slide.WithRangeDeadZoneDirections(val []DeadZoneDirectionType) |                 |
+| Options                                                        | Desc                                           |
+|----------------------------------------------------------------|------------------------------------------------|
+| slide.WithImageSize(*option.Size)                              | Set main image size, default 300x220           |
+| slide.WithImageAlpha(float32)                                  | Set main image transparency                    |
+| slide.WithRangeGraphSize(val option.RangeVal)                  | Set range for random graphic size              |
+| slide.WithRangeGraphAnglePos([]option.RangeVal)                | Set range for random graphic angles            |
+| slide.WithGenGraphNumber(val int)                              | Set number of graphics                         |
+| slide.WithEnableGraphVerticalRandom(val bool)                  | Enable/disable random vertical graphic sorting |
+| slide.WithRangeDeadZoneDirections(val []DeadZoneDirectionType) | Set dead zone directions for puzzle pieces     |
 
 
 ### Set Resources
 > builder.SetResources(slide.WithXxx(), ...)
 
-| Options                                       | Desc |
-|-----------------------------------------------|------|
-| slide.WithBackgrounds([]image.Image)          |      |
-| slide.WithGraphImages(images []*GraphImage)   |      |
+| Options                                       | Desc                       |
+|-----------------------------------------------|----------------------------|
+| slide.WithBackgrounds([]image.Image)          | Set main image backgrounds |
+| slide.WithGraphImages(images []*GraphImage)   | Set puzzle piece graphics  |
 
 ### Captcha Data
 
 > captData, err := capt.Generate()
 
-| Method                                   | Desc |
-|------------------------------------------|------|
-| GetData() *Block                         |      |
-| GetMasterImage() imagedata.JPEGImageData |      |
-| GetTileImage() imagedata.PNGImageData    |      |
+| Method                                   | Desc                  |
+|------------------------------------------|-----------------------|
+| GetData() *Block                         | Get verification data |
+| GetMasterImage() imagedata.JPEGImageData | Get main image        |
+| GetTileImage() imagedata.PNGImageData    | Get tile image        |
+
+
+### Validate the captcha
+> ok := slide.Validate(srcX, srcY, X, Y, paddingValue)
+
+| Params       | Desc                  |
+|--------------|-----------------------|
+| srcX         | User X-axis           |
+| srcY         | User Y-axis           |
+| X            | X-axis                |
+| Y            | Y-axis                |
+| paddingValue | Set the padding value |
+
+<br/>
 
 ### Notes
 
@@ -566,29 +596,40 @@ func loadPng(p string) (image.Image, error) {
 ### Configuration Options
 > rotate.NewBuilder(rotate.WithXxx(), ...) OR builder.SetOptions(rotate.WithXxx(), ...)
 
-| Options                                          | Desc            |
-|--------------------------------------------------|-----------------|
-| rotate.WithImageSquareSize(val int)              | default 220x220 |
-| rotate.WithRangeAnglePos(vals []option.RangeVal) |                 |
-| rotate.WithRangeThumbImageSquareSize(val []int)  |                 |
-| rotate.WithThumbImageAlpha(val float32)          |                 |
+| Options                                          | Desc                                     |
+|--------------------------------------------------|------------------------------------------|
+| rotate.WithImageSquareSize(val int)              | Set main image size, default 220x220     |
+| rotate.WithRangeAnglePos(vals []option.RangeVal) | Set range for random verification angles |
+| rotate.WithRangeThumbImageSquareSize(val []int)  | Set thumbnail size                       |
+| rotate.WithThumbImageAlpha(val float32)          | Set thumbnail transparency               |
 
 
 ### Set Resources
 > builder.SetResources(rotate.WithXxx(), ...)
 
-| Options                                    | Desc |
-|--------------------------------------------|------|
-| rotate.WithBackgrounds([]image.Image)      |      |
+| Options                                    | Desc                       |
+|--------------------------------------------|----------------------------|
+| rotate.WithImages([]image.Image)           | Set main image backgrounds |
 
 ### Captcha Data
 > captData, err := capt.Generate()
 
-| Method                                   | Desc |
-|------------------------------------------|------|
-| GetData() *Block                         |      |
-| GetMasterImage() imagedata.JPEGImageData |      |
-| GetTileImage() imagedata.PNGImageData    |      |
+| Method                                   | Desc                  |
+|------------------------------------------|-----------------------|
+| GetData() *Block                         | Get verification data |
+| GetMasterImage() imagedata.PNGImageData  | Get main image        |
+| GetThumbImage() imagedata.PNGImageData   | Get thumbnail         |
+
+### Validate the captcha
+> ok := rotate.Validate(srcAngle, angle, paddingValue)
+
+| Params       | Desc                  |
+|--------------|-----------------------|
+| srcAngle     | User Angle            |
+| angle        | Angle                 |
+| paddingValue | Set the padding value |
+
+<br/>
 
 ### Notes
 
@@ -653,10 +694,11 @@ func loadPng(p string) (image.Image, error) {
 - [ ] Flutter App
 - [ ] Android App
 - [ ] IOS App
-- ...
+- [ ] ...
 
 ## Deployment Service
-- [ ] Docker Image
+- [x] Binary Program
+- [x] Docker Image
 - ...
 
 <br/>

@@ -14,7 +14,7 @@
 
 > [English](README.md) | 中文 
 <p style="text-align: center">
-<a style="font-weight: bold" href="https://github.com/wenlng/go-captcha">Go Captcha</a> 是功能强大、模块化且高度可定制的行为式验证码库，支持多种交互式验证码类型：点选（Click）、滑动（Slide）、拖拽（Drag） 和 旋转（Rotate）。
+<a style="font-weight: bold" href="https://github.com/wenlng/go-captcha">Go Captcha</a> 是功能强大、模块化且高度可定制的行为式验证码库，支持多种交互式验证码类型：点选（Click）、滑动（Slide）、拖拽（Drag-Drop） 和 旋转（Rotate）。
 </p>
 
 <p style="text-align: center"> ⭐️ 如果能帮助到你，请随手给点一个star</p>
@@ -68,8 +68,8 @@
 `go-captcha` 支持以下四种验证码类型，每种类型具有独特的交互方式、生成逻辑和应用场景：
 1. **点选验证码（Click）**：用户在主图像中点击指定的点或字符，支持文本模式和图形模式。
 2. **滑动验证码（Slide）**：用户将拼图块滑动到主图像中的正确位置，支持基本模式和拖拽模式。
-3. **旋转验证码（Rotate）**：用户旋转缩略图使其与主图像的角度对齐。
-4. **拖拽验证码（DragDrop）**：滑动验证码的变体，允许用户在更大范围内拖动拼图块到目标位置。
+3. **拖拽验证码（DragDrop）**：滑动验证码的变体，允许用户在更大范围内拖动拼图块到目标位置。
+4. **旋转验证码（Rotate）**：用户旋转缩略图使其与主图像的角度对齐。
 
 <br/>
 
@@ -235,7 +235,7 @@ func main() {
 
 ### 创建实例
 - builder.Make()  中文文本、字母数字混合点选
-- builder.MakeWithShape()  图形点选
+- builder.MakeShape()  图形点选
 
 ### 配置选项
 > click.NewBuilder(click.WithXxx(), ...) 或 builder.SetOptions(click.WithXxx(), ...)
@@ -287,6 +287,20 @@ func main() {
 | GetMasterImage() imagedata.JPEGImageData | 获取主图      |
 | GetThumbImage() imagedata.PNGImageData   | 获取缩略图     |
 
+### 验证码校验
+> ok := click.Validate(srcX, srcY, X, Y, width, height, paddingValue)
+
+| Params       | Desc               |
+|--------------|--------------------|
+| srcX         | 用户交互的 X 值          |
+| srcY         | 用户交互的 Y 值          |
+| X            | 验证码校验的 X 值         |
+| Y            | 验证码校验的 Y 值         |
+| width        | 验证码校验的 Width 值     |
+| height       | 验证码校验的 Height 值    |
+| paddingValue | 控制误差值              |
+
+<br/>
 
 ### 注意事项
 
@@ -296,7 +310,7 @@ func main() {
 
 <br />
 
-## 🖖 滑动验证码（Slide）
+## 🖖 滑动/拖拽验证码（Slide/Drag-Drop）
 
 滑动验证码要求用户将拼图块滑动到主图像中的正确位置，支持两种模式：
 
@@ -428,7 +442,7 @@ func loadPng(p string) (image.Image, error) {
 
 ### 创建实例
 - builder.Make() 滑动式
-- builder.MakeWithRegion()  区域内拖拽式
+- builder.MakeDragDrop()  区域内拖拽式
 
 
 ### 配置选项
@@ -464,6 +478,19 @@ func loadPng(p string) (image.Image, error) {
 | GetTileImage() imagedata.PNGImageData    | 获取缩略图       |
 
 
+### 验证码校验
+> ok := slide.Validate(srcX, srcY, X, Y, paddingValue)
+
+| Params       | Desc            |
+|--------------|-----------------|
+| srcX         | 用户交互的 X 值       |
+| srcY         | 用户交互的 Y 值       |
+| X            | 验证码校验的 X 值      |
+| Y            | 验证码校验的 Y 值      |
+| paddingValue | 控制误差值           |
+
+<br/>
+
 ### 注意事项
 
 - 拼图块的图像资源（`OverlayImage`, `ShadowImage`, `MaskImage`）必须有效，否则会触发 `ImageTypeErr`, `ShadowImageTypeErr` 或 `MaskImageTypeErr`。
@@ -472,6 +499,7 @@ func loadPng(p string) (image.Image, error) {
 - 拖拽模式适合需要更高交互自由度的场景，但可能增加用户操作时间。
 
 <br />
+
 
 ## 🖖  旋转验证码（Rotate）
 
@@ -604,6 +632,18 @@ func loadPng(p string) (image.Image, error) {
 | GetMasterImage() imagedata.JPEGImageData | 获取主图        |
 | GetTileImage() imagedata.PNGImageData    | 获取缩略图       |
 
+
+### 验证码校验
+> ok := rotate.Validate(srcAngle, angle, paddingValue)
+
+| Params       | Desc  |
+|--------------|-------|
+| srcAngle     | 用户交互的角度 |
+| angle        | 验证码校验的角度 |
+| paddingValue | 控制误差值 |
+
+<br/>
+
 ### 注意事项
 
 - 背景图像不能为空，否则会触发 `EmptyImageErr`。
@@ -687,7 +727,8 @@ func loadPng(p string) (image.Image, error) {
 - ...
 
 ## Deployment Service
-- [ ] Docker Image
+- [x] Binary Program
+- [x] Docker Image
 - ...
 
 <br/>

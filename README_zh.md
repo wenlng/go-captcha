@@ -288,7 +288,7 @@ func main() {
 | GetThumbImage() imagedata.PNGImageData   | 获取缩略图     |
 
 ### 验证码校验
-> ok := click.CheckData(srcX, srcY, X, Y, width, height, paddingValue)
+> ok := click.Validate(srcX, srcY, X, Y, width, height, paddingValue)
 
 | Params       | Desc               |
 |--------------|--------------------|
@@ -310,7 +310,7 @@ func main() {
 
 <br />
 
-## 🖖 滑动验证码（Slide）
+## 🖖 滑动/拖拽验证码（Slide/Drag-Drop）
 
 滑动验证码要求用户将拼图块滑动到主图像中的正确位置，支持两种模式：
 
@@ -479,7 +479,7 @@ func loadPng(p string) (image.Image, error) {
 
 
 ### 验证码校验
-> ok := slide.CheckData(srcX, srcY, X, Y, paddingValue)
+> ok := slide.Validate(srcX, srcY, X, Y, paddingValue)
 
 | Params       | Desc            |
 |--------------|-----------------|
@@ -634,7 +634,7 @@ func loadPng(p string) (image.Image, error) {
 
 
 ### 验证码校验
-> ok := rotate.CheckData(srcAngle, angle, paddingValue)
+> ok := rotate.Validate(srcAngle, angle, paddingValue)
 
 | Params       | Desc  |
 |--------------|-------|

@@ -6,7 +6,7 @@
 
 package slide
 
-// CheckData checks if the point position is within the specified range
+// Validate checks if the point position is within the specified range
 // params:
 //   - sx: Source X coordinate
 //   - sy: Source Y coordinate
@@ -15,7 +15,7 @@ package slide
 //   - padding: Padding
 //
 // return: Whether within range
-func CheckData(sx, sy, dx, dy, padding int) bool {
+func Validate(sx, sy, dx, dy, padding int) bool {
 	newX := padding * 2
 	newY := padding * 2
 	newDx := dx - padding
@@ -27,7 +27,7 @@ func CheckData(sx, sy, dx, dy, padding int) bool {
 		sy <= newDy+newY
 }
 
-// Deprecated: As of 2.1.0, it will be removed, please use [CheckData]
+// Deprecated: As of 2.1.0, it will be removed, please use [slide.Validate]
 func CheckPoint(sx, sy, dx, dy, padding int64) bool {
 	newX := padding * 2
 	newY := padding * 2

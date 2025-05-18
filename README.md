@@ -272,8 +272,8 @@ func main() {
 | GetThumbImage() imagedata.PNGImageData   |      |
 
 
-### Verify the captcha
-> ok := click.CheckData(srcX, srcY, X, Y, width, height, paddingValue)
+### Validate the captcha
+> ok := click.Validate(srcX, srcY, X, Y, width, height, paddingValue)
 
 | Params       | Desc                  |
 |--------------|-----------------------|
@@ -296,7 +296,7 @@ func main() {
 <br />
 
 
-## 🖖 Slide CAPTCHA
+## 🖖 Slide Or Drag-Drop CAPTCHA
 
 The Slide CAPTCHA requires users to slide a puzzle piece to the correct position on the main image. It supports two modes:
 
@@ -467,8 +467,8 @@ func loadPng(p string) (image.Image, error) {
 | GetTileImage() imagedata.PNGImageData    |      |
 
 
-### Verify the captcha
-> ok := slide.CheckData(srcX, srcY, X, Y, paddingValue)
+### Validate the captcha
+> ok := slide.Validate(srcX, srcY, X, Y, paddingValue)
 
 | Params       | Desc                  |
 |--------------|-----------------------|
@@ -620,8 +620,8 @@ func loadPng(p string) (image.Image, error) {
 | GetMasterImage() imagedata.JPEGImageData |      |
 | GetTileImage() imagedata.PNGImageData    |      |
 
-### Verify the captcha
-> ok := rotate.CheckData(srcAngle, angle, paddingValue)
+### Validate the captcha
+> ok := rotate.Validate(srcAngle, angle, paddingValue)
 
 | Params       | Desc                  |
 |--------------|-----------------------|

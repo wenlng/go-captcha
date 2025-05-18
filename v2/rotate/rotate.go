@@ -29,7 +29,7 @@ var _ Captcha = (*captcha)(nil)
 
 var (
 	EmptyImageErr = errors.New("no image")
-	ImageTypeErr  = errors.New("image must be is image.Image type")
+	ImageTypeErr  = errors.New("image must be of type image.Image")
 )
 
 // captcha is the concrete implementation of the Captcha interface

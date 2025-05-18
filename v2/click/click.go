@@ -40,13 +40,13 @@ const (
 var _ Captcha = (*captcha)(nil)
 
 var (
-	EmptyShapesErr          = errors.New("empty shapes")
-	EmptyCharacterErr       = errors.New("empty character")
-	CharRangeLenErr         = errors.New("character length must be large than to 'rangeLen.Max'")
-	ShapesRangeLenErr       = errors.New("total number of shapes must be large than to 'rangeLen.Max'")
-	ShapesTypeErr           = errors.New("shape must be is image type")
+	EmptyShapesErr          = errors.New("no shapes provided")
+	EmptyCharacterErr       = errors.New("no character provided")
+	CharRangeLenErr         = errors.New("character length must be greater than rangeLen.Max")
+	ShapesRangeLenErr       = errors.New("total number of shapes must be greater than rangeLen.Max")
+	ShapesTypeErr           = errors.New("shape must be an image type")
 	EmptyBackgroundImageErr = errors.New("no background image")
-	ModeSupportErr          = errors.New("mode not supported")
+	ModeSupportErr          = errors.New("mode is not supported")
 )
 
 // captcha is the concrete implementation of the Captcha interface

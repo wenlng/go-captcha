@@ -181,14 +181,14 @@ func (d *drawImage) DrawWithPalette(params *DrawImageParams, tColors []color.Col
 		m := canvas.CreateNRGBACanvas(b.Dx(), b.Dy(), true)
 		point := randgen.RangCutImagePos(params.Width, params.Height, img)
 		draw.Draw(m.Get(), b, img, point, draw.Src)
-		cvs.Distort(float64(random.RandInt(5, 10)), float64(random.RandInt(120, 200)))
+		cvs.Distort(float64(random.RandIntFast(5, 10)), float64(random.RandIntFast(120, 200)))
 		draw.Draw(m.Get(), cvs.Bounds(), cvs, image.Point{}, draw.Over)
 		rc := m.Get().SubImage(image.Rect(0, 0, params.Width, params.Height)).(*image.NRGBA)
 		return rc, nil
 	}
 
 	if params.BackgroundDistort > 0 {
-		cvs.Distort(float64(random.RandInt(5, 10)), float64(params.BackgroundDistort))
+		cvs.Distort(float64(random.RandIntFast(5, 10)), float64(params.BackgroundDistort))
 	}
 
 	return cvs, nil
@@ -238,7 +238,7 @@ func (d *drawImage) DrawWithNRGBA2(params *DrawImageParams, tColors []color.Colo
 		d.randomDrawSlimLine(cvs, params.BackgroundSlimLineNum, nBgColors)
 	}
 	if params.BackgroundDistort > 0 {
-		cvs.Distort(float64(random.RandInt(5, 10)), float64(params.BackgroundDistort))
+		cvs.Distort(float64(random.RandIntFast(5, 10)), float64(params.BackgroundDistort))
 	}
 
 	cvsBounds := cvs.Bounds()
@@ -277,7 +277,7 @@ func (d *drawImage) DrawWithNRGBA2(params *DrawImageParams, tColors []color.Colo
 			bounds := cImage.Bounds()
 
 			dx := int(math.Max(float64(width*i+width/bounds.Dx()), 8))
-			dy := random.RandInt(1, cvsBounds.Dy()-bounds.Dy()-4)
+			dy := random.RandIntFast(1, cvsBounds.Dy()-bounds.Dy()-4)
 
 			draw.Draw(ccvs.Get(), image.Rect(dx, dy, dx+bounds.Dx(), dy+bounds.Dy()), cImage, image.Point{X: bounds.Min.X, Y: bounds.Min.Y}, draw.Over)
 		}
@@ -305,8 +305,8 @@ func (d *drawImage) randomFillWithCircles(m canvas.Palette, n, maxRadius int, co
 	for i := 0; i < n; i++ {
 		co := randgen.RandColor(colorB)
 		//co.A = uint8(0xee)
-		r := random.RandInt(1, maxRadius)
-		m.DrawCircle(random.RandInt(r, maxx-r), random.RandInt(r, maxy-r), r, co)
+		r := random.RandIntFast(1, maxRadius)
+		m.DrawCircle(random.RandIntFast(r, maxx-r), random.RandIntFast(r, maxy-r), r, co)
 	}
 }
 

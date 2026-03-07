@@ -163,7 +163,7 @@ func (c *captcha) randAngle() int {
 	}
 
 	angle := angles[index]
-	res := random.RandInt(angle.Min, angle.Max)
+	res := random.RandIntFast(angle.Min, angle.Max)
 
 	return res
 }

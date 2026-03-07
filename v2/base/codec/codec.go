@@ -12,31 +12,85 @@ import (
 	"image"
 	"image/jpeg"
 	"image/png"
+	"sync"
 )
 
-const pngBasePrefix = "data:image/png;base64,"
-const jpegBasePrefix = "data:image/jpeg;base64,"
+const (
+	pngBasePrefix  = "data:image/png;base64,"
+	jpegBasePrefix = "data:image/jpeg;base64,"
+	maxBufferSize  = 10 * 1024 * 1024 // 10MB
+)
+
+var (
+	// bufferPool is a pool of bytes.Buffer to reduce memory allocations
+	bufferPool = sync.Pool{
+		New: func() interface{} {
+			return &bytes.Buffer{}
+		},
+	}
+)
+
+// getBuffer returns a buffer from the pool
+func getBuffer() *bytes.Buffer {
+	return bufferPool.Get().(*bytes.Buffer)
+}
+
+// putBuffer returns a buffer to the pool after resetting it
+func putBuffer(buf *bytes.Buffer) {
+	if buf != nil {
+		buf.Reset()
+		if buf.Cap() < maxBufferSize {
+			bufferPool.Put(buf)
+		}
+	}
+}
 
 // EncodePNGToByte encodes a PNG image to a byte array
-func EncodePNGToByte(img image.Image) (ret []byte, err error) {
-	var buf bytes.Buffer
-	if err = png.Encode(&buf, img); err != nil {
-		return
+func EncodePNGToByte(img image.Image) ([]byte, error) {
+	if img == nil {
+		return nil, nil
 	}
-	ret = buf.Bytes()
-	buf.Reset()
-	return
+
+	buf := getBuffer()
+	defer putBuffer(buf)
+
+	bounds := img.Bounds()
+	estimatedSize := bounds.Dx() * bounds.Dy() * 4
+	if estimatedSize > 0 && estimatedSize < maxBufferSize {
+		buf.Grow(estimatedSize)
+	}
+
+	if err := png.Encode(buf, img); err != nil {
+		return nil, err
+	}
+
+	result := make([]byte, buf.Len())
+	copy(result, buf.Bytes())
+	return result, nil
 }
 
 // EncodeJPEGToByte encodes a JPEG image to a byte array
-func EncodeJPEGToByte(img image.Image, quality int) (ret []byte, err error) {
-	var buf bytes.Buffer
-	if err = jpeg.Encode(&buf, img, &jpeg.Options{Quality: quality}); err != nil {
-		return
+func EncodeJPEGToByte(img image.Image, quality int) ([]byte, error) {
+	if img == nil {
+		return nil, nil
 	}
-	ret = buf.Bytes()
-	buf.Reset()
-	return
+
+	buf := getBuffer()
+	defer putBuffer(buf)
+
+	bounds := img.Bounds()
+	estimatedSize := bounds.Dx() * bounds.Dy() * 3 / 2
+	if estimatedSize > 0 && estimatedSize < maxBufferSize {
+		buf.Grow(estimatedSize)
+	}
+
+	if err := jpeg.Encode(buf, img, &jpeg.Options{Quality: quality}); err != nil {
+		return nil, err
+	}
+
+	result := make([]byte, buf.Len())
+	copy(result, buf.Bytes())
+	return result, nil
 }
 
 // DecodeByteToJpeg decodes a byte array to a JPEG image

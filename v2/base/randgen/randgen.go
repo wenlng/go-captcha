@@ -9,7 +9,6 @@ package randgen
 import (
 	"image"
 	"image/color"
-	"math/rand"
 
 	"github.com/golang/freetype/truetype"
 	"github.com/wenlng/go-captcha/v2/base/helper"
@@ -48,14 +47,17 @@ func RandImage(images []image.Image) image.Image {
 
 // RandString randomly selects a string
 func RandString(chars []string) string {
-	k := rand.Intn(len(chars))
-	return chars[k]
+	if len(chars) == 0 {
+		return ""
+	}
+	index := random.RandIntFast(0, len(chars)-1)
+	return chars[index]
 }
 
 // RandColor randomly selects an RGBA color
 func RandColor(co []color.Color) color.RGBA {
 	colorLen := len(co)
-	index := random.RandInt(0, colorLen)
+	index := random.RandIntFast(0, colorLen-1)
 	if index >= colorLen {
 		index = colorLen - 1
 	}
@@ -73,10 +75,10 @@ func RangCutImagePos(width int, height int, img image.Image) image.Point {
 	curY := 0
 
 	if iW-width > 0 {
-		curX = random.RandInt(0, iW-width)
+		curX = random.RandIntFast(0, iW-width)
 	}
 	if iH-height > 0 {
-		curY = random.RandInt(0, iH-height)
+		curY = random.RandIntFast(0, iH-height)
 	}
 
 	return image.Point{

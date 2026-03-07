@@ -49,6 +49,14 @@ var (
 	ModeSupportErr          = errors.New("mode is not supported")
 )
 
+// wrapError wraps an error with additional context information
+func wrapError(err error, context string) error {
+	if err == nil {
+		return nil
+	}
+	return errors.New(context + ": " + err.Error())
+}
+
 // captcha is the concrete implementation of the Captcha interface
 type captcha struct {
 	version   string
@@ -206,7 +214,7 @@ func (c *captcha) generateWithText() (CaptchaData, error) {
 //   - []string: List of shape names
 //   - error: Error information
 func (c *captcha) genShapes() ([]string, error) {
-	length := random.RandInt(c.opts.rangeLen.Min, c.opts.rangeLen.Max)
+	length := random.RandIntFast(c.opts.rangeLen.Min, c.opts.rangeLen.Max)
 	shapeNames := c.genRandShape(length)
 	if len(shapeNames) == 0 {
 		return []string{}, EmptyShapesErr
@@ -219,7 +227,7 @@ func (c *captcha) genShapes() ([]string, error) {
 //   - []string: List of characters
 //   - error: Error information
 func (c *captcha) genChars() ([]string, error) {
-	length := random.RandInt(c.opts.rangeLen.Min, c.opts.rangeLen.Max)
+	length := random.RandIntFast(c.opts.rangeLen.Min, c.opts.rangeLen.Max)
 	chars := c.genRandChar(length)
 	if len(chars) == 0 {
 		return []string{}, EmptyCharacterErr
@@ -252,7 +260,7 @@ func (c *captcha) genDots(imageSize *option.Size, size *option.RangeVal, values 
 		randColor := randgen.RandHexColor(c.opts.rangeColors)
 		randColor2 := randgen.RandHexColor(c.opts.rangeThumbColors)
 
-		randSize := random.RandInt(size.Min, size.Max)
+		randSize := random.RandIntFast(size.Min, size.Max)
 		cHeight := randSize
 		cWidth := randSize
 
@@ -272,8 +280,8 @@ func (c *captcha) genDots(imageSize *option.Size, size *option.RangeVal, values 
 		dy := 10
 		w := width / length
 		rd := math.Abs(float64(w) - float64(cWidth))
-		xx := (i * w) + random.RandInt(0, int(math.Max(rd, 1)))
-		yy := random.RandInt(dy, height+cHeight)
+		xx := (i * w) + random.RandIntFast(0, int(math.Max(rd, 1)))
+		yy := random.RandIntFast(dy, height+cHeight)
 
 		x := int(math.Min(math.Max(float64(xx), float64(dy)), float64(width-dy-(padding*2))))
 		y := int(math.Min(math.Max(float64(yy), float64(cHeight+dy)), float64(height+(cHeight/2)-(padding*2))))
@@ -338,9 +346,14 @@ func (c *captcha) check() error {
 //   - []string: List of verification values
 func (c *captcha) rangeCheckDots(dots map[int]*Dot) (map[int]*Dot, []string) {
 	rs := random.Perm(len(dots))
-	chkDots := make(map[int]*Dot)
-	count := random.RandInt(c.opts.rangeVerifyLen.Min, c.opts.rangeVerifyLen.Max)
-	var values []string
+	chkDots := make(map[int]*Dot, len(rs))
+	count := random.RandIntFast(c.opts.rangeVerifyLen.Min, c.opts.rangeVerifyLen.Max)
+	maxCount := count
+	if c.opts.disabledRangeVerifyLen {
+		maxCount = len(rs)
+	}
+	values := make([]string, 0, maxCount)
+
 	for i, value := range rs {
 		if !c.opts.disabledRangeVerifyLen && i >= count {
 			break
@@ -367,7 +380,7 @@ func (c *captcha) rangeCheckDots(dots map[int]*Dot) (map[int]*Dot, []string) {
 //   - image.Image: Generated image
 //   - error: Error information
 func (c *captcha) genMasterImage(size *option.Size, dots map[int]*Dot) (image.Image, error) {
-	var drawDots = make([]*DrawDot, 0, len(dots))
+	drawDots := make([]*DrawDot, 0, len(dots))
 
 	for i := 0; i < len(dots); i++ {
 		dot := dots[i]
@@ -421,7 +434,7 @@ func (c *captcha) genMasterImage(size *option.Size, dots map[int]*Dot) (image.Im
 //   - image.Image: Generated thumbnail
 //   - error: Error information
 func (c *captcha) genThumbImage(size *option.Size, dots map[int]*Dot) (image.Image, error) {
-	var drawDots = make([]*DrawDot, 0, len(dots))
+	drawDots := make([]*DrawDot, 0, len(dots))
 
 	width := size.Width / len(dots)
 	for i := 0; i < len(dots); i++ {
@@ -499,7 +512,7 @@ func (c *captcha) genThumbImage(size *option.Size, dots map[int]*Dot) (image.Ima
 //
 // returns: List of shape names
 func (c *captcha) genRandShape(length int) []string {
-	var nameA []string
+	nameA := make([]string, 0, length)
 	for len(nameA) < length {
 		img := randgen.RandString(c.resources.shapes)
 		if !helper.InArrayWithStr(nameA, img) {
@@ -516,7 +529,7 @@ func (c *captcha) genRandShape(length int) []string {
 //
 // return: List of characters
 func (c *captcha) genRandChar(length int) []string {
-	var strA []string
+	strA := make([]string, 0, length)
 	for len(strA) < length {
 		char := randgen.RandString(c.resources.chars)
 		if !helper.InArrayWithStr(strA, char) {
@@ -558,7 +571,7 @@ func (c *captcha) randAngle() int {
 	}
 
 	angle := angles[index]
-	res := random.RandInt(angle.Min, angle.Max)
+	res := random.RandIntFast(angle.Min, angle.Max)
 
 	return res
 }

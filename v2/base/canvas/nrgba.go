@@ -97,13 +97,32 @@ func (n *nRGBA) DrawImage(img Palette, dotRect *PositionRect, posRect *AreaRect)
 	pMaxX := posRect.MaxX
 	pMaxY := posRect.MaxY
 
-	for x := 0; x < nW; x++ {
-		for y := 0; y < nH; y++ {
+	startX := pMinX
+	if startX < 0 {
+		startX = 0
+	}
+	endX := pMaxX
+	if endX > nW {
+		endX = nW
+	}
+	startY := pMinY
+	if startY < 0 {
+		startY = 0
+	}
+	endY := pMaxY
+	if endY > nH {
+		endY = nH
+	}
+
+	dst := n.NRGBA
+	for y := startY; y < endY; y++ {
+		for x := startX; x < endX; x++ {
 			co := img.At(x, y)
-			if _, _, _, a := co.RGBA(); a > 0 {
-				if x >= pMinX && x <= pMaxX && y >= pMinY && y <= pMaxY {
-					n.Set(dX+(x-pMinX), dY-dHeight+(y-pMinY), img.At(x, y))
-				}
+			_, _, _, a := co.RGBA()
+			if a > 0 {
+				dstX := dX + (x - pMinX)
+				dstY := dY - dHeight + (y - pMinY)
+				dst.Set(dstX, dstY, co)
 			}
 		}
 	}
@@ -111,16 +130,20 @@ func (n *nRGBA) DrawImage(img Palette, dotRect *PositionRect, posRect *AreaRect)
 
 // CalcMarginBlankArea calculates the blank area of the canvas
 func (n *nRGBA) CalcMarginBlankArea() *AreaRect {
-	nW := n.Bounds().Max.X
-	nH := n.Bounds().Max.Y
+	bounds := n.Bounds()
+	nW := bounds.Max.X
+	nH := bounds.Max.Y
 	minX := nW
 	maxX := 0
 	minY := nH
 	maxY := 0
-	for x := 0; x < nW; x++ {
-		for y := 0; y < nH; y++ {
-			co := n.At(x, y)
-			if _, _, _, a := co.RGBA(); a > 0 {
+
+	img := n.NRGBA
+	for y := 0; y < nH; y++ {
+		for x := 0; x < nW; x++ {
+			co := img.At(x, y)
+			_, _, _, a := co.RGBA()
+			if a > 0 {
 				if x < minX {
 					minX = x
 				}

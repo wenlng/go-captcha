@@ -134,7 +134,7 @@ func RandIndex(length int) int {
 		return -1
 	}
 
-	index := random.RandInt(0, length)
+	index := random.RandIntFast(0, length-1)
 	if index >= length {
 		index = length - 1
 	}

@@ -255,7 +255,7 @@ func (c *captcha) randGraphAngle() int {
 	}
 
 	angle := angles[index]
-	res := random.RandInt(angle.Min, angle.Max)
+	res := random.RandIntFast(angle.Min, angle.Max)
 
 	return res
 }
@@ -275,7 +275,7 @@ func (c *captcha) genGraphBlocks(imageSize *option.Size, size *option.RangeVal, 
 	height := imageSize.Height
 
 	randAngle := c.randGraphAngle()
-	randSize := random.RandInt(size.Min, size.Max)
+	randSize := random.RandIntFast(size.Min, size.Max)
 	cHeight := randSize
 	cWidth := randSize
 
@@ -289,7 +289,7 @@ func (c *captcha) genGraphBlocks(imageSize *option.Size, size *option.RangeVal, 
 		start, end := c.calcXWithDeadZone((i*blockWidth)+dp+5, ((i+1)*blockWidth)-dp, cWidth, dzdType)
 
 		start = int(math.Max(float64(start), float64(dp+5)))
-		block.X = random.RandInt(start+20, end+20) - dp
+		block.X = random.RandIntFast(start+20, end+20) - dp
 
 		if c.opts.enableGraphVerticalRandom {
 			y = c.calcYWithDeadZone(5, height-cHeight-5, cHeight, dzdType)
@@ -305,23 +305,23 @@ func (c *captcha) genGraphBlocks(imageSize *option.Size, size *option.RangeVal, 
 
 	point := &option.Point{}
 	if c.mode == ModeBasic {
-		point.X = random.RandInt(5, dp)
+		point.X = random.RandIntFast(5, dp)
 		point.Y = y
 		return blocks, point
 	}
 
 	if dzdType == DeadZoneDirectionTypeTop {
-		point.X = random.RandInt(5, width-cWidth-5)
+		point.X = random.RandIntFast(5, width-cWidth-5)
 		point.Y = 5
 	} else if dzdType == DeadZoneDirectionTypeBottom {
-		point.X = random.RandInt(5, width-cWidth-5)
+		point.X = random.RandIntFast(5, width-cWidth-5)
 		point.Y = height - cHeight - 5
 	} else if dzdType == DeadZoneDirectionTypeLeft {
 		point.X = 5
-		point.Y = random.RandInt(5, height-cHeight-5)
+		point.Y = random.RandIntFast(5, height-cHeight-5)
 	} else if dzdType == DeadZoneDirectionTypeRight {
 		point.X = width - cWidth - 5
-		point.Y = random.RandInt(5, height-cHeight-5)
+		point.Y = random.RandIntFast(5, height-cHeight-5)
 	}
 
 	return blocks, point
@@ -359,7 +359,7 @@ func (c *captcha) calcYWithDeadZone(start, end, value int, dzdType DeadZoneDirec
 	} else if dzdType == DeadZoneDirectionTypeBottom {
 		end -= value
 	}
-	return random.RandInt(start, end)
+	return random.RandIntFast(start, end)
 }
 
 // genGraph generates random graph resources
